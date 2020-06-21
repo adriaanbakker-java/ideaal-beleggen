@@ -1,0 +1,7 @@
+bij checkout naar PC is waarschijnlijk de .iml file ongeschikt omdat die van de MAC komt
+bovendien moet pad naar de koersen worden herzien in Constants.java
+Kopieer de inhoud van deze folder na checkout naar pc naar de .iml file in de hoofdfolder
+van het project en overschrijf de Constants.java
+De .iml file op de MAC uiteraard ongewijzigd laten.
+Bij de MAC uiteraard de Constants.java ongewijzigd laten.
+Let hierop bij het inchecken dmv push
