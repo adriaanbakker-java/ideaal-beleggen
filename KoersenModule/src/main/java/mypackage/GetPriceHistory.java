@@ -74,6 +74,7 @@ public class GetPriceHistory {
 		bMap.put("DELHAIZE", new BeleggerLinkRec("11755", "Ahold-Delhaize-Koninklijke"));
 		bMap.put("AKZO", new BeleggerLinkRec("11756", "Akzo-Nobel"));
 		bMap.put("ARCELOR", new BeleggerLinkRec("11895", "ArcelorMittal"));
+		bMap.put("ASMI", new BeleggerLinkRec("11808", "ASM-International"));
 		bMap.put("ASML", new BeleggerLinkRec("16923", "ASML-Holding"));
 		bMap.put("ASR", new BeleggerLinkRec("596718", "ASR-Nederland"));
 		bMap.put("DSM", new BeleggerLinkRec("11764", "DSM-Koninklijke"));
@@ -211,19 +212,30 @@ public class GetPriceHistory {
  * Updates from the net. Current day's stock price may be retrieved from a separate page. 
  */
 	public void updatePriceHistory(
-			String aTicker,
-			int aYear, int aMonth, MainController.LocalLogging aLogging)  {
+            String aTicker,
+            int startYear, int month,
+            int aEndYear,
+            int aEndMonth,
+            MainController.LocalLogging aLogging)  {
 		int yearFrom, monthFrom;
-		int currentYear, currentMonth, currentDay;
+		int currentYear, currentMonth;
 		
 		try {
 			List<DayPriceRecord> pricesFromFile =  getHistoricPricesFromFile(aTicker);
-			// find out what the last year/month is and try to retrieve the rest of the prices
+			// in case no end year and and end month given (values -1)
+            // find out what the last year/month is and try to retrieve the rest of the prices
 			// until today from internet
-			LocalDateTime today = LocalDateTime.now();
-			currentMonth = today.getMonthValue();
-			currentYear = today.getYear();
-			currentDay = today.getDayOfMonth();
+            // otherwise set end year and end month
+
+            if (aEndYear == -1) {
+                LocalDateTime today = LocalDateTime.now();
+                currentMonth = today.getMonthValue();
+                currentYear = today.getYear();
+            } else {
+                currentMonth = aEndMonth;
+                currentYear = aEndYear;
+            }
+
 
 			if (aTicker.equals("SHELL")) {
 				System.out.println("shell gevonden");
@@ -240,7 +252,8 @@ public class GetPriceHistory {
 				System.out.println("no prices used from file");
 				yearFrom = Constants.startYear;
 				monthFrom = 1;
-			} else {  // find out what the last month is from the price file and extend
+			} else {
+			    // find out what the last month is from the price file and extend
 				DayPriceRecord lastRec = prices.get(prices.size()-1);
 				
 				System.out.println("price history from file runs until "

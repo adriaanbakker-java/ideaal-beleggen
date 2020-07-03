@@ -162,7 +162,12 @@ public class Main {
     }
 */
     public static void main(String[] args) {
-        System.out.println("Demo scraper driver");
+        System.out.println("Koersenmodule: java -jar Koersenmodule<..>.jar [endYear endMonth]");
+        System.out.println("ververst koersen in " + Constants.getPricefolder());
+        System.out.println("tot aan huidige datum of (indien gegeven) endYear endMonth");
+        System.out.println("Door de week zal de laatste beursdag ontbreken wegens nog niet aanwezig op iex");
+
+
         //demoFirefoxDriver();
         //demoHeadlessDriver();
         //demoHeadlessDriverPrices();
@@ -178,11 +183,23 @@ public class Main {
 
 
         MainController.logInTextArea("koersen verversen");
+        int endYear = -1;
+        int endMonth = -1;
+        if (args.length == 2) {
+            System.out.println("arguments given: endYear=" + args[0] + " endMonth=" + args[1]);
+            endYear = Integer.parseInt(args[0]);
+            endMonth = Integer.parseInt(args[1]);
+        }
         try {
             Set<String> tickerSet = gph.getTickers();
+
             for (String ticker1 : tickerSet) {
                 MainController.LocalLogging localLogging = new MainController.LocalLogging();
-                gph.updatePriceHistory(ticker1, Constants.startYear, 1, localLogging);
+                gph.updatePriceHistory(
+                        ticker1,
+                        Constants.startYear, 1,
+                        endYear, endMonth,
+                        localLogging);
             }
         } catch (Exception e) {
             MainController.logInTextArea(e.getLocalizedMessage());

@@ -90,6 +90,7 @@ public class GetPriceHistory {
 		bMap.put("AKZO", new BeleggerLinkRec("11756", "Akzo-Nobel"));
 		bMap.put("ARCELOR", new BeleggerLinkRec("11895", "ArcelorMittal"));
 		bMap.put("ASML", new BeleggerLinkRec("16923", "ASML-Holding"));
+		bMap.put("ASMI", new BeleggerLinkRec("11808", "ASM-International"));
 		bMap.put("ASR", new BeleggerLinkRec("596718", "ASR-Nederland"));
 		bMap.put("DSM", new BeleggerLinkRec("11764", "DSM-Koninklijke"));
 		bMap.put("GALAPAGOS", new BeleggerLinkRec("60189120", "Galapagos"));
