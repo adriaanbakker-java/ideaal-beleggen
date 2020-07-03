@@ -56,9 +56,23 @@ public class GrafiekenschermController implements Initializable {
 
     private int grafiekenIndex = 0;
 
+    private DayPriceRecord geefDayPriceRecordAt(Number x1, Number y1) {
+        double xd = (double) x1;
+        double yd = (double) y1;
+        if (   (xd - x1.intValue() < 0.1)
+            || (xd - (x1.intValue() + 1) < 0.1)) {
+            return myCandlestickObject.geefDayPriceRecordAt(new Point(xd,yd));
+        }
+        return null;
+    }
+
     public void mouseClick(Number x1, Number y1) {
         if (eventState == EventState.state_idle) {
             toonMessage("Controller: geklikt op:" + x1 + "," + y1);
+            DayPriceRecord dpr = geefDayPriceRecordAt(x1, y1);
+            if (dpr != null)
+                toonMessage("candle clicked:" + dpr.toString());
+
         } else if (eventState == EventState.state_wait_horline) {
             System.out.println("teken horizontale lijn op prijs " + y1);
             double y = (double) y1;
@@ -227,46 +241,7 @@ public class GrafiekenschermController implements Initializable {
         double size_volume = 0;
         double size_rest = 0;
         VBox vbox = new VBox();
-        /* if (chkMACD.isSelected()) {
-          //  macdChart =createMACD();
-            macdChart = createOBV();
-            size_candles *= 0.5;
-            size_rest = 1 - size_candles;
-            if (chkVolume.isSelected()) {
-                volumeChart = createBarchart();
-                size_volume = 0.15;
-                size_MACD = size_rest - 0.15;
-
-                myCandleStickChart.setPrefHeight(prefHeight * size_candles);
-                volumeChart.setPrefHeight(prefHeight * size_volume);
-                macdChart.setPrefHeight(prefHeight * size_MACD);
-                vbox.getChildren().add(myCandleStickChart);
-                vbox.getChildren().add(volumeChart);
-                vbox.getChildren().add(macdChart);
-            } else {
-                size_rest = 0.5;
-                size_MACD = 0.5;
-
-                myCandleStickChart.setPrefHeight(prefHeight * size_candles);
-                macdChart.setPrefHeight(prefHeight * size_MACD);
-                vbox.getChildren().add(myCandleStickChart);
-                vbox.getChildren().add(macdChart);
-            }
-        } else {
-            if (chkVolume.isSelected()) {
-                size_volume = 0.15;
-                size_candles = 1 - size_volume;
-                volumeChart = createBarchart();
-
-                myCandleStickChart.setPrefHeight(prefHeight * size_candles);
-                volumeChart.setPrefHeight(prefHeight * size_volume);
-                vbox.getChildren().add(myCandleStickChart);
-                vbox.getChildren().add(volumeChart);
-            } else {
-                myCandleStickChart.setPrefHeight(prefHeight);
-                vbox.getChildren().add(myCandleStickChart);
-            }
-        } */
+     
 
         int nIndicatoren = 0;
         if (chkMACD.isSelected()) nIndicatoren++;

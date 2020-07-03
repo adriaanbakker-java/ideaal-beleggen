@@ -166,6 +166,12 @@ public class CandleStickChart extends LineChart<Number, Number> {
         return false;
     }
 
+    private boolean isInBuurtVanCandle(double x1, double y1) {
+
+        return false;
+    }
+
+
     private Line inBuurtVanLijn(double x1, double y1) {
         for (Line line: myCandlestickObject.mapHorizLines()) {
             if (isVertDichtbij(line.getP1().getY(), y1))

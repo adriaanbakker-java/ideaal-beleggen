@@ -301,7 +301,9 @@ public class CandlestickClass {
         }
     }
 
-    private void addKoersreeksCandle(XYChart.Series<Number, Number> aSeries, int aIndex) throws Exception {
+    private void addKoersreeksCandle(
+            XYChart.Series<Number, Number> aSeries,
+            int aIndex) throws Exception {
         Integer index = txNaarKoersindex(aIndex);
         if (index == null) {
             throw new Exception("FOUT addKoersreeksCandle range " + aIndex);
@@ -516,6 +518,17 @@ public class CandlestickClass {
         return result;
     }
 
+
+    public DayPriceRecord geefDayPriceRecordAt(Point point1) {
+        int ix = getCandleIxAtX(point1.getX());
+        if (ix < 0)
+            return null;
+        Integer index1 = txNaarKoersindex(ix);
+        DayPriceRecord dpr1 =  myDayPriceArray.get(startindex + index1);
+        if ((dpr1.getLow() < point1.getY()) &&
+            (dpr1.getHigh() > point1.getY())) return dpr1;
+        return null;
+    }
 
     public void aanschuivenSlopedLijn(Point point1, Point point2, Line line) {
         int ix1 = getCandleIxAtX(point1.getX());
