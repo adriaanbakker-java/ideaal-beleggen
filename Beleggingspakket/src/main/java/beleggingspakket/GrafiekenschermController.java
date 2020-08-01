@@ -24,6 +24,7 @@ public class GrafiekenschermController implements Initializable {
     private CandleStickChart myCandleStickChart = null;
     private String fondsnaam = "nog niet ingevuld";
 
+
     public Main main = null;
 
    /*  A number of objects have to be connected AFTER constructor and initialize have run:
@@ -56,22 +57,37 @@ public class GrafiekenschermController implements Initializable {
 
     private int grafiekenIndex = 0;
 
-    private DayPriceRecord geefDayPriceRecordAt(Number x1, Number y1) {
+    private DayPriceRecordPlusIndex geefDayPriceRecordAt(Number x1, Number y1) {
         double xd = (double) x1;
         double yd = (double) y1;
         if (   (xd - x1.intValue() < 0.1)
             || (xd - (x1.intValue() + 1) < 0.1)) {
-            return myCandlestickObject.geefDayPriceRecordAt(new Point(xd,yd));
+
+            Integer index1 = myCandlestickObject.geefDayPriceIndexAt(xd);
+            if (index1 < 0)
+                return null;
+
+            DayPriceRecordPlusIndex result =
+                    new DayPriceRecordPlusIndex(
+                        index1,
+                        myCandlestickObject.getMyDayPriceArray().get(index1));
+            return result;
         }
+
         return null;
     }
 
     public void mouseClick(Number x1, Number y1) {
         if (eventState == EventState.state_idle) {
             toonMessage("Controller: geklikt op:" + x1 + "," + y1);
-            DayPriceRecord dpr = geefDayPriceRecordAt(x1, y1);
-            if (dpr != null)
-                toonMessage("candle clicked:" + dpr.toString());
+            DayPriceRecordPlusIndex dprpi = geefDayPriceRecordAt(x1, y1);
+            if (dprpi != null) {
+                CalcVolatility calcVolatility = new CalcVolatility(myCandlestickObject.getMyDayPriceArray());
+                toonMessage("candle clicked:" + dprpi.dpr.toString() + " at index " +
+                        dprpi.index + " volatily(250 days)=" +
+                        calcVolatility.calcVolatility(dprpi.index));
+
+            }
 
         } else if (eventState == EventState.state_wait_horline) {
             System.out.println("teken horizontale lijn op prijs " + y1);
@@ -624,5 +640,15 @@ public class GrafiekenschermController implements Initializable {
 
     public void setCandleStickClassObject(CandlestickClass candlestickObject) {
         this.myCandlestickObject = candlestickObject;
+    }
+
+    private class DayPriceRecordPlusIndex {
+        int index;
+        DayPriceRecord dpr;
+
+        public DayPriceRecordPlusIndex(int index, DayPriceRecord dpr) {
+            this.index = index;
+            this.dpr = dpr;
+        }
     }
 }

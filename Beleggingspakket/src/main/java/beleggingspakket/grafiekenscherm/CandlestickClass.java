@@ -424,7 +424,7 @@ public class CandlestickClass {
     }
 
 
-    private int getCandleIxAtX(double aX) {
+    public int getCandleIxAtX(double aX) {
         if (!((aX >= aantalDagenLinks) && (aX <= aantalBeursdagenGrafiek - aantalDagenRechts - 1))) {
             System.out.println("buiten horizontaal bereik geklikt voor candles");
             return -1;
@@ -518,6 +518,13 @@ public class CandlestickClass {
         return result;
     }
 
+    public int geefDayPriceIndexAt(double x) {
+        int ix = getCandleIxAtX(x);
+        if (ix < 0)
+            return -1;
+        Integer index1 = txNaarKoersindex(ix);
+        return startindex + index1;
+    }
 
     public DayPriceRecord geefDayPriceRecordAt(Point point1) {
         int ix = getCandleIxAtX(point1.getX());
