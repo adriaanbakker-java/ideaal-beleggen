@@ -194,12 +194,18 @@ public class Main {
             Set<String> tickerSet = gph.getTickers();
 
             for (String ticker1 : tickerSet) {
-                MainController.LocalLogging localLogging = new MainController.LocalLogging();
-                gph.updatePriceHistory(
-                        ticker1,
-                        Constants.startYear, 1,
-                        endYear, endMonth,
-                        localLogging);
+                if (ticker1.equals("1NN")) {
+                    System.out.println("Skip 1NN for now");
+
+                } else {
+                    MainController.LocalLogging localLogging = new MainController.LocalLogging();
+                    gph.updatePriceHistory(
+                            ticker1,
+                            Constants.startYear, 1,
+                            endYear, endMonth,
+                            localLogging);
+                }
+
             }
         } catch (Exception e) {
             MainController.logInTextArea(e.getLocalizedMessage());

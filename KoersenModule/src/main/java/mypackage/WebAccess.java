@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,7 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class WebAccess {
-    private WebDriver driver = new HtmlUnitDriver();
+    private WebDriver driver = new HtmlUnitDriver(BrowserVersion.CHROME);
 
     public WebAccess(HashMap<String, GetPriceHistory.BeleggerLinkRec> bMap) {
         this.bMap = bMap;
@@ -194,7 +195,7 @@ public class WebAccess {
             throw new Exception("retrievePricesFromHistorypage: rowcount =" + rowcount + "Error: " + e.getMessage());
         }
 
-        return null;
+        return result;
 
 //        System.out.println(actualTitle);
 //        List<WebElement> tables = driver.findElements(By.className("ContentTable"));
@@ -228,7 +229,8 @@ public class WebAccess {
     }
 
 
-        private static DayPriceRecord process_row ( int aYear, int aMonth, Elements e_cells){
+        private static DayPriceRecord process_row ( int aYear, int aMonth, Elements e_cells)
+         throws Exception {
             int ccount = 1;
             DayPriceRecord dpr = null;
 
@@ -247,7 +249,7 @@ public class WebAccess {
 
                 switch (ccount) {
                     case 1: {
-                        day = getIntval(sval);
+                        day = retrieveDayNr(sval);
                         break;
                     }
                     case 2:
@@ -255,15 +257,15 @@ public class WebAccess {
                         // System.out.print("Open: " + printPrice(dval));
                         break;
                     case 3:
-                        close = parseDouble(sval);
-                        break;
-                    case 4:
                         low = parseDouble(sval);
                         break;
-                    case 6:
+                    case 4:
                         high = parseDouble(sval);
                         break;
-                    case 7:
+                    case 5:
+                        close = parseDouble(sval);
+                        break;
+                    case 6:
                         volume = parseVolume(sval);
                         dpr = new DayPriceRecord(day, aMonth, aYear, open, high, low, close, volume);
                         // System.out.println("Gelezen:" + dpr);
@@ -278,7 +280,15 @@ public class WebAccess {
 
         }
 
-        // format aDate of 04-okt-19
+    // retrieve day nr for example the 4 from "maandag 4 mei 2020"
+    private static int retrieveDayNr(String sval) throws Exception {
+        String arr[] = sval.split(" ");
+        if (arr.length < 4 )
+            throw new Exception("retrieveDayNr: four elements expected:[" + sval + "]");
+        return Integer.parseInt(arr[1]);
+    }
+
+    // format aDate of 04-okt-19
         // convert to MyDate
         public MyDate convertToDate (String aString) throws Exception {
             MyDate result = null;
