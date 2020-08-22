@@ -194,8 +194,8 @@ public class Main {
             Set<String> tickerSet = gph.getTickers();
 
             for (String ticker1 : tickerSet) {
-                if (ticker1.equals("1NN")) {
-                    System.out.println("Skip 1NN for now");
+                if (ticker1.equals("hier ticket")) {
+                    System.out.println("Skip" + ticker1+"  for now");
 
                 } else {
                     MainController.LocalLogging localLogging = new MainController.LocalLogging();

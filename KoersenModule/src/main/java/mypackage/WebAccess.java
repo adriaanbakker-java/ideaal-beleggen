@@ -64,6 +64,8 @@ public class WebAccess {
 
     private static double parseDouble(String aDouble) {
         double result = 0.0;
+        // get rid of possible dots
+        aDouble = aDouble.replace(".", "");
         try {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
             Number number = format.parse(aDouble);
