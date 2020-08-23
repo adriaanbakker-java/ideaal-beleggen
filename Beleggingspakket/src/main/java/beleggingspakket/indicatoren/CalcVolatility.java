@@ -26,22 +26,34 @@ public class CalcVolatility {
     }
 
 
+    // Calc stdev of log returns in the last nrOfDays before and including
+    // price at index of closingprices list
+    // log return at index i = ln(C{i}/C{i-1})
     public double calcStdDev(int index) {
         if (index < nrOfDays)
             return -1;
         double prices[] = new double[nrOfDays];
         for (int i= 1; i<= nrOfDays; i++) {
             double d = myClosingPrices.get(index - nrOfDays + i).getClose();
-            prices[i-1]= d;
-            //     last nrOfDays entries including entry (index - 1)
-            //     index - 1 - (nrOfdays - 1)..index - 1
+            prices[i-1]= d; // 0.. nrDays-1
         }
-
-        return stdevClass.stdev(prices);
+        // Calc log returns = ln(Ci/C{i-1}) where C{i} is closing price on day i
+        double lnReturns[] = new double [nrOfDays-1];
+        for (int i= 1; i<= nrOfDays-1; i++) {
+            if (prices[i-1] >0.01) {
+                lnReturns[i-1] = Math.log(prices[i]/prices[i-1]);
+            } else {
+                lnReturns[i-1] = 0;
+            }
+        }
+        double result = stdevClass.stdev(lnReturns);
+        return result;
     }
 
     public double calcVolatility(int index) {
         double stdev = calcStdDev(index);
+        // this is the daily volatility of the closing price
+        // annualize by nrTradingDays in a year
         double result = stdev * Math.sqrt(nrTradingDays);
         return result;
     }
