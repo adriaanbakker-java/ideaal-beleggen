@@ -1,0 +1,427 @@
+.
+├── Beleggingspakket
+│   ├── Constants.java
+│   ├── Ontwerp
+│   │   ├── Diagrammen
+│   │   │   ├── CandlestickChart.useq
+│   │   │   ├── Klassediagram.gif
+│   │   │   ├── Klassediagram.jpg
+│   │   │   ├── Klassediagram.png
+│   │   │   ├── Koersen.png
+│   │   │   ├── Koersen.ucls
+│   │   │   ├── PackageDiagram.ucls
+│   │   │   ├── Sequence_Koersen_ophalen.useq
+│   │   │   ├── complete_diagram.ucls
+│   │   │   ├── package_CandlestickGraph.png
+│   │   │   ├── package_CandlestickGraph.ucls
+│   │   │   ├── package_beleggingspakket.png
+│   │   │   ├── package_beleggingspakket.ucls
+│   │   │   ├── packagediagram_complete.ucls
+│   │   │   ├── seqMouseclick.png
+│   │   │   ├── seqMouseclick.useq
+│   │   │   ├── seq_InBuurtVanLijn.png
+│   │   │   ├── seq_InBuurtVanLijn.useq
+│   │   │   ├── seq_chartrefresh_lijnen.png
+│   │   │   ├── seq_chartrefresh_lijnen.useq
+│   │   │   ├── seq_grafiekenschermOpenen01.png
+│   │   │   ├── seq_grafiekenschermOpenen01.useq
+│   │   │   ├── seq_koersen_ophalen.png
+│   │   │   ├── seq_koersen_ophalen.useq
+│   │   │   ├── seq_lineclicked_niveaus.useq
+│   │   │   ├── seq_lineclicked_niveaus01.png
+│   │   │   ├── seq_lineclicked_niveaus01.useq
+│   │   │   ├── seq_lineclicked_niveaus02.useq
+│   │   │   ├── seq_mousepress.ucls
+│   │   │   ├── seq_onmousepressed.png
+│   │   │   └── seq_onmousepressed.useq
+│   │   ├── Indicatoren
+│   │   │   ├── Archief\ text\ bestanden\ ema.zip
+│   │   │   ├── On\ balance\ volume.docx
+│   │   │   ├── Relative\ Strength\ Index.docx
+│   │   │   ├── The\ Formula\ for\ MACD.docx
+│   │   │   ├── voorbeeldMAC.xlsx
+│   │   │   ├── ~$e\ Formula\ for\ MACD.docx
+│   │   │   └── ~$voorbeeldMAC.xlsx
+│   │   ├── Optieberekeningen
+│   │   │   ├── Adyen\ Optiecalculator.xls
+│   │   │   └── example\ calc\ volatility\ ING\ Optiecalculator.xls
+│   │   ├── Sprints
+│   │   │   ├── Sprint\ 033.docx
+│   │   │   ├── Sprint\ 34.docx
+│   │   │   ├── beschrijving0.31.docx
+│   │   │   ├── gebruik\ van\ indicatoren.docx
+│   │   │   ├── klasse-\ en\ sequentiediagrammen.docx
+│   │   │   ├── sprint032.docx
+│   │   │   ├── ~$asse-\ en\ sequentiediagrammen.docx
+│   │   │   └── ~$rint032.docx
+│   │   ├── how\ to\ start\ from\ command\ line.DOCX
+│   │   └── ~$w\ to\ start\ from\ command\ line.DOCX
+│   ├── beleggingspakket032.iml
+│   ├── bin
+│   │   ├── MACD.txt
+│   │   ├── The\ Formula\ for\ MACD.docx
+│   │   ├── beleggingspakket032.iml
+│   │   ├── beschrijving0.31.docx
+│   │   ├── close.txt
+│   │   ├── dependency-reduced-pom.xml
+│   │   ├── fastEma.txt
+│   │   ├── how\ to\ start\ from\ command\ line.DOCX
+│   │   ├── out
+│   │   │   └── artifacts
+│   │   │       └── Beleggingspakket_jar
+│   │   │           ├── '
+│   │   │           └── Beleggingspakket.jar
+│   │   ├── pom.xml
+│   │   ├── slowEma.txt
+│   │   ├── sprint032.docx
+│   │   ├── src
+│   │   │   └── main
+│   │   │       ├── java
+│   │   │       │   ├── META-INF
+│   │   │       │   │   └── MANIFEST.MF
+│   │   │       │   └── beleggingspakket
+│   │   │       │       ├── CandleStickChart.css
+│   │   │       │       └── candlesticksgraph
+│   │   │       │           └── CandleStickChart.css
+│   │   │       └── resources
+│   │   │           └── beleggingspakket
+│   │   │               ├── CandleStickChart.css
+│   │   │               ├── candlesticksgraph
+│   │   │               │   └── CandleStickChart.css
+│   │   │               ├── grafiekenscherm.fxml
+│   │   │               ├── mainwindow.fxml
+│   │   │               ├── primary.fxml
+│   │   │               ├── secondary.fxml
+│   │   │               └── styles.css
+│   │   ├── voorbeeldMAC.xlsx
+│   │   ├── ~$e\ Formula\ for\ MACD.docx
+│   │   ├── ~$voorbeeldMAC.xlsx
+│   │   └── ~$w\ to\ start\ from\ command\ line.DOCX
+│   ├── dependency-reduced-pom.xml
+│   ├── obsolete
+│   │   └── dependency-reduced-pom.xml
+│   ├── pom.xml
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   ├── META-INF
+│   │       │   │   └── MANIFEST.MF
+│   │       │   ├── beleggingspakket
+│   │       │   │   ├── CandleStickChart.css
+│   │       │   │   ├── Constants.java
+│   │       │   │   ├── GrafiekenschermController.java
+│   │       │   │   ├── Koersen
+│   │       │   │   │   ├── BeleggerLinkRec.java
+│   │       │   │   │   ├── BufferedPrices.java
+│   │       │   │   │   ├── DayPriceRecord.java
+│   │       │   │   │   ├── GetPriceHistory.java
+│   │       │   │   │   └── Tickers.java
+│   │       │   │   ├── Launcher.java
+│   │       │   │   ├── LogInterface.java
+│   │       │   │   ├── Main.java
+│   │       │   │   ├── MainController.java
+│   │       │   │   ├── PortefeuillebeheerController.java
+│   │       │   │   ├── grafiekenscherm
+│   │       │   │   │   ├── Candle.java
+│   │       │   │   │   ├── CandleStickChart.java
+│   │       │   │   │   ├── CandleStickExtraValues.java
+│   │       │   │   │   ├── CandlestickClass.java
+│   │       │   │   │   ├── Line.java
+│   │       │   │   │   ├── Lines.java
+│   │       │   │   │   ├── Point.java
+│   │       │   │   │   ├── RSIChart.java
+│   │       │   │   │   └── TooltipContent.java
+│   │       │   │   ├── indicatoren
+│   │       │   │   │   ├── BarchartIndicator.java
+│   │       │   │   │   ├── CalcVolatility.java
+│   │       │   │   │   ├── IndicatorClass.java
+│   │       │   │   │   ├── MACD.java
+│   │       │   │   │   ├── Momentum.java
+│   │       │   │   │   ├── OnBalanceVolume.java
+│   │       │   │   │   ├── RSI.java
+│   │       │   │   │   └── stdDevClass.java
+│   │       │   │   ├── log.java
+│   │       │   │   ├── portefeuillebeheer
+│   │       │   │   │   ├── Order.java
+│   │       │   │   │   ├── OrderDTO.java
+│   │       │   │   │   ├── Orders.java
+│   │       │   │   │   ├── Ordertype.java
+│   │       │   │   │   ├── Portefeuille.java
+│   │       │   │   │   ├── PositieDTO.java
+│   │       │   │   │   ├── Transaction.java
+│   │       │   │   │   ├── TransactionDTO.java
+│   │       │   │   │   └── Transactions.java
+│   │       │   │   └── util
+│   │       │   │       ├── IDate.java
+│   │       │   │       └── Util.java
+│   │       │   └── module-info.java
+│   │       └── resources
+│   │           └── beleggingspakket
+│   │               ├── CandleStickChart.css
+│   │               ├── Portefeuillebeheer.fxml
+│   │               ├── grafiekenscherm
+│   │               │   └── CandleStickChart.css
+│   │               ├── grafiekenscherm.fxml
+│   │               ├── mainwindow.fxml
+│   │               ├── primary.fxml
+│   │               ├── secondary.fxml
+│   │               └── styles.css
+│   ├── switch_to_mac
+│   │   ├── Constants.java
+│   │   └── beleggingspakket032.iml
+│   ├── switch_to_pc
+│   │   ├── Constants.java
+│   │   └── beleggingspakket032.iml
+│   ├── target
+│   │   ├── classes
+│   │   │   ├── beleggingspakket
+│   │   │   │   ├── CandleStickChart.css
+│   │   │   │   ├── Constants.class
+│   │   │   │   ├── GrafiekenschermController$DayPriceRecordPlusIndex.class
+│   │   │   │   ├── GrafiekenschermController$EventState.class
+│   │   │   │   ├── GrafiekenschermController.class
+│   │   │   │   ├── Koersen
+│   │   │   │   │   ├── BeleggerLinkRec.class
+│   │   │   │   │   ├── BufferedPrices.class
+│   │   │   │   │   ├── DayPriceRecord.class
+│   │   │   │   │   ├── GetPriceHistory$BeleggerLinkRec.class
+│   │   │   │   │   ├── GetPriceHistory$MyDate.class
+│   │   │   │   │   ├── GetPriceHistory.class
+│   │   │   │   │   └── Tickers.class
+│   │   │   │   ├── Launcher.class
+│   │   │   │   ├── LogInterface.class
+│   │   │   │   ├── Main.class
+│   │   │   │   ├── MainController$LocalLogging.class
+│   │   │   │   ├── MainController.class
+│   │   │   │   ├── Portefeuillebeheer.fxml
+│   │   │   │   ├── PortefeuillebeheerController$1.class
+│   │   │   │   ├── PortefeuillebeheerController.class
+│   │   │   │   ├── grafiekenscherm
+│   │   │   │   │   ├── Candle.class
+│   │   │   │   │   ├── CandleStickChart.class
+│   │   │   │   │   ├── CandleStickChart.css
+│   │   │   │   │   ├── CandleStickExtraValues.class
+│   │   │   │   │   ├── CandlestickClass$1.class
+│   │   │   │   │   ├── CandlestickClass$2.class
+│   │   │   │   │   ├── CandlestickClass.class
+│   │   │   │   │   ├── Line.class
+│   │   │   │   │   ├── Lines.class
+│   │   │   │   │   ├── Point.class
+│   │   │   │   │   ├── RSIChart.class
+│   │   │   │   │   └── TooltipContent.class
+│   │   │   │   ├── grafiekenscherm.fxml
+│   │   │   │   ├── indicatoren
+│   │   │   │   │   ├── BarchartIndicator$1.class
+│   │   │   │   │   ├── BarchartIndicator.class
+│   │   │   │   │   ├── CalcVolatility.class
+│   │   │   │   │   ├── IndicatorClass$1.class
+│   │   │   │   │   ├── IndicatorClass.class
+│   │   │   │   │   ├── MACD.class
+│   │   │   │   │   ├── Momentum.class
+│   │   │   │   │   ├── OnBalanceVolume.class
+│   │   │   │   │   ├── RSI.class
+│   │   │   │   │   └── stdevClass.class
+│   │   │   │   ├── log.class
+│   │   │   │   ├── mainwindow.fxml
+│   │   │   │   ├── portefeuillebeheer
+│   │   │   │   │   ├── Order.class
+│   │   │   │   │   ├── OrderDTO.class
+│   │   │   │   │   ├── Orders.class
+│   │   │   │   │   ├── Ordertype.class
+│   │   │   │   │   ├── Portefeuille.class
+│   │   │   │   │   ├── PositieDTO.class
+│   │   │   │   │   ├── Transaction.class
+│   │   │   │   │   ├── TransactionDTO.class
+│   │   │   │   │   └── Transactions.class
+│   │   │   │   ├── primary.fxml
+│   │   │   │   ├── secondary.fxml
+│   │   │   │   ├── styles.css
+│   │   │   │   └── util
+│   │   │   │       ├── IDate.class
+│   │   │   │       └── Util.class
+│   │   │   └── module-info.class
+│   │   └── generated-sources
+│   │       └── annotations
+│   └── uitleg_switch.txt
+├── KoersenModule
+│   ├── dependency-reduced-pom.xml
+│   ├── phantomjsdriver.log
+│   ├── pom.xml
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   └── mypackage
+│   │       │       ├── BeleggerLinkRec.java
+│   │       │       ├── Constants.java
+│   │       │       ├── DayPriceRecord.java
+│   │       │       ├── GetPriceHistory.java
+│   │       │       ├── LogInterface.java
+│   │       │       ├── Main.java
+│   │       │       ├── MainController.java
+│   │       │       ├── MyDate.java
+│   │       │       ├── Tickers.java
+│   │       │       └── WebAccess.java
+│   │       └── resources
+│   │           ├── commons-logging.properties
+│   │           └── log4j.properties
+│   └── target
+│       ├── Koersenmodule-1.0-SNAPSHOT.jar
+│       ├── classes
+│       │   ├── commons-logging.properties
+│       │   ├── log4j.properties
+│       │   └── mypackage
+│       │       ├── BeleggerLinkRec.class
+│       │       ├── Constants.class
+│       │       ├── DayPriceRecord.class
+│       │       ├── GetPriceHistory$BeleggerLinkRec.class
+│       │       ├── GetPriceHistory.class
+│       │       ├── LogInterface.class
+│       │       ├── Main.class
+│       │       ├── MainController$LocalLogging.class
+│       │       ├── MainController.class
+│       │       ├── MyDate.class
+│       │       ├── Tickers.class
+│       │       └── WebAccess.class
+│       ├── generated-sources
+│       │   └── annotations
+│       ├── maven-archiver
+│       │   └── pom.properties
+│       ├── maven-status
+│       │   └── maven-compiler-plugin
+│       │       └── compile
+│       │           └── default-compile
+│       │               ├── createdFiles.lst
+│       │               └── inputFiles.lst
+│       └── original-Koersenmodule-1.0-SNAPSHOT.jar
+├── README.md
+├── macversion
+│   ├── Beleggingspakket
+│   │   ├── Constants.java
+│   │   ├── _idea
+│   │   │   ├── Beleggingspakket.iml
+│   │   │   ├── compiler.xml
+│   │   │   ├── encodings.xml
+│   │   │   ├── libraries
+│   │   │   │   ├── Maven__junit_junit_3_8_1.xml
+│   │   │   │   ├── Maven__org_jsoup_jsoup_1_12_1.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_base_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_base_mac_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_controls_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_controls_mac_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_fxml_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_fxml_mac_13.xml
+│   │   │   │   ├── Maven__org_openjfx_javafx_graphics_13.xml
+│   │   │   │   └── Maven__org_openjfx_javafx_graphics_mac_13.xml
+│   │   │   ├── misc.xml
+│   │   │   ├── modules.xml
+│   │   │   ├── vcs.xml
+│   │   │   └── workspace.xml
+│   │   └── beleggingspakket032.iml
+│   └── KoersenModule
+│       ├── Constants.java
+│       └── _idea
+│           ├── KoersenModule.iml
+│           ├── compiler.xml
+│           ├── encodings.xml
+│           ├── libraries
+│           │   ├── Maven__cglib_cglib_nodep_3_2_4.xml
+│           │   ├── Maven__com_codeborne_phantomjsdriver_1_4_0.xml
+│           │   ├── Maven__com_google_code_gson_gson_2_8_0.xml
+│           │   ├── Maven__com_google_guava_guava_21_0.xml
+│           │   ├── Maven__commons_codec_commons_codec_1_10.xml
+│           │   ├── Maven__commons_io_commons_io_2_5.xml
+│           │   ├── Maven__commons_logging_commons_logging_1_2.xml
+│           │   ├── Maven__io_netty_netty_3_5_2_Final.xml
+│           │   ├── Maven__junit_junit_4_12.xml
+│           │   ├── Maven__log4j_log4j_1_2_17.xml
+│           │   ├── Maven__net_java_dev_jna_jna_4_1_0.xml
+│           │   ├── Maven__net_java_dev_jna_jna_platform_4_1_0.xml
+│           │   ├── Maven__net_java_dev_jna_platform_3_4_0.xml
+│           │   ├── Maven__net_sourceforge_cssparser_cssparser_0_9_23.xml
+│           │   ├── Maven__net_sourceforge_htmlunit_htmlunit_2_27.xml
+│           │   ├── Maven__net_sourceforge_htmlunit_htmlunit_core_js_2_27.xml
+│           │   ├── Maven__net_sourceforge_htmlunit_neko_htmlunit_2_27.xml
+│           │   ├── Maven__org_apache_commons_commons_exec_1_3.xml
+│           │   ├── Maven__org_apache_commons_commons_lang3_3_5.xml
+│           │   ├── Maven__org_apache_httpcomponents_httpclient_4_5_3.xml
+│           │   ├── Maven__org_apache_httpcomponents_httpcore_4_4_6.xml
+│           │   ├── Maven__org_apache_httpcomponents_httpmime_4_5_3.xml
+│           │   ├── Maven__org_eclipse_jetty_jetty_client_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_jetty_http_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_jetty_io_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_jetty_util_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_websocket_websocket_api_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_websocket_websocket_client_9_4_5_v20170502.xml
+│           │   ├── Maven__org_eclipse_jetty_websocket_websocket_common_9_4_5_v20170502.xml
+│           │   ├── Maven__org_hamcrest_hamcrest_core_1_3.xml
+│           │   ├── Maven__org_seleniumhq_selenium_htmlunit_driver_2_27.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_api_3_4_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_chrome_driver_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_firefox_driver_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_htmlunit_driver_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_ie_driver_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_java_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_leg_rc_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_remote_driver_3_1_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_safari_driver_2_45_0.xml
+│           │   ├── Maven__org_seleniumhq_selenium_selenium_support_3_4_0.xml
+│           │   ├── Maven__org_w3c_css_sac_1_3.xml
+│           │   ├── Maven__org_webbitserver_webbit_0_4_14.xml
+│           │   ├── Maven__xalan_serializer_2_7_2.xml
+│           │   ├── Maven__xalan_xalan_2_7_2.xml
+│           │   ├── Maven__xerces_xercesImpl_2_11_0.xml
+│           │   └── Maven__xml_apis_xml_apis_1_4_01.xml
+│           ├── misc.xml
+│           ├── vcs.xml
+│           └── workspace.xml
+├── stockprices
+│   ├── AALBERTS.csv
+│   ├── ABN.csv
+│   ├── ADYEN.csv
+│   ├── AEGON.csv
+│   ├── AEX.csv
+│   ├── AKZO.csv
+│   ├── ARCELOR.csv
+│   ├── ASMI.csv
+│   ├── ASML.csv
+│   ├── ASR.csv
+│   ├── DELHAIZE.csv
+│   ├── DSM.csv
+│   ├── GALAPAGOS.csv
+│   ├── HEINEKEN.csv
+│   ├── IMCD.csv
+│   ├── ING.csv
+│   ├── KPN.csv
+│   ├── NN.csv
+│   ├── Nieuwe\ map
+│   │   ├── AALBERTS.csv
+│   │   ├── ABN.csv
+│   │   ├── ADYEN.csv
+│   │   ├── AKZO.csv
+│   │   ├── ARCELOR.csv
+│   │   ├── ASML.csv
+│   │   ├── ASR.csv
+│   │   ├── DSM.csv
+│   │   ├── GALAPAGOS.csv
+│   │   ├── HEINEKEN.csv
+│   │   ├── KPN.csv
+│   │   ├── NN.csv
+│   │   ├── RELIX.csv
+│   │   ├── TAKEAWAY.csv
+│   │   ├── UNIBAIL.csv
+│   │   ├── UNILEVER.csv
+│   │   ├── VOPAK.csv
+│   │   └── WOLTERS.csv
+│   ├── PHILIPS.csv
+│   ├── RANDSTAD.csv
+│   ├── RELIX.csv
+│   ├── SHELL.csv
+│   ├── TAKEAWAY.csv
+│   ├── UNIBAIL.csv
+│   ├── UNILEVER.csv
+│   ├── VOPAK.csv
+│   └── WOLTERS.csv
+├── tree.txt
+└── windowsversion
+
+71 directories, 353 files
