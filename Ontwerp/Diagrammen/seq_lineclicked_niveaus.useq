@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.2.4" icons="true" generate-combined-fragments="true">  
+  <object id="1" language="java" name="beleggingspakket.grafiekenscherm.CandleStickChart" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/CandleStickChart.java" binary="false" 
+    label="candleStickChart" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="43" y="0"/>    
+    <execution id="2">      
+      <position height="1300" width="157" x="5" y="57"/>    
+    </execution>  
+  </object>  
+  <object id="5" language="java" name="beleggingspakket.GrafiekenschermController" project="Beleggingspakket" 
+    file="/Beleggingspakket/src/main/java/beleggingspakket/GrafiekenschermController.java" binary="false" 
+    label="grafiekenschermController" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="4">      
+      <position height="1258" width="0" x="0" y="78"/>    
+    </execution>    
+    <execution id="7">      
+      <position height="21" width="0" x="0" y="163"/>    
+    </execution>    
+    <execution id="13">      
+      <position height="21" width="0" x="0" y="429"/>    
+    </execution>    
+    <execution id="15">      
+      <position height="21" width="0" x="0" y="546"/>    
+    </execution>    
+    <execution id="19">      
+      <position height="21" width="0" x="0" y="705"/>    
+    </execution>    
+    <execution id="25">      
+      <position height="21" width="0" x="0" y="878"/>    
+    </execution>  
+  </object>  
+  <object id="28" language="java" name="java.io.PrintStream" project="Beleggingspakket" 
+    file="C:/Program Files/AdoptOpenJDK/jdk-11.0.6.10-hotspot/lib/jrt-fs.jar" binary="true" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="9">      
+      <position height="21" width="0" x="0" y="259"/>    
+    </execution>  
+  </object>  
+  <object id="29" language="java" name="beleggingspakket.grafiekenscherm.CandlestickClass" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/CandlestickClass.java" binary="false" 
+    label="myCandlestickObject" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="11">      
+      <position height="21" width="0" x="0" y="301"/>    
+    </execution>    
+    <execution id="23">      
+      <position height="21" width="0" x="0" y="778"/>    
+    </execution>  
+  </object>  
+  <object id="30" language="java" name="beleggingspakket.grafiekenscherm.Point" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/Point.java" binary="false" 
+    label="firstPoint" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="17">      
+      <position height="21" width="0" x="0" y="577"/>    
+    </execution>  
+  </object>  
+  <object id="31" language="java" name="beleggingspakket.grafiekenscherm.Point" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/Point.java" binary="false" 
+    label="secondPoint" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="21">      
+      <position height="21" width="0" x="0" y="736"/>    
+    </execution>  
+  </object>  
+  <object id="32" language="java" name="beleggingspakket.grafiekenscherm.CandlestickClass" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/CandlestickClass.java" binary="false" 
+    label="candlestickClass" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="27">      
+      <position height="335" width="0" x="0" y="980"/>    
+    </execution>    
+    <execution id="34">      
+      <position height="21" width="0" x="0" y="1022"/>    
+    </execution>    
+    <execution id="36">      
+      <position height="21" width="0" x="0" y="1074"/>    
+    </execution>  
+  </object>  
+  <object id="47" language="java" name="java.util.ArrayList" project="Beleggingspakket" 
+    file="C:/Program Files/AdoptOpenJDK/jdk-11.0.6.10-hotspot/lib/jrt-fs.jar" binary="true" label="myDayPriceArray" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="38">      
+      <position height="21" width="0" x="0" y="1105"/>    
+    </execution>  
+  </object>  
+  <object id="48" language="java" name="beleggingspakket.Koersen.DayPriceRecord" project="Beleggingspakket" 
+    file="/Beleggingspakket/src/main/java/beleggingspakket/Koersen/DayPriceRecord.java" binary="false" label="dpr1" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="40">      
+      <position height="21" width="0" x="0" y="1147"/>    
+    </execution>    
+    <execution id="42">      
+      <position height="21" width="0" x="0" y="1189"/>    
+    </execution>    
+    <execution id="44">      
+      <position height="21" width="0" x="0" y="1231"/>    
+    </execution>  
+  </object>  
+  <object id="49" language="java" name="beleggingspakket.grafiekenscherm.Line" project="Beleggingspakket"
+    file="/Beleggingspakket/src/main/java/beleggingspakket/candlesticksgraph/Line.java" binary="false" label="line" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="46">      
+      <position height="21" width="0" x="0" y="1273"/>    
+    </execution>  
+  </object>  
+  <combined-fragment id="50" interaction-operator="ALT">    
+    <interaction-operand id="51" constraint="eventState == EventState.state_idle">      
+      <fragment refId="6"/>    
+    </interaction-operand>    
+    <interaction-operand id="52" constraint="else">      
+      <fragment refId="53"/>    
+    </interaction-operand>    
+    <combined-fragment id="53" interaction-operator="ALT">      
+      <interaction-operand id="54" constraint="eventState == EventState.state_wait_horline">        
+        <fragment refId="10"/>        
+        <fragment refId="8"/>      
+      </interaction-operand>      
+      <interaction-operand id="55" constraint="else">        
+        <fragment refId="56"/>      
+      </interaction-operand>      
+      <combined-fragment id="56" interaction-operator="ALT">        
+        <interaction-operand id="57" 
+          constraint="(eventState == EventState.state_wait_delline) ||&#xd;                    (eventState == EventState.state_wait_schuifaan_1) ||&#xd;                    (eventState == EventState.state_wait_schuifaan_2)">          
+          <fragment refId="12"/>        
+        </interaction-operand>        
+        <interaction-operand id="58" constraint="else">          
+          <fragment refId="59"/>        
+        </interaction-operand>        
+        <combined-fragment id="59" interaction-operator="ALT">          
+          <interaction-operand id="60" constraint="eventState == EventState.state_wait_slopedline">            
+            <fragment refId="16"/>            
+            <fragment refId="14"/>          
+          </interaction-operand>          
+          <interaction-operand id="61" constraint="else">            
+            <fragment refId="62"/>          
+          </interaction-operand>          
+          <combined-fragment id="62" interaction-operator="ALT">            
+            <interaction-operand id="63" constraint="eventState == EventState.state_wait_slopedline2">              
+              <fragment refId="18"/>              
+              <fragment refId="22"/>              
+              <fragment refId="20"/>            
+            </interaction-operand>            
+            <interaction-operand id="64" constraint="else">              
+              <fragment refId="24"/>            
+            </interaction-operand>          
+          </combined-fragment>        
+        </combined-fragment>      
+      </combined-fragment>    
+    </combined-fragment>  
+  </combined-fragment>  
+  <message id="3" operation="mouseClick(java.lang.Number,java.lang.Number):void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="6" operation="toonMessage(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>  
+  <message id="8" operation="println(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="10" operation="addHorLine(double):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="toonMessage(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="14" operation="toonMessage(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="15"/>  
+  </message>  
+  <message id="16" operation="Point(double,double)" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="17"/>  
+  </message>  
+  <message id="18" operation="toonMessage(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="19"/>  
+  </message>  
+  <message id="20" operation="Point(double,double)" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="21"/>  
+  </message>  
+  <message id="22" 
+    operation="addSlopedLine(beleggingspakket.grafiekenscherm.Point,beleggingspakket.grafiekenscherm.Point):void"
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="23"/>  
+  </message>  
+  <message id="24" operation="toonMessage(java.lang.String):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="25"/>  
+  </message>  
+  <message id="26" operation="geefNiveaus(double,beleggingspakket.grafiekenscherm.Line):java.lang.String"
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="27"/>  
+  </message>  
+  <message id="33" operation="getCandleIxAtX(double):int" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="34"/>  
+  </message>  
+  <message id="35" operation="txNaarKoersindex(int):java.lang.Integer" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="36"/>  
+  </message>  
+  <message id="37" operation="get(int):E" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="38"/>  
+  </message>  
+  <message id="39" operation="printDate():java.lang.String" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="40"/>  
+  </message>  
+  <message id="41" operation="printClose():java.lang.String" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="42"/>  
+  </message>  
+  <message id="43" operation="printLow():java.lang.String" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="44"/>  
+  </message>  
+  <message id="45" operation="getP1():beleggingspakket.grafiekenscherm.Point" asynchronous="false">
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="46"/>  
+  </message>
+</sequence-diagram>
