@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d81cb020-93d0-44f4-86aa-33145d3bfc48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/Koersenmodule.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/BeleggerLinkRec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/DayPriceRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/GetPriceHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/LogInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MyDate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Tickers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/WebAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hgUI6iAWyIjKqQBSFfeBSNlgIg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.37002775" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="beleggingspakket.Main" />
+      <module name="beleggingspakket032" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="beleggingspakket.Main" />
+      <module name="beleggingspakket032" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d81cb020-93d0-44f4-86aa-33145d3bfc48" name="Default Changelist" comment="" />
+      <created>1600432146048</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600432146048</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="175" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600432513939">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="175" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432513939" />
+    <state x="448" y="218" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1600432410103">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="448" y="218" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432410103" />
+    <state width="1398" height="204" key="GridCell.Tab.0.bottom" timestamp="1600535650883">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.bottom/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600535650883" />
+    <state width="1398" height="204" key="GridCell.Tab.0.center" timestamp="1600535650881">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.center/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600535650881" />
+    <state width="1398" height="204" key="GridCell.Tab.0.left" timestamp="1600535650880">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.left/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600535650880" />
+    <state width="1398" height="204" key="GridCell.Tab.0.right" timestamp="1600535650882">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="204" key="GridCell.Tab.0.right/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600535650882" />
+    <state x="177" y="70" width="1238" height="722" key="SettingsEditor" timestamp="1600509448117">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="177" y="70" width="1238" height="722" key="SettingsEditor/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600509448117" />
+    <state x="1646" y="83" key="SettingsEditor/0.23.1440.798/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600436681327" />
+    <state x="176" y="65" key="new project wizard" timestamp="1600506564922">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="176" y="65" key="new project wizard/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600506564922" />
+  </component>
+</project>
