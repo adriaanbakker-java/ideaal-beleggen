@@ -23,7 +23,7 @@ cp -r Beleggingspakket/.idea/* ${DIRIDEABEL}
 # 
 # 
 mkdir ${DIRKOE}
-mkdir ${DIRIDEABEL}
+mkdir ${DIRIDEAKOE}
 cp KoersenModule/src/main/java/mypackage/Constants.java ${DIRKOE}
 cp KoersenModule/*.iml ${DIRKOE}
 cp KoersenModule/*.xml ${DIRKOE}
