@@ -6,13 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="beleggingspakket032" />
+        <module name="Koersenmodule" />
+        <module name="Koersenmodule (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="beleggingspakket032" target="11" />
-      <module name="beleggingspakket032 (1)" target="11" />
-      <module name="beleggingspakket032 (2)" target="11" />
+      <module name="Koersenmodule" target="11" />
+      <module name="Koersenmodule (1)" target="11" />
+      <module name="Koersenmodule (2)" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

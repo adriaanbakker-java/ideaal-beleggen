@@ -3,18 +3,28 @@
 
 DIRTOP="/Users/abakker/Pakket/ideaal-beleggen/macversion_BKWI" 
 DIRBEL=${DIRTOP}"/Beleggingspakket"
-DIRIDEA=${DIRBEL}"/idea"
+DIRKOE=${DIRTOP}"/KoersenModule"
+DIRIDEABEL=${DIRBEL}"/idea"
+DIRIDEAKOE=${DIRKOE}"/idea"
 set -x
 rm -r ${DIRTOP}
 
  
  
 mkdir ${DIRTOP}
+
+
 mkdir ${DIRBEL}
-mkdir ${DIRIDEA}
+mkdir ${DIRIDEABEL}
 cp Beleggingspakket/src/main/java/beleggingspakket/Constants.java ${DIRBEL}
 cp Beleggingspakket/*.iml ${DIRBEL}
 cp Beleggingspakket/*.xml ${DIRBEL}
-cp -r Beleggingspakket/.idea/* ${DIRIDEA}
+cp -r Beleggingspakket/.idea/* ${DIRIDEABEL}
 # 
 # 
+mkdir ${DIRKOE}
+mkdir ${DIRIDEABEL}
+cp KoersenModule/src/main/java/mypackage/Constants.java ${DIRKOE}
+cp KoersenModule/*.iml ${DIRKOE}
+cp KoersenModule/*.xml ${DIRKOE}
+cp -r KoersenModule/.idea/* ${DIRIDEAKOE}

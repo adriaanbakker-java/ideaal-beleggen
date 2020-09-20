@@ -23,25 +23,83 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d81cb020-93d0-44f4-86aa-33145d3bfc48" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/Koersenmodule.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/BeleggerLinkRec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/DayPriceRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/GetPriceHistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/LogInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MainController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MyDate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Tickers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/WebAccess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/beleggingspakket032.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__junit_junit_3_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_jsoup_jsoup_1_12_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_base_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_base_mac_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_controls_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_controls_mac_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_fxml_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_fxml_mac_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_graphics_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/libraries/Maven__org_openjfx_javafx_graphics_mac_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/_idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/Beleggingspakket/beleggingspakket032.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/KoersenModule.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__cglib_cglib_nodep_3_2_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__com_codeborne_phantomjsdriver_1_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__com_google_guava_guava_21_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__commons_io_commons_io_2_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__io_netty_netty_3_5_2_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__log4j_log4j_1_2_17.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_java_dev_jna_jna_4_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_java_dev_jna_jna_platform_4_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_java_dev_jna_platform_3_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_sourceforge_cssparser_cssparser_0_9_23.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_2_27.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_core_js_2_27.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__net_sourceforge_htmlunit_neko_htmlunit_2_27.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_apache_commons_commons_exec_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_apache_commons_commons_lang3_3_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_jetty_client_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_jetty_http_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_jetty_io_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_jetty_util_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_api_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_client_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_common_9_4_5_v20170502.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_htmlunit_driver_2_27.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_api_3_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_chrome_driver_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_firefox_driver_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_htmlunit_driver_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_ie_driver_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_java_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_leg_rc_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_remote_driver_3_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_safari_driver_2_45_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_seleniumhq_selenium_selenium_support_3_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_w3c_css_sac_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__org_webbitserver_webbit_0_4_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__xalan_serializer_2_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__xalan_xalan_2_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__xerces_xercesImpl_2_11_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion/KoersenModule/_idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/beleggingspakket032.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/beleggingspakket032.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../macversion_BKWI/Beleggingspakket/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../save_macversion_BKWI.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../save_macversion_BKWI.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +127,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.37002775" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -138,10 +196,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1398" height="204" key="GridCell.Tab.0.right/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600535650882" />
-    <state x="177" y="70" width="1238" height="722" key="SettingsEditor" timestamp="1600509448117">
+    <state x="177" y="70" width="1238" height="722" key="SettingsEditor" timestamp="1600608070583">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="177" y="70" width="1238" height="722" key="SettingsEditor/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600509448117" />
+    <state x="177" y="70" width="1238" height="722" key="SettingsEditor/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600608070583" />
     <state x="1646" y="83" key="SettingsEditor/0.23.1440.798/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600436681327" />
     <state x="176" y="65" key="new project wizard" timestamp="1600506564922">
       <screen x="0" y="23" width="1440" height="797" />
