@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <content url="file://$USER_HOME$/installatiepakketten/htmlunit-2.43.0/lib" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

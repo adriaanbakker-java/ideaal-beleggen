@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b34507ff-ee77-4415-84ef-04e2b70e786a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/Koersenmodule.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/BeleggerLinkRec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/DayPriceRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/GetPriceHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/LogInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/MyDate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/Tickers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/java/nl/ideaalbeleggen/WebAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Webapplicatie/koersenmodule/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hgIXIAAsIGfJPvOsEdKoUFILiD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.37002775" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mypackage.Main" />
+      <module name="Koersenmodule" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mypackage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Koersenmodule []" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Maven.Koersenmodule []" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b34507ff-ee77-4415-84ef-04e2b70e786a" name="Default Changelist" comment="" />
+      <created>1600426349293</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600426349293</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600426997246">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600426997246" />
+    <state x="388" y="93" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1600507868395">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="388" y="93" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600507868395" />
+    <state width="1398" height="141" key="GridCell.Tab.0.bottom" timestamp="1600513344780">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="141" key="GridCell.Tab.0.bottom/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600513344780" />
+    <state width="1538" height="191" key="GridCell.Tab.0.bottom/0.23.1440.797/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600430758585" />
+    <state width="1398" height="141" key="GridCell.Tab.0.center" timestamp="1600513344779">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="141" key="GridCell.Tab.0.center/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600513344779" />
+    <state width="1538" height="191" key="GridCell.Tab.0.center/0.23.1440.797/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600430758584" />
+    <state width="1398" height="141" key="GridCell.Tab.0.left" timestamp="1600513344778">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="141" key="GridCell.Tab.0.left/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600513344778" />
+    <state width="1538" height="191" key="GridCell.Tab.0.left/0.23.1440.797/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600430758583" />
+    <state width="1398" height="141" key="GridCell.Tab.0.right" timestamp="1600513344779">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1398" height="141" key="GridCell.Tab.0.right/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600513344779" />
+    <state width="1538" height="191" key="GridCell.Tab.0.right/0.23.1440.797/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600430758584" />
+    <state width="1300" height="330" key="GridCell.Tab.1.bottom" timestamp="1600432830467">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1300" height="330" key="GridCell.Tab.1.bottom/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432830467" />
+    <state width="1300" height="330" key="GridCell.Tab.1.center" timestamp="1600432830466">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1300" height="330" key="GridCell.Tab.1.center/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432830466" />
+    <state width="1300" height="330" key="GridCell.Tab.1.left" timestamp="1600432830466">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1300" height="330" key="GridCell.Tab.1.left/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432830466" />
+    <state width="1300" height="330" key="GridCell.Tab.1.right" timestamp="1600432830467">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state width="1300" height="330" key="GridCell.Tab.1.right/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600432830467" />
+    <state x="73" y="23" width="1451" height="916" key="SettingsEditor" timestamp="1600508599744">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="73" y="23" width="1273" height="797" key="SettingsEditor/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600508599744" />
+    <state x="1525" y="23" width="1451" height="916" key="SettingsEditor/0.23.1440.877/1440.23.1680.947@1440.23.1680.947" timestamp="1600435105575" />
+    <state x="1889" y="179" width="782" height="872" key="search.everywhere.popup" timestamp="1600508173736">
+      <screen x="1440" y="23" width="1680" height="1027" />
+    </state>
+    <state x="385" y="144" width="670" height="676" key="search.everywhere.popup/0.23.1440.797/1440.23.1680.1027@0.23.1440.797" timestamp="1600508119768" />
+    <state x="1889" y="179" width="782" height="872" key="search.everywhere.popup/0.23.1440.797/1440.23.1680.1027@1440.23.1680.1027" timestamp="1600508173736" />
+  </component>
+</project>
