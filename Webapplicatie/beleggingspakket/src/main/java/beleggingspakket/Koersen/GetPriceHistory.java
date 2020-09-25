@@ -1,6 +1,7 @@
 package beleggingspakket.Koersen;
 
-import beleggingspakket.MainController;
+//import beleggingspakket.MainController;
+import beleggingspakket.MainController01;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -17,7 +18,8 @@ public class GetPriceHistory {
          return null;
     }
 
-    public void updatePriceHistory(String ticker1, int startYear, int i, MainController.LocalLogging localLogging) {
+    public void updatePriceHistory(String ticker1, int startYear, int i,
+                                   MainController01.LocalLogging localLogging) {
     }
 
     public void testUpdatePrice() {
