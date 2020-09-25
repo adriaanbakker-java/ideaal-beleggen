@@ -1,6 +1,6 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
-import beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
 
 import java.util.ArrayList;
 

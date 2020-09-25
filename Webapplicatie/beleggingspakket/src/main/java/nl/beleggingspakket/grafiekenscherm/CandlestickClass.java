@@ -29,18 +29,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
-import beleggingspakket.Koersen.DayPriceRecord;
-//import org.openjfx.log;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
 
 import java.util.ArrayList;
+
+//import org.openjfx.log;
 
 /*
 *  De CandleStickClass is verantwoordelijk voor het initialiseren van de parameters

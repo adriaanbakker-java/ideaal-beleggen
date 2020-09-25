@@ -1,4 +1,4 @@
-package beleggingspakket.portefeuillebeheer;
+package nl.beleggingspakket.portefeuillebeheer;
 
 import java.util.ArrayList;
 

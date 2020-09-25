@@ -1,4 +1,4 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
 /*
 momentum indicator is simply the latest closing price minus the
@@ -6,7 +6,7 @@ closing price ten days ago.
 */
 
 
-import beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
 
 import java.util.ArrayList;
 

@@ -5,14 +5,14 @@ public class Constants {
     private static String PricefolderMAC = "/Users/abakker/stockprices/";
     //"/Users/aba23913/stockprices/";
     //private static String PricefolderMAC = "~/BeleggingspakketMAC/stockprices/";
-    private static String PricefolderPC = "D:\\Beleggingspakket\\IdeaalBeleggen\\ideaal-beleggen\\stockprices\\";
+    private static String PricefolderPC = "D:\\Beleggingspakket\\ideaal-beleggen\\stockprices\\";
         //"d:\\stockprices\\";
 
     public static void setPricefolder(String pricefolder) {
         Pricefolder = pricefolder;
     }
 
-    private static String Pricefolder = PricefolderMAC;
+    private static String Pricefolder = PricefolderPC;
 
 
     public static String getPricefolder() {

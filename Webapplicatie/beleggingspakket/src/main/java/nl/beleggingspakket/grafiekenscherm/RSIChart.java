@@ -1,9 +1,7 @@
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
-import javafx.collections.ObservableList;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -41,9 +39,9 @@ public class RSIChart extends LineChart<Number, Number> {
             // In case it already exists, retrieve the path
             // Set this path to the rgb values of blueish
             String rgba_horline = "-fx-stroke: rgba(13,33,60,0.41); ";
-            XYChart.Series series2 = null;
+            Series series2 = null;
             if (getData().size() == 1) {
-                series2 = new XYChart.Series<Number, Number>();
+                series2 = new Series<Number, Number>();
                 getData().add(series2);
                 seriesPath = (Path) series2.getNode();
                 seriesPath.setStyle(rgba_horline);

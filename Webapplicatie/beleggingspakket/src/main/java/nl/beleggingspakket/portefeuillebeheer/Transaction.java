@@ -1,6 +1,6 @@
-package beleggingspakket.portefeuillebeheer;
+package nl.beleggingspakket.portefeuillebeheer;
 
-import beleggingspakket.util.IDate;
+import nl.beleggingspakket.util.IDate;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,6 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
 
-
-import java.util.*;
 class stdevClass {
 //    public static void main(String[] args){
 ////        int [] list = {1,-2,4,-4,9,-6,16,-8,25,-10};

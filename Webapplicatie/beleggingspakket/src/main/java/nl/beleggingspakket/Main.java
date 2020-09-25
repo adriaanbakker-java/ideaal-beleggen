@@ -1,13 +1,13 @@
-package beleggingspakket;
+package nl.beleggingspakket;
 
+import nl.beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.Koersen.GetPriceHistory;
+import nl.beleggingspakket.grafiekenscherm.CandlestickClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import beleggingspakket.Koersen.DayPriceRecord;
-import beleggingspakket.Koersen.GetPriceHistory;
-import beleggingspakket.grafiekenscherm.CandlestickClass;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package beleggingspakket.portefeuillebeheer;
+package nl.beleggingspakket.portefeuillebeheer;
 
-import beleggingspakket.Koersen.DayPriceRecord;
-import beleggingspakket.util.IDate;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.util.IDate;
 
 import java.time.LocalDateTime;
 

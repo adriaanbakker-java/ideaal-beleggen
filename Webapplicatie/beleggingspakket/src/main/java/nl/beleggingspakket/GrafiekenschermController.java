@@ -1,8 +1,8 @@
-package beleggingspakket;
+package nl.beleggingspakket;
 
-import beleggingspakket.Koersen.DayPriceRecord;
-import beleggingspakket.grafiekenscherm.*;
-import beleggingspakket.indicatoren.*;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.grafiekenscherm.*;
+import nl.beleggingspakket.indicatoren.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;

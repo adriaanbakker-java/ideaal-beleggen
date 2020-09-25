@@ -1,4 +1,4 @@
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
 public class Point {
     public double getX() {

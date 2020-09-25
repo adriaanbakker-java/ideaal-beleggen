@@ -1,6 +1,5 @@
-package beleggingspakket.Koersen;
+package nl.beleggingspakket.Koersen;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

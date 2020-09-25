@@ -29,11 +29,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
-import beleggingspakket.GrafiekenschermController;
+import nl.beleggingspakket.GrafiekenschermController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
@@ -48,7 +49,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javafx.geometry.Point2D;
 
 
 /**

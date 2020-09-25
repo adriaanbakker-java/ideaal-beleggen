@@ -1,4 +1,4 @@
-package beleggingspakket;
+package nl.beleggingspakket;
 
 public class log {
     static public void error(String message) {

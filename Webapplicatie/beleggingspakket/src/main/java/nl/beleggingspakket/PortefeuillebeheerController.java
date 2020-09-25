@@ -1,14 +1,13 @@
-package beleggingspakket;
+package nl.beleggingspakket;
 
-import beleggingspakket.Koersen.BufferedPrices;
-import beleggingspakket.Koersen.DayPriceRecord;
-import beleggingspakket.Koersen.GetPriceHistory;
-import beleggingspakket.portefeuillebeheer.*;
-import beleggingspakket.util.IDate;
-import beleggingspakket.util.Util;
+import nl.beleggingspakket.Koersen.BufferedPrices;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.Koersen.GetPriceHistory;
+import nl.beleggingspakket.portefeuillebeheer.*;
+import nl.beleggingspakket.util.IDate;
+import nl.beleggingspakket.util.Util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -201,7 +200,7 @@ public class PortefeuillebeheerController implements Initializable {
         double limietprijs = 0.0;
         int nrStocks = 0;
 
-        /* Order(String aTicker,
+        /* Order(String aTicker,-
           Date aDate,
           Ordertype aOrderType,
           boolean aIsSaleOrder,

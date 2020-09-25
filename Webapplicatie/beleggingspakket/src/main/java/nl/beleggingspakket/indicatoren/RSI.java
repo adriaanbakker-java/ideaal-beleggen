@@ -1,4 +1,4 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
 /*
 *
@@ -37,7 +37,7 @@ eighth column is RSI (relative strength)
 */
 
 
-import beleggingspakket.Koersen.DayPriceRecord;
+import nl.beleggingspakket.Koersen.DayPriceRecord;
 
 import java.util.ArrayList;
 

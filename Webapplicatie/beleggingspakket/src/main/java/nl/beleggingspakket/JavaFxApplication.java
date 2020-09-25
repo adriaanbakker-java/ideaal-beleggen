@@ -1,4 +1,4 @@
-package com.vojtechruzicka.javafxweaverexample;
+package nl.beleggingspakket;
 
 import javafx.application.Application;
 import javafx.application.Platform;

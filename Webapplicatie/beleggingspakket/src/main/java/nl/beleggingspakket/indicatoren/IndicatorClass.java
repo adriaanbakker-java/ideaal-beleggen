@@ -1,4 +1,4 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
 
 /*
@@ -8,7 +8,7 @@ package beleggingspakket.indicatoren;
 *   The series should have the same number of elements as there are (visible, not dummy) candles in the graph
 */
 
-import beleggingspakket.grafiekenscherm.RSIChart;
+import nl.beleggingspakket.grafiekenscherm.RSIChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;

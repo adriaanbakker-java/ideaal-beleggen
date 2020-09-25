@@ -1,4 +1,4 @@
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
 public class Line {
     private  int aantalBeursdagenKoersreeks = 0;

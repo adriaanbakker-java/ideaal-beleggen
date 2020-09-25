@@ -1,4 +1,4 @@
-package com.vojtechruzicka.javafxweaverexample;
+package nl.beleggingspakket;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

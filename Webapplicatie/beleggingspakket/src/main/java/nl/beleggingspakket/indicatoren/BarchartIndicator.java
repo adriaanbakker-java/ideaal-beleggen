@@ -1,4 +1,4 @@
-package beleggingspakket.indicatoren;
+package nl.beleggingspakket.indicatoren;
 
 
 /*
@@ -8,9 +8,11 @@ package beleggingspakket.indicatoren;
 *   The series should have the same number of elements as there are (visible, not dummy) candles in the graph
 */
 
-import beleggingspakket.Koersen.DayPriceRecord;
-import beleggingspakket.grafiekenscherm.CandlestickClass;
-import javafx.scene.chart.*;
+import nl.beleggingspakket.grafiekenscherm.CandlestickClass;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
 
 import java.util.List;

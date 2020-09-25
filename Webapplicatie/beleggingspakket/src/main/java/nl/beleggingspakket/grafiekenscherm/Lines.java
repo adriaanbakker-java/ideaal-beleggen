@@ -1,4 +1,4 @@
-package beleggingspakket.grafiekenscherm;
+package nl.beleggingspakket.grafiekenscherm;
 
 import java.util.ArrayList;
 import java.util.Iterator;

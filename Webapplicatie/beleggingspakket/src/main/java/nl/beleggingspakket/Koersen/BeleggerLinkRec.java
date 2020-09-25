@@ -1,4 +1,4 @@
-package beleggingspakket.Koersen;
+package nl.beleggingspakket.Koersen;
 
 public class BeleggerLinkRec {
     String Stocknr;

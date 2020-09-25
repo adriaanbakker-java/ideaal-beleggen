@@ -1,5 +1,6 @@
-package beleggingspakket;
+package nl.beleggingspakket;
 
+import nl.beleggingspakket.Koersen.GetPriceHistory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,15 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import beleggingspakket.Koersen.GetPriceHistory;
 
 
 public class MainController implements Initializable {

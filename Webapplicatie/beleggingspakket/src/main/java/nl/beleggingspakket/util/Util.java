@@ -1,4 +1,4 @@
-package beleggingspakket.util;
+package nl.beleggingspakket.util;
 
 import java.text.DecimalFormat;
 

@@ -1,4 +1,4 @@
-package beleggingspakket.portefeuillebeheer;
+package nl.beleggingspakket.portefeuillebeheer;
 
 public class PositieDTO {
     public String getAandeelNaam() {

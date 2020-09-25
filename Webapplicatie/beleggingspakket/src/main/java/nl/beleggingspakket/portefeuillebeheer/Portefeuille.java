@@ -1,6 +1,6 @@
-package beleggingspakket.portefeuillebeheer;
+package nl.beleggingspakket.portefeuillebeheer;
 
-import beleggingspakket.util.Util;
+import nl.beleggingspakket.util.Util;
 
 import java.util.HashMap;
 
