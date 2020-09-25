@@ -8,11 +8,11 @@
         <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.vojtechruzicka</groupId>
-    <artifactId>javafx-weaver-example</artifactId>
+    <groupId>nl.ideaalbeleggen</groupId>
+    <artifactId>beleggingspakket</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>javafx-weaver-example</name>
-    <description>Demo project for Spring Boot and JavaFX integration</description>
+    <name>beleggingspakket</name>
+    <description>Beleggingspakket, bezig met Spring Boot and JavaFX integration</description>
 
     <properties>
         <java.version>11</java.version>

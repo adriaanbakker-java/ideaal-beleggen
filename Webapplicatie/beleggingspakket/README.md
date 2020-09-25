@@ -1,2 +1,9 @@
 # javafx-weaver-example
-Example repository for blog post about Spring Boot and JavaFX integration
+JavaFX integratie met Spring Boot voor beleggingspakket
+
+Beleggingspakket zelf:
+Nu nog samen met portefeuillebeheer en met technische analyse (=grafiekenscherm)
+Apart is al de koersenmodule
+
+Moet nog worden aangeroepen vanuit hoofdscherm, op dit moment is dat nog weather forecast demo
+
