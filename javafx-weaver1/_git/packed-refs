@@ -1,0 +1,11 @@
+# pack-refs with: peeled fully-peeled sorted 
+b08ea64b229c24158713e6b01cf472b9ec119fce refs/remotes/origin/feature/Provide_Pre-Defined_StageReadyEvent
+37153326e37765695c9c15e800a494f26e2048ae refs/remotes/origin/master
+0a5685963b17a1cf1a657f56ca7db66b5ab0b108 refs/tags/1.1.0
+^07eed1e002b8ae95dd940e74322c4cc75014aa55
+6869137c6273cf6de9bf8fd04fd0940b020d2c27 refs/tags/1.2.0
+^b3bac19aa74e7e211fc0601af3039ae1d59eb850
+9611bbadbbd685ee4903278431b3c9c5e0719b0d refs/tags/1.3.0
+^855d50bb544f80fe2ea987148caae624bf14e82c
+260c92558eb11c71e807d5c023adaf4b2de06ec9 refs/tags/javafx-weaver-1.0.0
+^2490f126d0e6364de7b882782231d8e98f16982c
