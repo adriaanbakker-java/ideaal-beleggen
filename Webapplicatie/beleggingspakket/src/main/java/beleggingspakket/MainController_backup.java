@@ -14,11 +14,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 
-public class MainController01 implements Initializable {
-    public Main main;
+public class MainController_backup implements Initializable {
+    public Main_backup main;
 
 
     // used to communicate between screens and to have control over the flows (regievoering)

@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import beleggingspakket.Koersen.BufferedPrices;
 import beleggingspakket.Koersen.GetPriceHistory;
-import beleggingspakket.portefeuillebeheer.*;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 
@@ -23,8 +22,8 @@ import java.util.ResourceBundle;
 
 import static java.time.LocalDateTime.now;
 
-public class PortefeuillebeheerController implements Initializable {
-    public Main main;
+public class PortefeuillebeheerController_backup implements Initializable {
+    public Main_backup main;
     ObservableList aandelenlijst = FXCollections.observableArrayList();
 
     // for now, just for the ticker set to be able to order

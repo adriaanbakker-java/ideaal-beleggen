@@ -22,13 +22,37 @@ public class JavaFxApplication extends Application {
                 .run(args);
     }
 
+    MainController mainController;
+    Stage mainStage;
+    Main main;
+
+    public void showMainWindow() {
+        mainStage.show();
+    }
+
+
+
     @Override
     public void start(Stage stage) {
+        mainStage = stage;
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MainController.class);
+
+
+        /*
+        HOE KRIJGEN WE NU HET CONTROLLER OBJECT VAN HET SCHERM??
+        HET VOLGENDE DOET HET NIET - ander object kennelijk dan het werkelijke controller object
+         mainController = fxWeaver.loadController(MainController.class);
+         mainController.setMainObject(main);*/
+
+        mainController = fxWeaver.getBean(MainController.class);
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        mainStage.setScene(scene);
+
+        main = new Main(this);
+        mainController.setMainObject(main);
+        main.showMainStage();
+//        stage.show();
     }
 
     @Override

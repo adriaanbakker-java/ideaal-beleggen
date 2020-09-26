@@ -1,4 +1,5 @@
-# javafx-weaver-example
+# Beleggingspakket met Spring Boot en Java FX integratie 
+
 JavaFX integratie met Spring Boot voor beleggingspakket
 
 Beleggingspakket zelf:

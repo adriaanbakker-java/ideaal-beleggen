@@ -50,7 +50,7 @@ import java.util.ArrayList;
 *  het vertalen van coordinaten naar de bijbehorende candles (vertalen van index tussen grafiek en koersreeks),
 * het plaatsen van de candles en het afhandelen van de events zoomen en pannen in de grafiek.
 
-*    createCandlechart() in the GrafiekenschermController calls createContent()
+*    createCandlechart() in the GrafiekenschermController_backup calls createContent()
      to create the candlestickgraph screen.
      CreateContent() creates a new chart object
      This chart object has both a reference to the candlestick object and the controller.

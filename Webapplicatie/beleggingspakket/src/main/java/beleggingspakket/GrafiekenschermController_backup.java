@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class GrafiekenschermController implements Initializable {
+public class GrafiekenschermController_backup implements Initializable {
     private CandlestickClass myCandlestickObject = null;
     private CandleStickChart myCandleStickChart = null;
     private String fondsnaam = "nog niet ingevuld";
 
 
-    public Main main = null;
+    public Main_backup main = null;
 
    /*  A number of objects have to be connected AFTER constructor and initialize have run:
      Reason for this awkward sequence of creation is that the constructor cannot
@@ -184,7 +184,7 @@ public class GrafiekenschermController implements Initializable {
     }
 
     // index is used to determine which grafiekenScherm is active and which are no
-    // longer alive. Each grafiekenscherm has its own GrafiekenschermController object
+    // longer alive. Each grafiekenscherm has its own GrafiekenschermController_backup object
     // as a backing object
     public void setIndex(int grafiekenIndex) {
         this.grafiekenIndex = grafiekenIndex;
@@ -527,7 +527,7 @@ public class GrafiekenschermController implements Initializable {
         myCandleStickChart.setPrefHeight(1000);
         myCandleStickChart.setMaxHeight(1000);
         putChartsOnScreen();
-        myCandleStickChart.setMyGrafiekenschermController(this);
+        myCandleStickChart.setMyGrafiekenschermControllerBackup(this);
     }
 
     private void toonMessage(String aMessage) {
