@@ -74,22 +74,24 @@ public class MainController {
 
     private ConfigurableApplicationContext applicationContext;
 
-    public void toonGrafiekenscherm(ActionEvent actionEvent) {
-        System.out.println("Toon grafiekenscherm");
-        String gekozenMarkt = selecteerMarkt.getValue();
-        String gekozenAandeel = selecteerAandeel.getValue();
+    public void toonGrafiekenscherm(ActionEvent actionEvent) throws Exception {
 
-        if (gekozenAandeel == null) {
-            logInTextArea("Eerst aandeel kiezen svp");
-        } else {
-            int aantalKoersdagen = Integer.parseInt(selecteerAantalDagen.getValue());
-            int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+            System.out.println("Toon grafiekenscherm");
+            String gekozenMarkt = selecteerMarkt.getValue();
+            String gekozenAandeel = selecteerAandeel.getValue();
 
-            logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
-                    + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
-                    + " aantal dagen retro" + aantalDagenRetro);
-            main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
-        }
+            if (gekozenAandeel == null) {
+                logInTextArea("Eerst aandeel kiezen svp");
+            } else {
+                int aantalKoersdagen = Integer.parseInt(selecteerAantalDagen.getValue());
+                int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+
+                logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
+                        + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
+                        + " aantal dagen retro" + aantalDagenRetro);
+                main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+            }
+
     }
 
 

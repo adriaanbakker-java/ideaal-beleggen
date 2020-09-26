@@ -16,10 +16,16 @@ public class Main {
         app.showMainWindow();
     }
 
-    public void toonGrafiekenscherm(String gekozenMarkt, String gekozenAandeel, int aantalKoersdagen, int aantalDagenRetro) {
+    public void toonGrafiekenscherm(
+            String gekozenMarkt,
+            String gekozenAandeel,
+            int aantalKoersdagen,
+            int aantalDagenRetro) throws Exception {
         System.out.println("Vanuit Main: Toon grafiekenscherm");
-        mainController.logInTextArea("Vanuit Main: Toon Grafiekenscherm");
+        mainController.logInTextArea("Vanuit Main: Toon GrafiekenschermController");
+        app.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
     }
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
