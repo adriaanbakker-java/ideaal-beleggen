@@ -148,11 +148,11 @@ public class MainController01 implements Initializable {
 
     public void test() {
         System.out.println("Testen!!");
-        try {
+       /* try {
             getPriceHistory.testUpdatePrice();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
-        }
+        }*/
     }
 
     public void toonPortefeuille() {
