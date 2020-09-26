@@ -42,13 +42,6 @@ public class JavaFxApplication extends Application {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MainController.class);
 
-
-        /*
-        HOE KRIJGEN WE NU HET CONTROLLER OBJECT VAN HET SCHERM??
-        HET VOLGENDE DOET HET NIET - ander object kennelijk dan het werkelijke controller object
-         mainController = fxWeaver.loadController(MainController.class);
-         mainController.setMainObject(main);*/
-
         mainController = fxWeaver.getBean(MainController.class);
         mainScene = new Scene(root);
         mainStage.setScene(mainScene);
@@ -79,8 +72,16 @@ public class JavaFxApplication extends Application {
         URL resourceURL = x.getResource("grafiekenscherm.fxml");
         FXMLLoader loader = new FXMLLoader(resourceURL);
         Parent grafiekenRoot = loader.load();
-        GrafiekenschermController myController = loader.getController();
+        GrafiekenschermController grafiekenschermController = loader.getController();
+        grafiekenschermController.setMain(main);
+        grafiekenschermController.setAandeel(gekozenAandeel);
+
         Scene grafiekenScene = new Scene(grafiekenRoot, 900, 600);
-        mainStage.setScene(grafiekenScene);
+
+        Stage stage = new Stage();
+        stage.setScene(grafiekenScene);
+        stage.show();
     }
+
+
 }
