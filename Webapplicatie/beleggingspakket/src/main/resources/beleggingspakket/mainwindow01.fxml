@@ -1,18 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
+<BorderPane prefHeight="534.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
    <top>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#loadWeatherForecast" text="Klik mij" />
-            <Label fx:id="weatherLabel" text="Koersenfolder" />
-            <TextField fx:id="txtKoersfolder" prefHeight="25.0" prefWidth="116.0" text="d:\prive\stockprices\" />
-            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="25.0" prefWidth="149.0" text="Toon Grafiekenscherm" />
+            <HBox>
+               <children>
+                  <VBox prefHeight="203.0" prefWidth="277.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#koersenVerversen" text="Koersen verversen">
+                           <VBox.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </VBox.margin></Button>
+                        <Button mnemonicParsing="false" onAction="#toonPortefeuille" text="Portefeuille">
+                           <VBox.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="86.0" prefWidth="184.0">
+                     <children>
+                        <Label prefHeight="0.0" prefWidth="41.0" text="Markt:">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ChoiceBox id="selecteerMarkt" fx:id="selecteerMarkt" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="0.0" prefWidth="196.0">
+                     <children>
+                        <Label text="Aandeel:" />
+                        <ChoiceBox id="selecteerAandeel" fx:id="selecteerAandeel" prefWidth="150.0" />
+                        <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="25.0" prefWidth="149.0" text="Toon Grafiekenscherm">
+                           <VBox.margin>
+                              <Insets bottom="8.0" right="8.0" top="8.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label prefHeight="17.0" prefWidth="135.0" text="Aantal beursdagen: ">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ChoiceBox id="selecteerAantalDagen" fx:id="selecteerAantalDagen" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                        <Label prefHeight="17.0" prefWidth="135.0" text="Dagen terug in verleden">
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ChoiceBox id="selecteerAantalDagenVerleden" fx:id="selecteerAantalDagenVerleden" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#test" text="Test -Klik mij" />
+            <Label fx:id="lblTestlabel" text="Testlabel" />
+            <Label fx:id="lblKoersfolder" text="Koersenfolder">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
+            <TextField fx:id="txtKoersenfolder" prefHeight="25.0" prefWidth="116.0" text="d:\prive\stockprices\" />
+
          </children>
       </VBox>
+
+
    </top>
 </BorderPane>

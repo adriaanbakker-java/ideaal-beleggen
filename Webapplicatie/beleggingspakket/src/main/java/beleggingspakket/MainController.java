@@ -33,13 +33,16 @@ public class MainController {
 
     public Main main;
     String pricefolder;
+
     private WeatherService weatherService;
 
-    @FXML
-    private Label weatherLabel;
 
     @FXML
-    private TextField txtKoersfolder;
+    private Label lblTestlabel;
+
+
+    @FXML
+    private TextField txtKoersenfolder;
 
     @Autowired
     public MainController(WeatherService weatherService) {
@@ -47,9 +50,9 @@ public class MainController {
         pricefolder = Constants.getPricefolder();
     }
 
-    public void loadWeatherForecast(ActionEvent actionEvent) {
-        this.weatherLabel.setText(weatherService.getWeatherForecast());
-        //initialize();
+
+    public void toonGrafiekenscherm(ActionEvent actionEvent) {
+        System.out.println("Toon grafiekenscherm");
     }
 
 
@@ -60,6 +63,20 @@ public class MainController {
 
     public void initialize() {
         pricefolder = Constants.getPricefolder();
-        txtKoersfolder.setText(pricefolder);
+        txtKoersenfolder.setText(pricefolder);
     }
+
+    public void toonPortefeuille(ActionEvent actionEvent) {
+        System.out.println("toont de portefeuille");
+    }
+
+    public void koersenVerversen(ActionEvent actionEvent) {
+        System.out.println("Roept via spring boot de REST service aan voor koersen verversen");
+    }
+
+    public void test() {
+        System.out.println("test");
+        this.lblTestlabel.setText(weatherService.getWeatherForecast());
+    }
+
 }
