@@ -103,8 +103,8 @@ public class CandleStickChart extends LineChart<Number, Number> {
         return myGrafiekenschermController;
     }
 
-    public void setMyGrafiekenschermController(GrafiekenschermController myGrafiekenschermControllerBackup) {
-        this.myGrafiekenschermController = myGrafiekenschermController;
+    public void setMyGrafiekenschermController(GrafiekenschermController myController) {
+        this.myGrafiekenschermController = myController;
     }
 
 

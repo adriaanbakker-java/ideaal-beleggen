@@ -126,7 +126,7 @@ public class JavaFxApplication extends Application {
         Parent grafiekenRoot = loader.load();
         GrafiekenschermController grafiekenschermController = loader.getController();
         grafiekenschermController.setMain(main);
-        grafiekenschermController.setAandeel(gekozenAandeel);
+        grafiekenschermController.setFondsnaam(gekozenAandeel);
 
         Scene grafiekenScene = new Scene(grafiekenRoot, 900, 600);
 

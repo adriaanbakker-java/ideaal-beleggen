@@ -1,8 +1,10 @@
 package beleggingspakket;
 
+import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.grafiekenscherm.CandleStickChart;
 import beleggingspakket.grafiekenscherm.CandlestickClass;
 import beleggingspakket.grafiekenscherm.Line;
+import beleggingspakket.grafiekenscherm.Point;
 import beleggingspakket.indicatoren.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -23,6 +26,13 @@ import java.util.ResourceBundle;
 //@Component
 //@FxmlView("grafiekenscherm.fxml")
 public class GrafiekenschermController implements Initializable {
+
+    private String fondsnaam = "nog niet ingevuld";
+    private Point point1 = null;
+    private Point point2 = null;
+
+    @FXML
+    private Label lblFondsnaam;
 
     @FXML
     private Label weatherLabel;
@@ -45,6 +55,12 @@ public class GrafiekenschermController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
+    @FXML
+    private ChoiceBox<String> cmbBeursdagen;
+
+    @FXML
+    private Label lblMessage;
+
     private LineChart<Number, Number> macdChart = null;
     private LineChart<Number, Number> OBVChart = null;
     private LineChart<Number, Number> RSIChart = null;
@@ -54,6 +70,49 @@ public class GrafiekenschermController implements Initializable {
     private Main main;
     private CandlestickClass myCandlestickObject = null;
     private CandleStickChart myCandleStickChart = null;
+
+    public enum EventState {
+        state_idle,
+        state_wait_horline,
+        state_wait_slopedline,
+        state_wait_slopedline2,
+        state_wait_delline,
+        state_wait_schuifaan_2, state_wait_schuifaan_1
+    }
+
+    private Point firstPoint;
+
+    private EventState eventState = EventState.state_idle;
+
+    private class DayPriceRecordPlusIndex {
+        int index;
+        DayPriceRecord dpr;
+
+        public DayPriceRecordPlusIndex(int index, DayPriceRecord dpr) {
+            this.index = index;
+            this.dpr = dpr;
+        }
+    }
+
+    private DayPriceRecordPlusIndex geefDayPriceRecordAt(Number x1, Number y1) {
+        double xd = (double) x1;
+        double yd = (double) y1;
+        if (   (xd - x1.intValue() < 0.1)
+                || (xd - (x1.intValue() + 1) < 0.1)) {
+
+            Integer index1 = myCandlestickObject.geefDayPriceIndexAt(xd);
+            if (index1 < 0)
+                return null;
+
+            DayPriceRecordPlusIndex result =
+                    new DayPriceRecordPlusIndex(
+                            index1,
+                            myCandlestickObject.getMyDayPriceArray().get(index1));
+            return result;
+        }
+
+        return null;
+    }
 
     @Autowired
     public GrafiekenschermController() {
@@ -67,9 +126,13 @@ public class GrafiekenschermController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        cmbBeursdagen.getItems().addAll("1", "5", "20", "40", "60");
+        cmbBeursdagen.setValue("1");
     }
 
+    public void setFondsnaam(String gekozenAandeel) {
+        lblFondsnaam.setText(gekozenAandeel);
+    }
 
     public void setMain(Main main) {
         this.main = main;
@@ -81,33 +144,74 @@ public class GrafiekenschermController implements Initializable {
 
     public void zoomIn() {
         System.out.println("zoom in");
+        try {
+            int aantalDagen  = Integer.parseInt(cmbBeursdagen.getValue());
+            toonMessage("zoom in, " + aantalDagen +" dag(en) links eraf");
+            myCandlestickObject.zoomIn(aantalDagen);
+            createCandleChart(fondsnaam);
+        } catch (Exception e) {
+            toonMessage("kan niet verder inzoomen");
+        }
     }
 
-    public void zoomUit() {
-        System.out.println("zoom uit");
+    private void toonMessage(String s) {
+        this.lblMessage.setText(s);
     }
 
-    public void beursdagNaarLinks() {
-        System.out.println("beursdagNaarLinks");
+    public void zoomUit() {  // 5 beursdagen naar links uitzoomen
+        try {
+            int aantalDagen  = Integer.parseInt(cmbBeursdagen.getValue());
+            toonMessage("zoom uit, " + aantalDagen +" dag(en) links erbij");
+            myCandlestickObject.zoomUit(aantalDagen);
+            createCandleChart(fondsnaam);
+        } catch (Exception e) {
+            toonMessage("kan niet verder uitzoomen");
+        }
     }
 
-    public void beursdagNaarRechts() {
-        System.out.println("beursdagNaarRechts");
+
+    public void beursdagNaarLinks()  {
+        try {
+            int aantalDagen  = Integer.parseInt(cmbBeursdagen.getValue());
+            toonMessage(aantalDagen + " beursdag(en) naar links");
+            myCandlestickObject.panPeriod(-aantalDagen);
+            createCandleChart(fondsnaam);
+        } catch (Exception e) {
+            toonMessage("kan niet verder naar links");
+        }
+    }
+
+
+
+    public void beursdagNaarRechts()  {
+        try {
+            int aantalDagen  = Integer.parseInt(cmbBeursdagen.getValue());
+            toonMessage(aantalDagen + " beursdag(en) naar rechts");
+            myCandlestickObject.panPeriod(aantalDagen);
+            createCandleChart(fondsnaam);
+
+        } catch (Exception e) {
+            toonMessage("kan niet verder naar rechts");
+        }
     }
 
     public void addHorLine() {
-        System.out.println("addHorLine");
+        System.out.println("klik in de grafiek");
+        eventState = EventState.state_wait_horline;
     }
 
     public void delHorLine() {
-        System.out.println("delHorLine");
+        System.out.println("klik in grafiek");
+        eventState = EventState.state_wait_delline;
     }
 
     public void addSlopedLine() {
-        System.out.println("addSlopedLine");
+        toonMessage("klik in de grafiek voor eerste punt");
+        eventState = EventState.state_wait_slopedline;
     }
     public void schuifHorLijnAan() {
-        System.out.println("schuifHorLijnAan");
+        toonMessage("Klik op een lijn");
+        eventState = EventState.state_wait_schuifaan_1;
     }
 
     /*
@@ -380,6 +484,7 @@ public class GrafiekenschermController implements Initializable {
 
 
     public void toonPortefeuille() {
+
         System.out.println("toonPortefeuille");
     }
 
@@ -401,9 +506,100 @@ public class GrafiekenschermController implements Initializable {
         myCandleStickChart.setMyGrafiekenschermController(this);
     }
 
-    public void lineClicked(double x1, double y1, Line line, boolean b) {
+    public void lineClicked(Number x1, Number y1, Line line, boolean aIsHorizontaal) {
+        double yVal = line.getP1().getY();
+        String sVal = String.format("%.2f", yVal);
+        toonMessage("in de buurt van lijn geklikt:" + sVal);
+        if (aIsHorizontaal)
+            lblMessage.setText(sVal);
+
+        String sLine = "";
+        if (eventState == EventState.state_idle) {
+            if (!aIsHorizontaal) {
+                lblMessage.setText(myCandlestickObject.geefNiveaus((Double) x1, line));
+            }
+        } else
+        if (eventState == EventState.state_wait_delline) {
+            if (aIsHorizontaal) {
+                sLine = "horiz. lijn verwijderen";
+            } else {
+                sLine += "schuine lijn verwijderen";
+            }
+            toonMessage(sLine);
+            double y = (double) y1;
+            myCandlestickObject.delLine(line);
+            myCandleStickChart.layoutPlotChildren();
+            eventState = EventState.state_idle;
+        } else if (eventState == EventState.state_wait_schuifaan_1){
+            if (aIsHorizontaal) {
+                aanschuivenHorizLijn( (double) x1, (double) y1,  line);
+                eventState = EventState.state_idle;
+            } else {
+                point1 = new Point((double) x1, (double) y1);
+                sLine = "schuine lijn aanschuiven - klik op tweede punt op de lijn";
+                toonMessage(sLine);
+                eventState = EventState.state_wait_schuifaan_2;
+            } // aanschuiven
+        } else if (eventState == EventState.state_wait_schuifaan_2){
+            point2 = new Point((double) x1, (double) y1);
+            aanschuivenSlopedLine(point1, point2, line);
+            eventState = EventState.state_idle;
+        }
     }
 
-    public void mouseClick(Number x1, Number y1) {
+    private void aanschuivenSlopedLine(Point point1, Point point2, Line line) {
+        String sLine = "controller schuine lijn aanschuiven - tweede punt geklikt, aanschuiven nog implementeren";
+        toonMessage(sLine);
+        myCandlestickObject.aanschuivenSlopedLijn(point1, point2, line);
     }
+
+
+    private void aanschuivenHorizLijn(double x1, double y1, Line line) {
+        String sLine;
+        sLine = "horiz. lijn aanschuiven";
+        toonMessage(sLine);
+        myCandlestickObject.aanschuivenHorizLijn(x1, y1, line);
+    }
+
+
+    public void mouseClick(Number x1, Number y1) {
+        if (eventState == EventState.state_idle) {
+            toonMessage("Controller: geklikt op:" + x1 + "," + y1);
+            DayPriceRecordPlusIndex dprpi = geefDayPriceRecordAt(x1, y1);
+            if (dprpi != null) {
+                CalcVolatility calcVolatility = new CalcVolatility(myCandlestickObject.getMyDayPriceArray());
+                toonMessage("candle clicked:" + dprpi.dpr.toString() + " at index " +
+                        dprpi.index + " volatily(250 days)=" +
+                        calcVolatility.calcVolatility(dprpi.index));
+
+            }
+
+        } else if (eventState == EventState.state_wait_horline) {
+            System.out.println("teken horizontale lijn op prijs " + y1);
+            double y = (double) y1;
+            myCandlestickObject.addHorLine(y);
+            eventState = EventState.state_idle;
+        } else if ((eventState == EventState.state_wait_delline) ||
+                (eventState == EventState.state_wait_schuifaan_1) ||
+                (eventState == EventState.state_wait_schuifaan_2)){
+            toonMessage("klik nog eens in de buurt van de lijn");
+        } else if (eventState == EventState.state_wait_slopedline) {
+            toonMessage("klik voor het tweede punt van de lijn");
+            double x = (double) x1;
+            double y = (double) y1;
+            firstPoint = new Point(x,y);
+            eventState = EventState.state_wait_slopedline2;
+        } else if (eventState == EventState.state_wait_slopedline2) {
+            toonMessage("tweede punt geklikt");
+            double x = (double) x1;
+            double y = (double) y1;
+            Point secondPoint = new Point(x,y);
+
+            myCandlestickObject.addSlopedLine(firstPoint, secondPoint);
+            eventState = EventState.state_idle;
+        } else {
+            toonMessage("mouseclick maar weet niet hoe deze te verwerken in toestand " + eventState);
+        }
+    }
+
 }
