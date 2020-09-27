@@ -134,8 +134,14 @@ public class MainController {
         selecteerAandeel.getItems().addAll(aandelenlijst);
     }
 
-    public void toonPortefeuille(ActionEvent actionEvent) {
+    public void toonPortefeuille(ActionEvent actionEvent)  {
         logInTextArea("toont de portefeuille");
+        try {
+            main.toonPortefeuille();
+        } catch (Exception e) {
+            logInTextArea("Exceptie bij starten portefeuille:" + e.getLocalizedMessage());
+        }
+
     }
 
     public void koersenVerversen(ActionEvent actionEvent) {

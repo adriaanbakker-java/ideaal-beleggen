@@ -30,4 +30,8 @@ public class Main {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
+    public void toonPortefeuille() throws Exception {
+        app.toonPortefeuille();
+    }
 }

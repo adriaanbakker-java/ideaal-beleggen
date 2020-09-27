@@ -33,6 +33,8 @@ public class JavaFxApplication extends Application {
     Stage mainStage;
     Scene mainScene;
     Main main;
+    PortefeuillebeheerController pfController;
+    Scene pfScene;
 
     public void showMainWindow() {
         mainStage.show();
@@ -139,9 +141,22 @@ public class JavaFxApplication extends Application {
                 aantalDagenRetro);
         grafiekenschermController.setCandleStickClassObject(candlestickClassObject);
         grafiekenschermController.createCandleChart(gekozenAandeel);
-
         stage.show();
     }
 
 
+    public void toonPortefeuille() throws Exception {
+        FXMLLoader loaderPF = new FXMLLoader(getClass().getResource("Portefeuillebeheer.fxml"));
+        Parent pfRoot = loaderPF.load();
+        pfController = loaderPF.getController();
+        pfController.main = this.main;
+
+        pfScene = new Scene(pfRoot, 800, 800);
+
+        System.out.println("JavaFxApplication: show portefeuille");
+        Stage pfStage;
+        pfStage = new Stage();
+        pfStage.setScene(pfScene);
+        pfStage.show();
+    }
 }
