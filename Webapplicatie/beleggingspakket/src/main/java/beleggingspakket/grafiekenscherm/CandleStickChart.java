@@ -31,7 +31,7 @@
  */
 package beleggingspakket.grafiekenscherm;
 
-import beleggingspakket.GrafiekenschermController_backup;
+import beleggingspakket.GrafiekenschermController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
@@ -64,7 +64,7 @@ import java.util.List;
  *
  */
 public class CandleStickChart extends LineChart<Number, Number> {
-    private GrafiekenschermController_backup myGrafiekenschermControllerBackup;
+    private GrafiekenschermController myGrafiekenschermController;
     private CandlestickClass myCandlestickObject;
 
     public double getChartHeight() {
@@ -99,12 +99,12 @@ public class CandleStickChart extends LineChart<Number, Number> {
         this.setMousehandler();
     }
 
-    public GrafiekenschermController_backup getMyGrafiekenschermControllerBackup() {
-        return myGrafiekenschermControllerBackup;
+    public GrafiekenschermController getMyGrafiekenschermController() {
+        return myGrafiekenschermController;
     }
 
-    public void setMyGrafiekenschermControllerBackup(GrafiekenschermController_backup myGrafiekenschermControllerBackup) {
-        this.myGrafiekenschermControllerBackup = myGrafiekenschermControllerBackup;
+    public void setMyGrafiekenschermController(GrafiekenschermController myGrafiekenschermControllerBackup) {
+        this.myGrafiekenschermController = myGrafiekenschermController;
     }
 
 
@@ -152,11 +152,11 @@ public class CandleStickChart extends LineChart<Number, Number> {
         Line line = inBuurtVanLijn((double) x1, (double) y1);
         Line line2 = inBuurtVanSlopedLijn((double) x1, (double) y1);
         if (line != null) {
-            myGrafiekenschermControllerBackup.lineClicked((double) x1, (double) y1, line, true);
+            myGrafiekenschermController.lineClicked((double) x1, (double) y1, line, true);
         } else if (line2 != null) {
-            myGrafiekenschermControllerBackup.lineClicked((double) x1, (double) y1, line2, false);
+            myGrafiekenschermController.lineClicked((double) x1, (double) y1, line2, false);
         } else {
-            myGrafiekenschermControllerBackup.mouseClick(x1, y1);
+            myGrafiekenschermController.mouseClick(x1, y1);
         }
     }
 

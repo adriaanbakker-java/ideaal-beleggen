@@ -1,5 +1,8 @@
 package beleggingspakket;
 
+import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.Koersen.GetPriceHistory;
+import beleggingspakket.grafiekenscherm.CandlestickClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class JavaFxApplication extends Application {
 
@@ -58,15 +62,63 @@ public class JavaFxApplication extends Application {
         Platform.exit();
     }
 
+
+    private ArrayList<DayPriceRecord> prepareCandleSticks(String gekozenMarkt, String gekozenAandeel, int aantalBeursdagen,
+                                                          int aantalDagenRetro) {
+        String infostring;
+        ArrayList<DayPriceRecord> prices;
+
+        if (gekozenMarkt == null) {
+            infostring = "Eerst markt kiezen svp";
+            log.info(infostring);
+            mainController.logInTextArea(infostring);
+            return null;
+        } else if (gekozenAandeel == null) {
+            infostring = "Eerst aandeel kiezen svp";
+            log.info(infostring);
+            mainController.logInTextArea(infostring);
+            return null;
+        } else {
+            infostring = "showCandleSticks aangeroepen voor markt " + gekozenMarkt +
+                    " en aandeel " + gekozenAandeel +
+                    " aantal beursdagen is " + aantalBeursdagen +
+                    " aantal dagen in verleden is " + aantalDagenRetro;
+            log.info(infostring);
+            mainController.logInTextArea(infostring);
+            GetPriceHistory myGPH = new GetPriceHistory();
+            try {
+                prices = myGPH.getHistoricPricesFromFile(gekozenAandeel);
+            } catch (Exception e) {
+                infostring = "kon prijzen niet lezen" + e.getLocalizedMessage();
+                mainController.logInTextArea(infostring);
+                return null;
+            }
+            return prices;
+        }
+    }
+
+
+
     public void toonGrafiekenscherm(String gekozenMarkt,
                                     String gekozenAandeel,
-                                    int aantalKoersdagen,
+                                    int aantalBeursdagen,
                                     int aantalDagenRetro) throws Exception {
        /* FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MyController.class);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();*/
+        ArrayList<DayPriceRecord> prices = null;
+        try {
+            prices = prepareCandleSticks(gekozenMarkt, gekozenAandeel, aantalBeursdagen, aantalDagenRetro);
+            if (prices == null)
+                throw new Exception("koersbestand niet gevonden of leeg");
+            if (prices.size() <= 10 )
+                throw new Exception("koersbestand niet gevonden of leeg");
+        } catch (Exception e) {
+            throw new Exception("toonGrafiekenscherm:" + e.getLocalizedMessage());
+        }
+
 
         Class<? extends JavaFxApplication> x = getClass();
         URL resourceURL = x.getResource("grafiekenscherm.fxml");
@@ -80,6 +132,14 @@ public class JavaFxApplication extends Application {
 
         Stage stage = new Stage();
         stage.setScene(grafiekenScene);
+        CandlestickClass candlestickClassObject = new CandlestickClass(
+                prices,
+                gekozenAandeel,
+                aantalBeursdagen,
+                aantalDagenRetro);
+        grafiekenschermController.setCandleStickClassObject(candlestickClassObject);
+        grafiekenschermController.createCandleChart(gekozenAandeel);
+
         stage.show();
     }
 

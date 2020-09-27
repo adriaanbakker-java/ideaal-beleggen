@@ -6,5 +6,5 @@ Beleggingspakket zelf:
 Nu nog samen met portefeuillebeheer en met technische analyse (=grafiekenscherm)
 Apart is al de koersenmodule
 
-Moet nog worden aangeroepen vanuit hoofdscherm, op dit moment is dat nog weather forecast demo
-
+Op dit moment is er een grafiekenscherm al doet dat nog niets.
+Ook portefeuillebeheer moet opnieuw worden ingepast.

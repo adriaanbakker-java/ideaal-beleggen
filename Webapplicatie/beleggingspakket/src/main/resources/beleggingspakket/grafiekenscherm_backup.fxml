@@ -13,7 +13,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" prefHeight="534.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.GrafiekenschermController_backup">
+<BorderPane fx:id="borderPane" prefHeight="534.0" prefWidth="808.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="beleggingspakket.GrafiekenschermController_backup">
    <top>
       <HBox prefHeight="41.0" prefWidth="808.0" BorderPane.alignment="CENTER">
          <children>
