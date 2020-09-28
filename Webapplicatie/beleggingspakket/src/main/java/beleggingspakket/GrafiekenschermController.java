@@ -61,13 +61,13 @@ public class GrafiekenschermController implements Initializable {
     @FXML
     private Label lblMessage;
 
+    private Main main;
     private LineChart<Number, Number> macdChart = null;
     private LineChart<Number, Number> OBVChart = null;
     private LineChart<Number, Number> RSIChart = null;
     private LineChart<Number, Number> MomentumChart = null;
     private BarChart<Number, Number> volumeChart = null;
 
-    private Main main;
     private CandlestickClass myCandlestickObject = null;
     private CandleStickChart myCandleStickChart = null;
 
@@ -488,8 +488,36 @@ public class GrafiekenschermController implements Initializable {
         System.out.println("toonPortefeuille");
     }
 
-    public void verwerkEenBeursdag() {
-        System.out.println("verwerkEenBeursdag");
+    // Indien er orders zijn ingelegd, check of je ze kunt uitvoeren
+    private boolean checkUitvoerenOrders(int aantalDagen) {
+        System.out.println("check orders uitvoeren");
+        int lastIndex = myCandlestickObject.getEindindex();
+        ArrayList<DayPriceRecord> priceArray = myCandlestickObject.getMyDayPriceArray();
+        int endIndex = myCandlestickObject.getMyDayPriceArray().size() - 1;
+        if (lastIndex >= endIndex)
+            return false;   // we zijn al aan het einde van de beschikbare candles
+        DayPriceRecord dpr = priceArray.get(lastIndex + 1);
+
+        return main.verwerkOrders(dpr);
+    }
+
+    public void verwerkEenBeursdag()  {
+        try {
+            boolean uitgevoerd = checkUitvoerenOrders(1);
+            if (uitgevoerd) {
+                toonMessage( "Er zijn order(s) uitgevoerd");
+            } else {
+                toonMessage("geen uitgevoerde orders");
+            }
+
+            myCandlestickObject.panPeriod(1);
+            createCandleChart(fondsnaam);
+            beursdagNaarRechts();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+
+            toonMessage("verwerkEenBeursdag: kan niet verder naar rechts");
+        }
     }
 
     public void setCandleStickClassObject(CandlestickClass candlestickClassObject) {
