@@ -2,7 +2,7 @@ package nl.ideaalbeleggen;
 
 public class Constants {
 
-    private static String PricefolderMAC = "/Users/abakker/stockprices/";
+    private static String PricefolderMAC = "/Users/abakker/Pakket/ideaal-beleggen/stockprices/";
     //"/Users/aba23913/stockprices/";
     //private static String PricefolderMAC = "~/BeleggingspakketMAC/stockprices/";
     private static String PricefolderPC = "D:\\Beleggingspakket\\ideaal-beleggen\\stockprices\\";
@@ -12,7 +12,7 @@ public class Constants {
         Pricefolder = pricefolder;
     }
 
-    private static String Pricefolder = PricefolderPC;
+    private static String Pricefolder = PricefolderMAC;
 
 
     public static String getPricefolder() {
