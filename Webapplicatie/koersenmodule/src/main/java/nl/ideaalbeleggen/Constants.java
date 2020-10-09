@@ -2,7 +2,8 @@ package nl.ideaalbeleggen;
 
 public class Constants {
 
-    private static String PricefolderMAC = "/Users/abakker/stockprices/";
+    // Ordina MAC
+    private static String PricefolderMAC = "/Users/aba23913/Pakket/ideaal-beleggen/stockprices/";
     //"/Users/aba23913/stockprices/";
     //private static String PricefolderMAC = "~/BeleggingspakketMAC/stockprices/";
     private static String PricefolderPC = "D:\\Beleggingspakket\\IdeaalBeleggen\\ideaal-beleggen\\stockprices\\";
