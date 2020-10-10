@@ -510,7 +510,7 @@ public class GrafiekenschermController implements Initializable {
                 toonMessage("geen uitgevoerde orders");
             }
 
-            myCandlestickObject.panPeriod(1);
+            //myCandlestickObject.panPeriod(1);
             createCandleChart(fondsnaam);
             beursdagNaarRechts();
         } catch (Exception e) {
