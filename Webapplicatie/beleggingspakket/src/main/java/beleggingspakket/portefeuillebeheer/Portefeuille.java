@@ -4,13 +4,15 @@ package beleggingspakket.portefeuillebeheer;
 
 import beleggingspakket.util.Util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Portefeuille {
     public HashMap<String, Integer> getPosities() {
         return posities;
     }
-
+    private Orders orders = new Orders();
+    private Transactions transactions = new Transactions();
     private HashMap<String, Integer> posities = new HashMap<>();
 
     public Portefeuille() {
@@ -37,4 +39,27 @@ public class Portefeuille {
     }
 
 
+    public ArrayList<Order> getOrders() {
+        return orders.getOrders();
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
+    public void removeOrderById(int iVolgnr) {
+        orders.getOrders().remove(iVolgnr);
+    }
+
+    public void deleteOrder(Order order) {
+        orders.deleteOrder(order);
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions.getTransactions();
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transactions.getTransactions().add(transaction);
+    }
 }

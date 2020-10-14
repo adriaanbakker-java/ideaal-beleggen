@@ -29,8 +29,7 @@ public class PortefeuillebeheerController implements Initializable {
     // for now, just for the ticker set to be able to order
     private GetPriceHistory getPriceHistory = new GetPriceHistory();
     private double rekeningTegoed = 10000.00;
-    private Orders orders = new Orders();
-    private Transactions transactions = new Transactions();
+
     private Portefeuille portefeuille = new Portefeuille();
 
     private TableView tableViewOrders = new TableView();
@@ -255,7 +254,8 @@ public class PortefeuillebeheerController implements Initializable {
                     limietprijs,
                     nrStocks
             );
-            orders.add(order);
+
+            portefeuille.addOrder(order);
             addOrdersToScreen();
         } catch (Exception e) {
 
@@ -269,7 +269,7 @@ public class PortefeuillebeheerController implements Initializable {
         tableViewOrders.getItems().clear();
 
         txtRekeningtegoed.setText(Util.toCurrency(rekeningTegoed));
-        for (Order order : orders.getOrders()) {
+        for (Order order : portefeuille.getOrders()) {
             String koopverkoop = "koop";
             if (order.isSaleOrder()) {
                 koopverkoop = "verkoop";
@@ -307,7 +307,7 @@ public class PortefeuillebeheerController implements Initializable {
 
     public void addTransactionsToScreen() throws Exception {
         tableViewTx.getItems().clear();
-        for (Transaction tx : transactions.getTransactions()) {
+        for (Transaction tx : portefeuille.getTransactions()) {
 
 
             double bedrag = tx.getNrOfShares() * tx.getSharePrice();
@@ -355,7 +355,7 @@ public class PortefeuillebeheerController implements Initializable {
             int nr = Integer.parseInt(txtOrdernr.getText());
             int iIndex = 0;
             int iVolgnr = 0;
-            for (Order order : orders.getOrders()) {
+            for (Order order : portefeuille.getOrders()) {
                 if (order.getOrderNr() == nr) {
                     iVolgnr = iIndex;
                     deleted = true;
@@ -365,7 +365,7 @@ public class PortefeuillebeheerController implements Initializable {
             if (!deleted) {
                 showMessage("order niet gevonden");
             } else {
-                orders.getOrders().remove(iVolgnr);
+                portefeuille.removeOrderById(iVolgnr);
                 addOrdersToScreen();
             }
         } catch (Exception e) {
@@ -386,10 +386,10 @@ public class PortefeuillebeheerController implements Initializable {
 
     public void processMatchedOrders() {
         for (Order order : ordersToBeDeleted) {
-            orders.deleteOrder(order);
+            portefeuille.deleteOrder(order);
         }
         for (Transaction transaction : transactionsToBeCreated) {
-            transactions.getTransactions().add(transaction);
+            portefeuille.addTransaction(transaction);
             double bedrag = transaction.getSharePrice() * transaction.getNrOfShares();
             int sign = 1;
             if (transaction.isSaleOrder()) {
@@ -413,7 +413,7 @@ public class PortefeuillebeheerController implements Initializable {
         boolean orderProcessed = false;
         System.out.println("verwerk orders via main en grafiekenscherm");
 
-        for (Order order : orders.getOrders()) {
+        for (Order order : portefeuille.getOrders()) {
             Transaction t = order.verwerkOrder(dpr);
             if (t != null) {
                 ordersToBeDeleted.add(order);
