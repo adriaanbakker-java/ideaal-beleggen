@@ -14,4 +14,10 @@ public class Transactions {
     public void add(Transaction transaction) {
         transactions.add(transaction);
     }
+
+    public void slaOp() {
+    }
+
+    public void haalOp() {
+    }
 }

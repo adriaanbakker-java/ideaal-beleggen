@@ -62,4 +62,20 @@ public class Portefeuille {
     public void addTransaction(Transaction transaction) {
         transactions.getTransactions().add(transaction);
     }
+
+    public void slaOp() {
+        System.out.println("Portefeuille opslaan");
+        //... sla rekeningtegoed op
+        // ... sla posities op
+        orders.slaOp();
+        transactions.slaOp();
+    }
+
+    public void haalOp () {
+        //... haal rekeningtegoed op
+        //... haal posities op
+        orders.haalOp();
+        transactions.haalOp();
+        System.out.println("Portefeuille van schijf halen");
+    }
 }

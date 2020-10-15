@@ -28,4 +28,12 @@ public class Orders {
             getOrders().remove(foundIndex);
         }
     }
+
+    public void slaOp() {
+        System.out.println("orders ->sla de orders op");
+    }
+
+    public void haalOp() {
+        System.out.println("orders -> haal van schijf");
+    }
 }
