@@ -2,6 +2,7 @@ package beleggingspakket.portefeuillebeheer;
 
 
 import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
 
 import java.time.LocalDateTime;
 
@@ -89,4 +90,13 @@ public class Transaction {
         this.sharePrice = sharePrice;
     }
 
+
+    public String toString() {
+        return getTxNumber() + "," +
+                getTicker() + "," +
+                executionDate + "," +
+                isSaleOrder + "," +
+                nrOfShares + "," +
+                Util.toCurrency(getSharePrice());
+    }
 }

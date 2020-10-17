@@ -8,6 +8,7 @@ import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,7 +29,7 @@ public class PortefeuillebeheerController implements Initializable {
 
     // for now, just for the ticker set to be able to order
     private GetPriceHistory getPriceHistory = new GetPriceHistory();
-    private double rekeningTegoed = 10000.00;
+
 
     private Portefeuille portefeuille = new Portefeuille();
 
@@ -46,6 +47,9 @@ public class PortefeuillebeheerController implements Initializable {
 
     @FXML
     private TextField txtAantal;
+
+    @FXML
+    private TextField txtEinddatum;
 
     @FXML
     private TextField txtRekeningtegoed;
@@ -92,7 +96,22 @@ public class PortefeuillebeheerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        txtRekeningtegoed.setText(Util.toCurrency(rekeningTegoed));
+        aandelenlijst.removeAll(selecteerAandeel);
+
+        ArrayList<String> tickerSet = new ArrayList<>();
+        tickerSet.addAll( getPriceHistory.getTickers() );
+        Collections.sort(tickerSet);
+
+        for (String ticker1 : tickerSet) {
+            aandelenlijst.add(ticker1);
+        }
+
+        selecteerAandeel.getItems().addAll(aandelenlijst);
+
+
+
+        txtRekeningtegoed.setText(Util.toCurrency(
+                portefeuille.getRekeningTegoed()));
 
         final ToggleGroup groupOrderType = new ToggleGroup();
         rbtLimiet.setToggleGroup(groupOrderType);
@@ -111,7 +130,6 @@ public class PortefeuillebeheerController implements Initializable {
 
         aandelenlijst.removeAll(selecteerAandeel);
 
-        ArrayList<String> tickerSet = new ArrayList<>();
         tickerSet.addAll(getPriceHistory.getTickers());
         Collections.sort(tickerSet);
 
@@ -268,7 +286,7 @@ public class PortefeuillebeheerController implements Initializable {
     public void addOrdersToScreen() throws Exception {
         tableViewOrders.getItems().clear();
 
-        txtRekeningtegoed.setText(Util.toCurrency(rekeningTegoed));
+        txtRekeningtegoed.setText(Util.toCurrency(portefeuille.getRekeningTegoed()));
         for (Order order : portefeuille.getOrders()) {
             String koopverkoop = "koop";
             if (order.isSaleOrder()) {
@@ -395,8 +413,9 @@ public class PortefeuillebeheerController implements Initializable {
             if (transaction.isSaleOrder()) {
                 sign *= -1;
             }
-            rekeningTegoed = rekeningTegoed -
-                    sign * transaction.getSharePrice() * transaction.getNrOfShares();
+            portefeuille.setRekeningTegoed(
+                    portefeuille.getRekeningTegoed() -
+                    sign * transaction.getSharePrice() * transaction.getNrOfShares());
 
             portefeuille.addToPositie(transaction.getTicker(), transaction.getNrOfShares() * sign);
         }
@@ -424,5 +443,37 @@ public class PortefeuillebeheerController implements Initializable {
         return orderProcessed;
     }
 
+    public void laadPortefeuille() {
+        System.out.println("Portefeuille van schijf halen");
+        portefeuille.haalOp();
+    }
 
+    public void opslaanPortefeuille() {
+        System.out.println("Portefeuille opslaan");
+        portefeuille.slaOp();
+    }
+
+    public void toonGrafiekenscherm(ActionEvent actionEvent) throws Exception {
+
+        System.out.println("Toon grafiekenscherm");
+        String gekozenAandeel = selecteerAandeel.getValue();
+
+        if (gekozenAandeel == null) {
+            logInTextArea("Eerst aandeel kiezen svp");
+        } else {
+            logInTextArea("toon grafiekenscherm retro vanuit portefeuille - nog doen");
+//            int aantalKoersdagen = Integer.parseInt(30);
+//            int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+//
+//            logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
+//                    + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
+//                    + " aantal dagen retro" + aantalDagenRetro);
+//            main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+        }
+
+    }
+
+    private void logInTextArea(String logmessage) {
+        showMessage(logmessage);
+    }
 }

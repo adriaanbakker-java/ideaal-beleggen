@@ -2,6 +2,7 @@ package beleggingspakket.portefeuillebeheer;
 
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,18 @@ public class Order {
     }
 
     private int orderNr;
+
+
+    public String toString() {
+        return getOrderNr() + "," +
+                getTicker() + "," +
+                orderDate + "," +
+                isSaleOrder + "," +
+                nrOfShares + "," +
+                getOrderType() + "," +
+                Util.toCurrency(getLimitprice()) + "," +
+                Util.toCurrency(getStopprice());
+    }
 
     public void setSaleOrder(boolean saleOrder) {
         isSaleOrder = saleOrder;

@@ -1,5 +1,6 @@
 package beleggingspakket.portefeuillebeheer;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Orders {
@@ -29,11 +30,22 @@ public class Orders {
         }
     }
 
-    public void slaOp() {
+    public void slaOp(FileWriter writer) throws Exception {
         System.out.println("orders ->sla de orders op");
+        try {
+            for (Order order: orders) {
+                String sOrder = order.toString();
+                writer.write(sOrder + "\n");
+            }
+        } catch (Exception e) {
+            throw new Exception("Exception in slaOp() order:" + e.getLocalizedMessage());
+        }
     }
 
     public void haalOp() {
         System.out.println("orders -> haal van schijf");
     }
+
+
+
 }

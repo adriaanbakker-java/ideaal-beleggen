@@ -1,5 +1,6 @@
 package beleggingspakket.portefeuillebeheer;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Transactions {
@@ -15,7 +16,16 @@ public class Transactions {
         transactions.add(transaction);
     }
 
-    public void slaOp() {
+    public void slaOp(FileWriter writer) throws Exception {
+        System.out.println("transactions ->sla de transacties op");
+        try {
+            for (Transaction t:transactions) {
+                String sTransaction = t.toString();
+                writer.write(sTransaction + "\n");
+            }
+        } catch (Exception e) {
+            throw new Exception("Exception in slaOp() transactie:" + e.getLocalizedMessage());
+        }
     }
 
     public void haalOp() {

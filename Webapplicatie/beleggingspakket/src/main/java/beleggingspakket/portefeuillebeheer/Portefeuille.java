@@ -2,12 +2,22 @@ package beleggingspakket.portefeuillebeheer;
 
 //import com.vojtechruzicka.javafxweaverexample.util.Util;
 
+import beleggingspakket.Constants;
 import beleggingspakket.util.Util;
+import javafx.event.ActionEvent;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Portefeuille {
+
+
+    private double rekeningTegoed = 10000.00;
+
+
     public HashMap<String, Integer> getPosities() {
         return posities;
     }
@@ -63,12 +73,39 @@ public class Portefeuille {
         transactions.getTransactions().add(transaction);
     }
 
+
+
+
     public void slaOp() {
         System.out.println("Portefeuille opslaan");
-        //... sla rekeningtegoed op
-        // ... sla posities op
-        orders.slaOp();
-        transactions.slaOp();
+        String folder = Constants.getPFfolder();
+        String filenamePF = Constants.getFilenamePF();
+
+        try {
+            String filename = Constants.getPFfolder()  + filenamePF;
+            // check if file exists, otherwise create
+            File myFile = new File(filename);
+            if (!myFile.exists()) {
+                myFile.createNewFile();
+            }
+            
+            try (	FileWriter writer = new FileWriter(myFile);
+                     BufferedWriter bw = new BufferedWriter(writer)) {
+                // exporteer het rekeningtegoed
+                String currentLine = Util.toCurrency(rekeningTegoed);
+                writer.write(currentLine +  "\n");
+
+                // ... sla posities op
+                orders.slaOp(writer);
+                transactions.slaOp(writer);
+            }
+
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void haalOp () {
@@ -78,4 +115,14 @@ public class Portefeuille {
         transactions.haalOp();
         System.out.println("Portefeuille van schijf halen");
     }
+
+    public double getRekeningTegoed() {
+        return rekeningTegoed;
+    }
+
+    public void setRekeningTegoed(double rekeningTegoed) {
+        this.rekeningTegoed = rekeningTegoed;
+    }
+
+
 }
