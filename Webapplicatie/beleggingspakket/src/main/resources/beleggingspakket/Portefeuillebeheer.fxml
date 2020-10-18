@@ -26,6 +26,7 @@
    <left>
       <VBox maxHeight="1.7976931348623157E308" prefWidth="202.0" BorderPane.alignment="CENTER">
          <children>
+            <TextField fx:id="txtRekeningtegoed1" editable="false" layoutX="10.0" layoutY="86.0" promptText="Portefeuillenaam" text="Portefeuillenaam" />
             <Label text="Einddatum portefeuille">
                <VBox.margin>
                   <Insets top="5.0" />

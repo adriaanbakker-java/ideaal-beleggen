@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -33,6 +34,8 @@ public class MainController {
     String pricefolder;
     ObservableList marktlijst = FXCollections.observableArrayList();
     ObservableList aandelenlijst = FXCollections.observableArrayList();
+    ObservableList portefeuillelijst = FXCollections.observableArrayList();
+
     private GetPriceHistory getPriceHistory = new GetPriceHistory();
 
     public void setMainObject(Main mainObject) {
@@ -56,6 +59,11 @@ public class MainController {
     @FXML
     private ChoiceBox<String> selecteerAandeel;
 
+    @FXML
+    private ChoiceBox<String> selecteerPortefeuille;
+
+    @FXML
+    private TextField txtEinddatum;
 
     @FXML
     private Label lblTestlabel;
@@ -101,6 +109,7 @@ public class MainController {
         textArea.setText(textArea.getText() + "\n" + infostring);
     }
 
+    @SuppressWarnings("unchecked")
     public void initialize() {
         pricefolder = Constants.getPricefolder();
         txtKoersenfolder.setText(pricefolder);
@@ -123,25 +132,47 @@ public class MainController {
 
         aandelenlijst.removeAll(selecteerAandeel);
 
-        ArrayList<String> tickerSet = new ArrayList<>();
-        tickerSet.addAll( getPriceHistory.getTickers() );
+
+        ArrayList<String> tickerSet = new ArrayList<>(getPriceHistory.getTickers());
         Collections.sort(tickerSet);
 
-        for (String ticker1 : tickerSet) {
-            aandelenlijst.add(ticker1);
-        }
+        tickerSet.addAll(aandelenlijst);
 
         selecteerAandeel.getItems().addAll(aandelenlijst);
+
+
+        ArrayList<String> pfs = findPortefeuillesOnDisk();
+
+        portefeuillelijst.clear();
+        portefeuillelijst.addAll(pfs);
+
+        portefeuillelijst.removeAll(selecteerPortefeuille);
+        ArrayList<String> portefeuilles = findPortefeuillesOnDisk();
+        selecteerPortefeuille.getItems().addAll(portefeuilles);
+
+    }
+
+
+    public ArrayList<String> findPortefeuillesOnDisk() {
+        ArrayList<String> result = new ArrayList<>();
+        result.add("Portefeuille");
+        result.add("Portefeuille01");
+        return result;
     }
 
     public void toonPortefeuille(ActionEvent actionEvent)  {
         logInTextArea("toont de portefeuille");
         try {
-            main.toonPortefeuille();
+            String pfNaam =  selecteerPortefeuille.getValue();
+            main.toonPortefeuille(pfNaam);
         } catch (Exception e) {
             logInTextArea("Exceptie bij starten portefeuille:" + e.getLocalizedMessage());
         }
 
+    }
+
+    public void maakPortefeuilleAan(ActionEvent actionEvent) {
+        System.out.println("maak Portefeuille aan met einddatum "  + txtEinddatum.getText());
     }
 
     public void koersenVerversen(ActionEvent actionEvent) {
@@ -154,3 +185,4 @@ public class MainController {
     }
 
 }
+

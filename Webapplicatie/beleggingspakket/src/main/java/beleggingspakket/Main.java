@@ -36,8 +36,8 @@ public class Main {
         this.pfController = aPfController;
     }
 
-    public void toonPortefeuille() throws Exception {
-        app.toonPortefeuille();
+    public void toonPortefeuille(String pfNaam) throws Exception {
+        app.toonPortefeuille(pfNaam);
     }
 
     // Process the orders that are outstanding by confronting them with the dpr

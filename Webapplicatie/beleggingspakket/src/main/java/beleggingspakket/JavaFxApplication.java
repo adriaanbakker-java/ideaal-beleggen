@@ -55,11 +55,7 @@ public class JavaFxApplication extends Application {
 
         main = new Main(this);
         mainController.setMainObject(main);
-        try {
-            createPortefeuilleScherm();
-        } catch (Exception e) {
-            System.out.println("Fout in createPortefeuilleScherm:" + e.getLocalizedMessage());
-        }
+
 
         main.showMainStage();
 //        stage.show();
@@ -152,24 +148,21 @@ public class JavaFxApplication extends Application {
     }
 
 
-    private void createPortefeuilleScherm() throws Exception {
+    private void createPortefeuilleScherm(String portefeuilleNaam) throws Exception {
         FXMLLoader loaderPF = new FXMLLoader(getClass().getResource("Portefeuillebeheer.fxml"));
         Parent pfRoot = loaderPF.load();
         pfController = loaderPF.getController();
         pfController.main = this.main;
+        pfController.setPortefeuilleNaam(portefeuilleNaam);
         pfScene = new Scene(pfRoot, 800, 800);
         main.setPfController(pfController);
         portefeuilleStage = new Stage();
         portefeuilleStage.setScene(pfScene);
     }
 
-    private void toonPortefeuilleScherm() {
-        System.out.println("JavaFxApplication: show portefeuille");
-        portefeuilleStage.show();
-    }
 
-    public void toonPortefeuille() throws Exception {
-        createPortefeuilleScherm();
+    public void toonPortefeuille(String pfNaam) throws Exception {
+        createPortefeuilleScherm(pfNaam);
         portefeuilleStage.show();
     }
 }

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="534.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
+<BorderPane prefHeight="534.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -18,11 +24,52 @@
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin></Button>
-                        <Button mnemonicParsing="false" onAction="#toonPortefeuille" text="Portefeuille">
+                        <Button mnemonicParsing="false" onAction="#toonPortefeuille" prefHeight="27.0" prefWidth="139.0" text="Portefeuille openen">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Button>
+                        <ChoiceBox id="selecteerMarkt" fx:id="selecteerPortefeuille" prefHeight="27.0" prefWidth="141.0">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                        <Button layoutX="30.0" layoutY="77.0" mnemonicParsing="false" onAction="#maakPortefeuilleAan" text="Portefeuille aanmaken">
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <HBox prefHeight="33.0" prefWidth="277.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="65.0" text="Einddatum">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="txtEinddatum" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" promptText="Einddatum" text="01-01-2020">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="168.0" prefHeight="33.0" prefWidth="277.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="66.0" text="Naam">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="txtEinddatum1" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" promptText="Portefeuille01" text="Portefeuille01">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                   <VBox prefHeight="86.0" prefWidth="184.0">

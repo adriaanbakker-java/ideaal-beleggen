@@ -44,9 +44,9 @@ public class PortefeuillebeheerController implements Initializable {
     @FXML
     private VBox vboxOrders;
 
-
     @FXML
     private TextField txtAantal;
+
 
     @FXML
     private TextField txtEinddatum;
@@ -86,6 +86,7 @@ public class PortefeuillebeheerController implements Initializable {
 
     @FXML
     private ChoiceBox<String> selecteerAandeel;
+    private String pfNaam = "";
 
     TableColumn<String, OrderDTO> createColumn(String displayName, String name) {
         TableColumn<String, OrderDTO> column1 = new TableColumn<>(displayName);
@@ -107,8 +108,6 @@ public class PortefeuillebeheerController implements Initializable {
         }
 
         selecteerAandeel.getItems().addAll(aandelenlijst);
-
-
 
         txtRekeningtegoed.setText(Util.toCurrency(
                 portefeuille.getRekeningTegoed()));
@@ -475,5 +474,9 @@ public class PortefeuillebeheerController implements Initializable {
 
     private void logInTextArea(String logmessage) {
         showMessage(logmessage);
+    }
+
+    public void setPortefeuilleNaam(String portefeuilleNaam) {
+        pfNaam = portefeuilleNaam;
     }
 }
