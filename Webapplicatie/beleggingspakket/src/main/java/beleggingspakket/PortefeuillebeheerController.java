@@ -444,7 +444,7 @@ public class PortefeuillebeheerController implements Initializable {
 
     public void laadPortefeuille() {
         System.out.println("Portefeuille van schijf halen");
-        portefeuille.haalOp();
+        portefeuille.haalOp(pfNaam);
     }
 
     public void opslaanPortefeuille() {
@@ -476,7 +476,11 @@ public class PortefeuillebeheerController implements Initializable {
         showMessage(logmessage);
     }
 
-    public void setPortefeuilleNaam(String portefeuilleNaam) {
+    public void haalPortefeuilleVanSchijf(String portefeuilleNaam) throws Exception {
         pfNaam = portefeuilleNaam;
+        portefeuille.haalOp(pfNaam);
+        txtRekeningtegoed.setText(Util.toCurrency(
+                portefeuille.getRekeningTegoed()));
+        addOrdersToScreen();
     }
 }

@@ -133,10 +133,13 @@ public class MainController {
         aandelenlijst.removeAll(selecteerAandeel);
 
 
-        ArrayList<String> tickerSet = new ArrayList<>(getPriceHistory.getTickers());
+        ArrayList<String> tickerSet = new ArrayList<>();
+        tickerSet.addAll( getPriceHistory.getTickers() );
         Collections.sort(tickerSet);
 
-        tickerSet.addAll(aandelenlijst);
+        for (String ticker1 : tickerSet) {
+            aandelenlijst.add(ticker1);
+        }
 
         selecteerAandeel.getItems().addAll(aandelenlijst);
 

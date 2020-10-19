@@ -153,7 +153,7 @@ public class JavaFxApplication extends Application {
         Parent pfRoot = loaderPF.load();
         pfController = loaderPF.getController();
         pfController.main = this.main;
-        pfController.setPortefeuilleNaam(portefeuilleNaam);
+        pfController.haalPortefeuilleVanSchijf(portefeuilleNaam);
         pfScene = new Scene(pfRoot, 800, 800);
         main.setPfController(pfController);
         portefeuilleStage = new Stage();

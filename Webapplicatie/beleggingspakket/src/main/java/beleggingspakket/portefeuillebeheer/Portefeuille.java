@@ -4,13 +4,12 @@ package beleggingspakket.portefeuillebeheer;
 
 import beleggingspakket.Constants;
 import beleggingspakket.util.Util;
-import javafx.event.ActionEvent;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Portefeuille {
 
@@ -108,12 +107,48 @@ public class Portefeuille {
 
     }
 
-    public void haalOp () {
-        //... haal rekeningtegoed op
-        //... haal posities op
-        orders.haalOp();
-        transactions.haalOp();
-        System.out.println("Portefeuille van schijf halen");
+    public void haalOp(String pfNaam) {
+        System.out.println("Portefeuille " + pfNaam + " van schijf halen");
+        System.out.println("Portefeuille opslaan");
+        String folder = Constants.getPFfolder();
+        String filenamePF = pfNaam + ".csv";
+        try {
+            String filename = Constants.getPFfolder()  + filenamePF;
+            // check if file exists, otherwise create
+            File myFile = new File(filename);
+            if (!myFile.exists()) {
+                throw new Exception("bestand niet gevonden:" + filename);
+            }
+
+            String currentLine = "";
+
+            File file = new File(filename);
+            InputStream inputStream = new FileInputStream(file);
+            StringBuilder resultStringBuilder = new StringBuilder();
+            try (BufferedReader br
+                         = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                if ((line = br.readLine()) != null) {
+                    System.out.println("gelezen: " + line);
+                    rekeningTegoed = Util.toDouble(line);
+                }
+                orders.deleteOrders();
+                transactions.deleteTransactions();
+
+                while ((line = br.readLine()) != null) {
+                    System.out.println("gelezen: " + line);
+                    if (line.contains("ORDER")) {
+                        orders.addOrderLineFromDisk(line);
+                    }
+                    if (line.contains("TRANSACTION")) {
+                        transactions.addTransactionLineFromDisk(line);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Portefeuille haalop(): " + e.getMessage());
+        }
     }
 
     public double getRekeningTegoed() {

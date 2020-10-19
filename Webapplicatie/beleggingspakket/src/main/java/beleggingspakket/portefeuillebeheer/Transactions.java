@@ -21,13 +21,20 @@ public class Transactions {
         try {
             for (Transaction t:transactions) {
                 String sTransaction = t.toString();
-                writer.write(sTransaction + "\n");
+                writer.write("TRANSACTION," + sTransaction + "\n");
             }
         } catch (Exception e) {
             throw new Exception("Exception in slaOp() transactie:" + e.getLocalizedMessage());
         }
     }
 
-    public void haalOp() {
+
+    public void addTransactionLineFromDisk(String line) {
+        System.out.println("ophalen transaction line:" + line);
+    }
+
+    // delete all transactions
+    public void deleteTransactions() {
+        transactions.clear();
     }
 }

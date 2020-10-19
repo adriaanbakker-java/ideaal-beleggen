@@ -27,10 +27,10 @@ public class Order {
     public String toString() {
         return getOrderNr() + "," +
                 getTicker() + "," +
-                orderDate + "," +
+                Util.toYYYYMMDDHHMM(orderDate) + "," +
                 isSaleOrder + "," +
                 nrOfShares + "," +
-                getOrderType() + "," +
+                getOrderType().name() + "," +
                 Util.toCurrency(getLimitprice()) + "," +
                 Util.toCurrency(getStopprice());
     }
