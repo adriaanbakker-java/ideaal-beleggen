@@ -32,7 +32,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="txtEinddatum" editable="false" promptText="Rekeningtegoed" text="01-09-2020" />
+            <TextField fx:id="txtEinddatum" editable="false" promptText="Einddatum" text="01-09-2020" />
             <Label text="Rekeningtegoed">
                <VBox.margin>
                   <Insets top="5.0" />
