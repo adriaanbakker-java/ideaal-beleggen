@@ -350,7 +350,7 @@ public class PortefeuillebeheerController implements Initializable {
 
     public void addPositionsToScreen(int year, int month, int day) throws Exception {
         tableViewPortefeuille.getItems().clear();
-        for (Map.Entry<String, Integer> entry : portefeuille.getPosities().entrySet()) {
+        for (Map.Entry<String, Integer> entry : portefeuille.getPosities()) {
             String aandeel = entry.getKey();
             int aantal = entry.getValue();
             String sAantal = Integer.toString(aantal);
@@ -461,13 +461,15 @@ public class PortefeuillebeheerController implements Initializable {
             logInTextArea("Eerst aandeel kiezen svp");
         } else {
             logInTextArea("toon grafiekenscherm retro vanuit portefeuille - nog doen");
-//            int aantalKoersdagen = Integer.parseInt(30);
-//            int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+            int aantalKoersdagen = 30;
+
+            int aantalDagenRetro = 0;
+
 //
 //            logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
 //                    + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
 //                    + " aantal dagen retro" + aantalDagenRetro);
-//            main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+            main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
         }
 
     }
@@ -478,10 +480,14 @@ public class PortefeuillebeheerController implements Initializable {
 
     public void haalPortefeuilleVanSchijf(String portefeuilleNaam) throws Exception {
         pfNaam = portefeuilleNaam;
+        portefeuille = new Portefeuille();
         portefeuille.haalOp(pfNaam);
-        txtRekeningtegoed.setText(Util.toCurrency(
-                portefeuille.getRekeningTegoed()));
+        String einddatum = portefeuille.getEinddatum().toString();
+        txtEinddatum.setText( einddatum );
+        String rekeningtegoed = Util.toCurrency(portefeuille.getRekeningTegoed());
+        txtRekeningtegoed.setText(rekeningtegoed);
         addOrdersToScreen();
         addTransactionsToScreen();
+        addPositionsToScreen(2010,01,01);
     }
 }

@@ -3,50 +3,37 @@ package beleggingspakket.portefeuillebeheer;
 //import com.vojtechruzicka.javafxweaverexample.util.Util;
 
 import beleggingspakket.Constants;
+import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 
 import java.io.*;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Portefeuille {
 
 
+
+
+    private IDate einddatum = new IDate(1800,1,1);
     private double rekeningTegoed = 10000.00;
 
 
-    public HashMap<String, Integer> getPosities() {
-        return posities;
+    public Set<Map.Entry<String, Integer>> getPosities() {
+        return posities.getPosities();
     }
     private Orders orders = new Orders();
     private Transactions transactions = new Transactions();
-    private HashMap<String, Integer> posities = new HashMap<>();
+    private Posities posities = new Posities();
 
+    public IDate getEinddatum() {
+        return einddatum;
+    }
+    public void addToPositie(String ticker, int i) {
+        posities.addToPositie(ticker, i);
+    }
     public Portefeuille() {
     }
-
-    public void addToPositie(String ticker, int aantal) {
-        if (!posities.containsKey(ticker)) {
-            posities.put(ticker, aantal);
-        } else {
-            Integer totAantal = posities.get(ticker) + aantal;
-            posities.replace(ticker, totAantal);
-        }
-    }
-
-    public PositieDTO geefPositieDTO(String aTicker, double aKoers) {
-        int aantal = posities.get(aTicker).intValue();
-        double waarde = aKoers * aantal;
-        PositieDTO dto = new PositieDTO(
-                aTicker,
-                Integer.toString(aantal),
-                Util.toCurrency(aKoers),
-                Util.toCurrency(waarde));
-        return dto;
-    }
-
 
     public ArrayList<Order> getOrders() {
         return orders.getOrders();
@@ -99,6 +86,7 @@ public class Portefeuille {
                 // ... sla posities op
                 orders.slaOp(writer);
                 transactions.slaOp(writer);
+                posities.slaOp(writer);
 
             }
         } catch (Exception e) {
@@ -129,8 +117,15 @@ public class Portefeuille {
                 String line;
                 if ((line = br.readLine()) != null) {
                     System.out.println("gelezen: " + line);
+
+                    einddatum = Util.toIDate(line);
+                } else
+                    throw new Exception("onverwacht einde bestand bij lezen einddatum portefeuille");
+                if ((line = br.readLine()) != null) {
+                    System.out.println("gelezen: " + line);
                     rekeningTegoed = Util.toDouble(line);
-                }
+                } else
+                    throw new Exception("onverwacht einde bestand bij lezen rekeningtegoed portefeuille");
                 orders.deleteOrders();
                 transactions.deleteTransactions();
 

@@ -32,6 +32,15 @@ public class Util {
         return result;
     }
 
+
+
+    public static IDate toIDate(String orderDate) {
+        int dd = Integer.parseInt(orderDate.substring(0,2));
+        int mm = Integer.parseInt(orderDate.substring(3,5));
+        int yyyy =  Integer.parseInt(orderDate.substring(6,10));
+        return new IDate(yyyy, mm, dd);
+    }
+
     public static Ordertype toOrderType(String orderTypeString) {
         Ordertype result = null;
         for (Ordertype o: Ordertype.values()) {
