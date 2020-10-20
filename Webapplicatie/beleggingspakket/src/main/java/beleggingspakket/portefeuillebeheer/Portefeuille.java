@@ -86,6 +86,8 @@ public class Portefeuille {
             File myFile = new File(filename);
             if (!myFile.exists()) {
                 myFile.createNewFile();
+            } else {
+                myFile.delete();
             }
             
             try (	FileWriter writer = new FileWriter(myFile);
@@ -97,10 +99,8 @@ public class Portefeuille {
                 // ... sla posities op
                 orders.slaOp(writer);
                 transactions.slaOp(writer);
+
             }
-
-
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -109,7 +109,6 @@ public class Portefeuille {
 
     public void haalOp(String pfNaam) {
         System.out.println("Portefeuille " + pfNaam + " van schijf halen");
-        System.out.println("Portefeuille opslaan");
         String folder = Constants.getPFfolder();
         String filenamePF = pfNaam + ".csv";
         try {

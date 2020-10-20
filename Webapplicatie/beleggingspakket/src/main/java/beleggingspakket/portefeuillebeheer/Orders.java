@@ -49,21 +49,7 @@ public class Orders {
 
 
     public void addOrderLineFromDisk(String line) throws Exception {
-        System.out.println("ophalen order line:" + line);
-        String[] orderelements = line.split(",");
-        String sTicker = orderelements[2];
-        LocalDate dDate = Util.toLocalDateTime(orderelements[3]);
-
-        boolean isSalesOrder = false;
-        if (orderelements[4].equals("true"))
-            isSalesOrder = true;
-        int nrOfShares = Integer.parseInt(orderelements[5]);
-        Ordertype ordertype = Util.toOrderType(orderelements[6]);
-        double stopprice = Util.toDouble(orderelements[7]);
-        double limitprice = Util.toDouble(orderelements[8]);
-
-
-        Order order = new Order(sTicker, dDate.atTime(00,00), ordertype, isSalesOrder, stopprice, limitprice, nrOfShares);
+        Order order = new Order(line);
         orders.add(order);
     }
 

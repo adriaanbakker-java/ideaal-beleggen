@@ -9,73 +9,81 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 
 public class Order {
+    private int orderNr;
     private String ticker = "";
+    private LocalDateTime orderDateTime;
+    private boolean isSaleOrder;
+    private int nrOfShares;
+    private Ordertype orderType;
+    Double stopprice = 0.0;
+    Double limitprice = 0.0;
 
     static int orderSeq = 1000;
+
+    // maak order aan via regel uit portefeuille bestand
+    public Order(String line) throws Exception {
+        System.out.println("aanmaken order via string:" + line);
+        String[] orderelements = line.split(",");
+        orderNr = Integer.parseInt(orderelements[1]);
+        ticker = orderelements[2];
+        orderDateTime = Util.toLocalDateTime(orderelements[3]);
+        isSaleOrder = false;
+        if (orderelements[4].equals("true"))
+            isSaleOrder = true;
+        nrOfShares = Integer.parseInt(orderelements[5]);
+        orderType = Util.toOrderType(orderelements[6]);
+        stopprice = Util.toDouble(orderelements[7]);
+        limitprice = Util.toDouble(orderelements[8]);
+
+        // passeer de oude ordernummers
+        if (orderSeq <= orderNr)
+            orderSeq = orderNr + 1;
+    }
+
+    // regel voor portefeuille bestand
+    public String toString() {
+        return getOrderNr() + "," +
+                getTicker() + "," +
+                orderDateTime.toString() + "," +
+                isSaleOrder + "," +
+                nrOfShares + "," +
+                getOrderType().name() + "," +
+                Util.toCurrency(getStopprice()) + "," +
+                Util.toCurrency(getLimitprice());
+    }
 
     public int getOrderNr() {
         return orderNr;
     }
-
     public void setOrderNr(int orderNr) {
         this.orderNr = orderNr;
     }
 
-    private int orderNr;
-
-
-    public String toString() {
-        return getOrderNr() + "," +
-                getTicker() + "," +
-                Util.toYYYYMMDDHHMM(orderDate) + "," +
-                isSaleOrder + "," +
-                nrOfShares + "," +
-                getOrderType().name() + "," +
-                Util.toCurrency(getLimitprice()) + "," +
-                Util.toCurrency(getStopprice());
-    }
 
     public void setSaleOrder(boolean saleOrder) {
         isSaleOrder = saleOrder;
     }
-
-    private boolean isSaleOrder;
-    private int nrOfShares;
-    private LocalDateTime orderDate;
-    private Ordertype orderType;
-    Double limitprice = 0.0;
-    Double stopprice = 0.0;
-
-
     public String getTicker() {
         return ticker;
     }
-
     public boolean isSaleOrder() {
         return isSaleOrder;
     }
-
     public int getNrOfShares() {
         return nrOfShares;
     }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
     }
-
     public Ordertype getOrderType() {
         return orderType;
     }
-
     public Double getLimitprice() {
         return limitprice;
     }
-
     public Double getStopprice() {
         return stopprice;
     }
-
-
 
     /* Ordertype:
         MARKET - no limit price, no stop price, buys or sells at opening price
@@ -101,8 +109,6 @@ public class Order {
                    than stopprice. Stopprice is mandatory.
 
     */
-
-
     public Order(String aTicker,
                  LocalDateTime aDate,
                  Ordertype aOrderType,
@@ -111,14 +117,13 @@ public class Order {
                  double aLimitprice,
                  int aNrOfShares) throws Exception {
         ticker = aTicker;
-        orderDate = aDate;
+        orderDateTime = aDate;
         orderType = aOrderType;
         nrOfShares = aNrOfShares;
         stopprice = aStopprice;
         limitprice = aLimitprice;
         isSaleOrder = aIsSaleOrder;
         orderNr = orderSeq++;
-
 
         if (orderType == Ordertype.STOPLIMIT) {
             if (isSaleOrder) {
@@ -241,7 +246,6 @@ public class Order {
         return null;
     }
 
-
     /*
      *  LIMIT order
      */
@@ -261,7 +265,6 @@ public class Order {
         }
         return null;
     }
-
 
     /*
     * sell or buy at the given price

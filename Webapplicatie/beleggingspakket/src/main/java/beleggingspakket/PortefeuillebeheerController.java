@@ -482,5 +482,6 @@ public class PortefeuillebeheerController implements Initializable {
         txtRekeningtegoed.setText(Util.toCurrency(
                 portefeuille.getRekeningTegoed()));
         addOrdersToScreen();
+        addTransactionsToScreen();
     }
 }

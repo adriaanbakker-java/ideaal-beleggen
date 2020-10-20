@@ -10,6 +10,7 @@ public class Transaction {
 
 
     private IDate executionDate;
+    private IDate orderdate;
     private String ticker;
     private int txNumber;
     private boolean isSaleOrder;
@@ -76,11 +77,11 @@ public class Transaction {
     }
     
     public Transaction(
-                        IDate aDate,
+                        IDate aDate,   // execution date
                         String ticker,
                        boolean isSaleOrder,
                        int nrOfShares,
-                       LocalDateTime orderDate,
+                       LocalDateTime orderDate,   // order date
                        Double sharePrice) {
         this.executionDate = aDate;
         this.ticker = ticker;

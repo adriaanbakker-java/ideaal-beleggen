@@ -1,6 +1,11 @@
 package beleggingspakket.portefeuillebeheer;
 
+import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
+
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Transactions {
@@ -29,8 +34,20 @@ public class Transactions {
     }
 
 
-    public void addTransactionLineFromDisk(String line) {
+    public void addTransactionLineFromDisk(String line) throws Exception {
         System.out.println("ophalen transaction line:" + line);
+        String[] transactionelements = line.split(",");
+        String sTicker = transactionelements[2];
+        LocalDateTime dDate = Util.toLocalDateTime(transactionelements[3]);
+        IDate iDate = new IDate(2020, 10, 20);   // transactionelements[4] is
+        int nrOfShares = Integer.parseInt(transactionelements[5]);
+        double sharePrice = Util.toDouble(transactionelements[6]);
+        boolean isSalesOrder = false;
+        if (transactionelements[4].equals("true"))
+            isSalesOrder = true;
+
+        Transaction transaction = new Transaction(iDate, sTicker, isSalesOrder, nrOfShares, dDate, sharePrice);
+        transactions.add(transaction);
     }
 
     // delete all transactions

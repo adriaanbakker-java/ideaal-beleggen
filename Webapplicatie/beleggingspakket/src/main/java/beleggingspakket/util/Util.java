@@ -47,11 +47,9 @@ public class Util {
         return number.doubleValue();
     }
 
-    public static LocalDate toLocalDateTime(String sYYYYMMDD) {
-        String date = "2016-08-16";
-
+    public static LocalDateTime toLocalDateTime(String sYYYYMMDD) {
         //default, ISO_LOCAL_DATE
-        LocalDate localDate = LocalDate.parse(date);
+        LocalDateTime localDate = LocalDateTime.parse(sYYYYMMDD);
         return localDate;
     }
 }
