@@ -1,6 +1,7 @@
 package beleggingspakket;
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -25,7 +26,7 @@ public class Main {
             int aantalDagenRetro) throws Exception {
         System.out.println("Vanuit Main: Toon grafiekenscherm");
         mainController.logInTextArea("Vanuit Main: Toon GrafiekenschermController");
-        app.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+        app.toonGrafiekenschermRetroDagen(gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
     }
 
 
@@ -56,5 +57,10 @@ public class Main {
         }
 
         return result;
+    }
+
+
+    public void toonGrafiekenschermTot(String gekozenAandeel, int aantalKoersdagen, IDate einddatum) throws Exception {
+        app.toonGrafiekenschermTot( gekozenAandeel,  aantalKoersdagen,  einddatum);
     }
 }

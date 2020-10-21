@@ -25,8 +25,8 @@ public class Util {
         return formatted2;
     }
 
-    public static String toYYYYMMDDHHMM(LocalDateTime orderDate) {
-        String europeanDatePattern = "dd.MM.yyyy";
+    public static String toDDMMYYYY(LocalDateTime orderDate) {
+        String europeanDatePattern = "dd-MM-yyyy";
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
         String result = europeanDateFormatter.format(orderDate);
         return result;
@@ -39,6 +39,22 @@ public class Util {
         int mm = Integer.parseInt(orderDate.substring(3,5));
         int yyyy =  Integer.parseInt(orderDate.substring(6,10));
         return new IDate(yyyy, mm, dd);
+    }
+
+    public static IDate toIDate(LocalDateTime orderDate) {
+       String ddmmyyyy = toDDMMYYYY(orderDate);
+       return toIDate(ddmmyyyy);
+    }
+
+    public static LocalDateTime toLocalDateTime(IDate idate) {
+        LocalDate ld = LocalDate.of(idate.getYear(), idate.getMonth(), idate.getDay());
+        return ld.atStartOfDay();
+    }
+
+    public static LocalDateTime toLocalDateTime(String sYYYYMMDD) {
+        //default, ISO_LOCAL_DATE
+        LocalDateTime localDate = LocalDateTime.parse(sYYYYMMDD);
+        return localDate;
     }
 
     public static Ordertype toOrderType(String orderTypeString) {
@@ -56,9 +72,5 @@ public class Util {
         return number.doubleValue();
     }
 
-    public static LocalDateTime toLocalDateTime(String sYYYYMMDD) {
-        //default, ISO_LOCAL_DATE
-        LocalDateTime localDate = LocalDateTime.parse(sYYYYMMDD);
-        return localDate;
-    }
+
 }

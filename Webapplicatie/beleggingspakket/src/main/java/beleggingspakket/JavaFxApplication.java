@@ -3,6 +3,8 @@ package beleggingspakket;
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
 import beleggingspakket.grafiekenscherm.CandlestickClass;
+import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class JavaFxApplication extends Application {
@@ -68,28 +71,19 @@ public class JavaFxApplication extends Application {
     }
 
 
-    private ArrayList<DayPriceRecord> prepareCandleSticks(String gekozenMarkt, String gekozenAandeel, int aantalBeursdagen,
-                                                          int aantalDagenRetro) {
+    private ArrayList<DayPriceRecord> readPrices(String gekozenAandeel) {
         String infostring;
         ArrayList<DayPriceRecord> prices;
 
-        if (gekozenMarkt == null) {
-            infostring = "Eerst markt kiezen svp";
-            log.info(infostring);
-            mainController.logInTextArea(infostring);
-            return null;
-        } else if (gekozenAandeel == null) {
+        if (gekozenAandeel == null) {
             infostring = "Eerst aandeel kiezen svp";
             log.info(infostring);
             mainController.logInTextArea(infostring);
             return null;
         } else {
-            infostring = "showCandleSticks aangeroepen voor markt " + gekozenMarkt +
-                    " en aandeel " + gekozenAandeel +
-                    " aantal beursdagen is " + aantalBeursdagen +
-                    " aantal dagen in verleden is " + aantalDagenRetro;
-            log.info(infostring);
-            mainController.logInTextArea(infostring);
+            String infomsg = "lees prijsinformatie voor " + gekozenAandeel;
+            log.info(infomsg);
+            mainController.logInTextArea(infomsg);
             GetPriceHistory myGPH = new GetPriceHistory();
             try {
                 prices = myGPH.getHistoricPricesFromFile(gekozenAandeel);
@@ -103,27 +97,76 @@ public class JavaFxApplication extends Application {
     }
 
 
+    /*
+    *  Er zijn twee versies voor het openen van een grafiekenscherm
+    *     1. Vanuit de main module, met "aantal dagen retro" vanaf huidige datum
+    *     2. Vanuit de portefeuille, met de einddatum uit de portefeuille
+    *
+    *  Het candlesticks object werkt met aantal dagen retro vanaf de laatste dagkoers.
+    *  Om deze twee met elkaar te verenigen wordt het volgende ondernomen
+    *
+    *  Bij 1. wordt een einddatum berekend door van de huidige datum het aantal dagen retro af te trekken.
+    *
+    *  Bij 2. wordt de einddatum uit de portefeuille genomen
+    *
+    * Vervolgens wordt een effectief aantal dagen retro bepaald door te bepalen welke datum in de koersreeks nog net
+    * vlak voor of op deze einddatum valt. Het effectief aantal dagen retro is als volgt bepaald:
+    *
+    *   eindindex (index laatst zichtbare candle)  = myDayPriceArray.size() -1 - aantalDagenRetroEffectief;
+    *
+    */
 
-    public void toonGrafiekenscherm(String gekozenMarkt,
-                                    String gekozenAandeel,
+    // 1. Aangeroepen vanuit hoofdscherm
+    public void toonGrafiekenschermRetroDagen(String gekozenAandeel, int aantalBeursdagen, int aantalDagenRetro)
+      throws Exception {
+        LocalDateTime eindDT =  LocalDateTime.now().minusDays(aantalDagenRetro);
+        toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, Util.toIDate(eindDT));
+    }
+
+    // 2. Aangeroepen vanuit portefeuille
+    public void toonGrafiekenschermTot(String gekozenAandeel, int aantalBeursdagen, IDate einddatum)
+      throws Exception {
+        toonGrafiekenscherm(gekozenAandeel,aantalBeursdagen, einddatum);
+    }
+
+
+    // bepaal effectief aantal dagen retro
+    private int bepaalAantalDagenRetro(ArrayList<DayPriceRecord> prices, IDate einddatum) {
+        int index = 0;
+        LocalDateTime ldtEinddatum = Util.toLocalDateTime(einddatum);
+
+        // bepaal dayprice record dat in de tijd nog net op of voor de einddatum ligt
+        Boolean found = false;
+        Boolean eof = false;
+
+        do {
+            eof = (index >= prices.size());
+            if (!eof) {
+                DayPriceRecord dpr = prices.get(index);
+                found = !(dpr.isBefore(ldtEinddatum));
+            }
+            if (!found)
+                index ++;
+        } while ((!found) && (!eof));
+        index--;
+        if (index < prices.size()) {
+            DayPriceRecord dpr = prices.get(index);
+            if (!dpr.isOnDate(ldtEinddatum))
+                index = index - 1;
+        }
+        return prices.size() - 1 - index;
+    }
+
+    public void toonGrafiekenscherm(String gekozenAandeel,
                                     int aantalBeursdagen,
-                                    int aantalDagenRetro) throws Exception {
+                                    IDate einddatum) throws Exception {
        /* FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MyController.class);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();*/
-        ArrayList<DayPriceRecord> prices = null;
-        try {
-            prices = prepareCandleSticks(gekozenMarkt, gekozenAandeel, aantalBeursdagen, aantalDagenRetro);
-            if (prices == null)
-                throw new Exception("koersbestand niet gevonden of leeg");
-            if (prices.size() <= 10 )
-                throw new Exception("koersbestand niet gevonden of leeg");
-        } catch (Exception e) {
-            throw new Exception("toonGrafiekenscherm:" + e.getLocalizedMessage());
-        }
-
+        ArrayList<DayPriceRecord> prices = readPrices(gekozenAandeel);
+        int aantalDagenRetro = bepaalAantalDagenRetro(prices, einddatum);
 
         Class<? extends JavaFxApplication> x = getClass();
         URL resourceURL = x.getResource("grafiekenscherm.fxml");
@@ -148,6 +191,8 @@ public class JavaFxApplication extends Application {
     }
 
 
+
+
     private void createPortefeuilleScherm(String portefeuilleNaam) throws Exception {
         FXMLLoader loaderPF = new FXMLLoader(getClass().getResource("Portefeuillebeheer.fxml"));
         Parent pfRoot = loaderPF.load();
@@ -165,4 +210,6 @@ public class JavaFxApplication extends Application {
         createPortefeuilleScherm(pfNaam);
         portefeuilleStage.show();
     }
+
+
 }

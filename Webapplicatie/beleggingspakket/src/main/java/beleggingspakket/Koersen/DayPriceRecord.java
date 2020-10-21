@@ -182,4 +182,15 @@ public final class DayPriceRecord {
 	public String printLow() {
 		return String.format("%.2f", getLow());
 	}
+
+	public boolean isOnDate(LocalDateTime ldtEinddatum) {
+		int day = ldtEinddatum.getDayOfMonth();
+		int month = ldtEinddatum.getMonthValue();
+		int year = ldtEinddatum.getYear();
+		if ( this.year != year ) return false;
+		if ((this.year == year ) && (this.month != month)) return false;
+		if ((this.year == year ) && (this.month == month) && (this.day != day)) return false;
+
+		return true;
+	}
 }

@@ -463,13 +463,10 @@ public class PortefeuillebeheerController implements Initializable {
             logInTextArea("toon grafiekenscherm retro vanuit portefeuille - nog doen");
             int aantalKoersdagen = 30;
 
-            int aantalDagenRetro = 0;
-
-//
-//            logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
-//                    + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
-//                    + " aantal dagen retro" + aantalDagenRetro);
-            main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+            logInTextArea("Vanuit grafiekenschermcontroller: Toon grafiekenscherm voor ticker:"
+                    + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
+                    + " tot aan datum " + portefeuille.getEinddatum().toString());
+            main.toonGrafiekenschermTot(gekozenAandeel, aantalKoersdagen, portefeuille.getEinddatum());
         }
 
     }
