@@ -49,4 +49,17 @@ public class Posities {
             throw new Exception("Exception in slaOp() order:" + e.getLocalizedMessage());
         }
     }
+
+    public void addPositionLineFromDisk(String line) {
+        System.out.println("aanmaken positie via string:" + line);
+        String[] positionelements = line.split(",");
+        String sTicker = positionelements[1].trim();
+        String sAantal = positionelements[2].trim();
+        int aantal = Integer.parseInt(sAantal);
+        addToPositie(sTicker, aantal);
+    }
+
+    public void deletePositions() {
+        posities.clear();
+    }
 }

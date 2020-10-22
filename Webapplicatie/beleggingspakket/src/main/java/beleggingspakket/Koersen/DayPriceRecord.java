@@ -1,5 +1,8 @@
 package beleggingspakket.Koersen;
 
+import beleggingspakket.util.IDate;
+import org.yaml.snakeyaml.events.Event;
+
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -33,6 +36,10 @@ public final class DayPriceRecord {
 
 	public double getLow() {
 		return Low;
+	}
+
+	public IDate getIDate() {
+		return new IDate(year,month,day);
 	}
 
 	public double getClose() {

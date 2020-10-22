@@ -53,7 +53,7 @@ public class Util {
 
     public static LocalDateTime toLocalDateTime(String sYYYYMMDD) {
         //default, ISO_LOCAL_DATE
-        LocalDateTime localDate = LocalDateTime.parse(sYYYYMMDD);
+        LocalDateTime localDate = toLocalDateTime(toIDate(sYYYYMMDD));
         return localDate;
     }
 

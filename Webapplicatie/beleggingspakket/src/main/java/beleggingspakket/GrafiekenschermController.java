@@ -6,6 +6,7 @@ import beleggingspakket.grafiekenscherm.CandlestickClass;
 import beleggingspakket.grafiekenscherm.Line;
 import beleggingspakket.grafiekenscherm.Point;
 import beleggingspakket.indicatoren.*;
+import beleggingspakket.util.IDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -187,8 +188,10 @@ public class GrafiekenschermController implements Initializable {
         try {
             int aantalDagen  = Integer.parseInt(cmbBeursdagen.getValue());
             toonMessage(aantalDagen + " beursdag(en) naar rechts");
-            myCandlestickObject.panPeriod(aantalDagen);
+            IDate lastDate = myCandlestickObject.panPeriod(aantalDagen);
             createCandleChart(fondsnaam);
+
+            main.beursdagNaarRechts(lastDate);
 
         } catch (Exception e) {
             toonMessage("kan niet verder naar rechts");

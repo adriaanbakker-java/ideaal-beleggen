@@ -38,15 +38,14 @@ public class Transactions {
         System.out.println("ophalen transaction line:" + line);
         String[] transactionelements = line.split(",");
         String sTicker = transactionelements[2];
-        LocalDateTime dDate = Util.toLocalDateTime(transactionelements[3]);
-        IDate iDate = new IDate(2020, 10, 20);   // transactionelements[4] is
+        IDate iDate = Util.toIDate(transactionelements[3]);
         int nrOfShares = Integer.parseInt(transactionelements[5]);
         double sharePrice = Util.toDouble(transactionelements[6]);
         boolean isSalesOrder = false;
         if (transactionelements[4].equals("true"))
             isSalesOrder = true;
 
-        Transaction transaction = new Transaction(iDate, sTicker, isSalesOrder, nrOfShares, dDate, sharePrice);
+        Transaction transaction = new Transaction(iDate, sTicker, isSalesOrder, nrOfShares, Util.toLocalDateTime(iDate), sharePrice);
         transactions.add(transaction);
     }
 

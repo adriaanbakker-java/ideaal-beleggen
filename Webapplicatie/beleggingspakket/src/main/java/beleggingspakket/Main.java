@@ -63,4 +63,8 @@ public class Main {
     public void toonGrafiekenschermTot(String gekozenAandeel, int aantalKoersdagen, IDate einddatum) throws Exception {
         app.toonGrafiekenschermTot( gekozenAandeel,  aantalKoersdagen,  einddatum);
     }
+
+    public void beursdagNaarRechts(IDate lastDate) {
+        pfController.beursdagNaarRechts(lastDate);
+    }
 }

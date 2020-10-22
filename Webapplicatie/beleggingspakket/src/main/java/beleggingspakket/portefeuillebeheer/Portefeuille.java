@@ -13,7 +13,19 @@ import java.util.*;
 public class Portefeuille {
 
 
+    public String getPortefeuillenaam() {
+        return portefeuillenaam;
+    }
 
+    public void setPortefeuillenaam(String portefeuillenaam) {
+        this.portefeuillenaam = portefeuillenaam;
+    }
+
+    private String portefeuillenaam = "nog-toekennen";
+
+    public void setEinddatum(IDate einddatum) {
+        this.einddatum = einddatum;
+    }
 
     private IDate einddatum = new IDate(1800,1,1);
     private double rekeningTegoed = 10000.00;
@@ -79,6 +91,12 @@ public class Portefeuille {
             
             try (	FileWriter writer = new FileWriter(myFile);
                      BufferedWriter bw = new BufferedWriter(writer)) {
+
+                // exporteer de einddatum
+                String laatsteDatum = this.einddatum.toString();
+                writer.write(laatsteDatum +  "\n");
+
+
                 // exporteer het rekeningtegoed
                 String currentLine = Util.toCurrency(rekeningTegoed);
                 writer.write(currentLine +  "\n");
@@ -126,8 +144,12 @@ public class Portefeuille {
                     rekeningTegoed = Util.toDouble(line);
                 } else
                     throw new Exception("onverwacht einde bestand bij lezen rekeningtegoed portefeuille");
+
+                /* Now we know that the file exist etcetera we can now safely assign the name */
+                this.portefeuillenaam = pfNaam;
                 orders.deleteOrders();
                 transactions.deleteTransactions();
+                posities.deletePositions();
 
                 while ((line = br.readLine()) != null) {
                     System.out.println("gelezen: " + line);
@@ -136,6 +158,9 @@ public class Portefeuille {
                     }
                     if (line.contains("TRANSACTION")) {
                         transactions.addTransactionLineFromDisk(line);
+                    }
+                    if (line.contains("POSITIE")) {
+                        posities.addPositionLineFromDisk(line);
                     }
                 }
             }

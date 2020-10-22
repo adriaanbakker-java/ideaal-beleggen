@@ -54,6 +54,8 @@ public class PortefeuillebeheerController implements Initializable {
     @FXML
     private TextField txtRekeningtegoed;
 
+    @FXML
+    private TextField txtPortefeuillenaam;
 
     @FXML
     private TextField txtLimietprijs;
@@ -264,7 +266,7 @@ public class PortefeuillebeheerController implements Initializable {
         try {
             Order order = new Order(
                     gekozenAandeel,
-                    now(),
+                    Util.toIDate( now()),
                     ordertype,
                     rbtVerkoop.isSelected(),
                     stopprijs,
@@ -442,9 +444,9 @@ public class PortefeuillebeheerController implements Initializable {
         return orderProcessed;
     }
 
-    public void laadPortefeuille() {
+    public void laadPortefeuille() throws Exception {
         System.out.println("Portefeuille van schijf halen");
-        portefeuille.haalOp(pfNaam);
+        haalPortefeuilleVanSchijf(this.pfNaam);
     }
 
     public void opslaanPortefeuille() {
@@ -453,7 +455,6 @@ public class PortefeuillebeheerController implements Initializable {
     }
 
     public void toonGrafiekenscherm(ActionEvent actionEvent) throws Exception {
-
         System.out.println("Toon grafiekenscherm");
         String gekozenAandeel = selecteerAandeel.getValue();
 
@@ -468,7 +469,6 @@ public class PortefeuillebeheerController implements Initializable {
                     + " tot aan datum " + portefeuille.getEinddatum().toString());
             main.toonGrafiekenschermTot(gekozenAandeel, aantalKoersdagen, portefeuille.getEinddatum());
         }
-
     }
 
     private void logInTextArea(String logmessage) {
@@ -479,12 +479,21 @@ public class PortefeuillebeheerController implements Initializable {
         pfNaam = portefeuilleNaam;
         portefeuille = new Portefeuille();
         portefeuille.haalOp(pfNaam);
+        txtPortefeuillenaam.setText( portefeuille.getPortefeuillenaam());
+
         String einddatum = portefeuille.getEinddatum().toString();
         txtEinddatum.setText( einddatum );
         String rekeningtegoed = Util.toCurrency(portefeuille.getRekeningTegoed());
         txtRekeningtegoed.setText(rekeningtegoed);
         addOrdersToScreen();
         addTransactionsToScreen();
-        addPositionsToScreen(2010,01,01);
+        IDate iEinddatum = portefeuille.getEinddatum();
+        addPositionsToScreen(iEinddatum.getYear(), iEinddatum.getMonth(), iEinddatum.getDay());
+    }
+
+    public void beursdagNaarRechts(IDate lastDate) {
+        portefeuille.setEinddatum(lastDate);
+        String einddatum = lastDate.toString();
+        txtEinddatum.setText(einddatum);
     }
 }

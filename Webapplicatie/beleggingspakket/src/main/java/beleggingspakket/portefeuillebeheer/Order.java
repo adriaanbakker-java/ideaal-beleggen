@@ -11,7 +11,7 @@ import static java.time.LocalDateTime.now;
 public class Order {
     private int orderNr;
     private String ticker = "";
-    private LocalDateTime orderDateTime;
+    private IDate orderDate;
     private boolean isSaleOrder;
     private int nrOfShares;
     private Ordertype orderType;
@@ -26,7 +26,7 @@ public class Order {
         String[] orderelements = line.split(",");
         orderNr = Integer.parseInt(orderelements[1]);
         ticker = orderelements[2];
-        orderDateTime = Util.toLocalDateTime(orderelements[3]);
+        orderDate = Util.toIDate(orderelements[3]);
         isSaleOrder = false;
         if (orderelements[4].equals("true"))
             isSaleOrder = true;
@@ -44,7 +44,7 @@ public class Order {
     public String toString() {
         return getOrderNr() + "," +
                 getTicker() + "," +
-                orderDateTime.toString() + "," +
+                orderDate.toString() + "," +
                 isSaleOrder + "," +
                 nrOfShares + "," +
                 getOrderType().name() + "," +
@@ -72,8 +72,8 @@ public class Order {
     public int getNrOfShares() {
         return nrOfShares;
     }
-    public LocalDateTime getOrderDateTime() {
-        return orderDateTime;
+    public IDate getOrderDate() {
+        return orderDate;
     }
     public Ordertype getOrderType() {
         return orderType;
@@ -110,14 +110,14 @@ public class Order {
 
     */
     public Order(String aTicker,
-                 LocalDateTime aDate,
+                 IDate aDate,
                  Ordertype aOrderType,
                  boolean aIsSaleOrder,
                  double aStopprice,
                  double aLimitprice,
                  int aNrOfShares) throws Exception {
         ticker = aTicker;
-        orderDateTime = aDate;
+        orderDate = aDate;
         orderType = aOrderType;
         nrOfShares = aNrOfShares;
         stopprice = aStopprice;

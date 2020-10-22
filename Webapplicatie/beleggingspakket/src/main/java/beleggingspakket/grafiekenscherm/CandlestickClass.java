@@ -32,6 +32,7 @@
 package beleggingspakket.grafiekenscherm;
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
@@ -258,9 +259,10 @@ public class CandlestickClass {
     }
 
 
-    public void panPeriod( int aantalDagenPannen) throws Exception {
+    public IDate panPeriod(int aantalDagenPannen) throws Exception {
         aantalDagenRetro = aantalDagenRetro - aantalDagenPannen;
         init(gekozenAandeel, aantalBeursdagenKoersreeks, aantalDagenRetro);
+        return lastDayDpr.getIDate();
     }
 
     public void zoomUit(int aAantalBeursdagenLinksErbij) throws Exception {
