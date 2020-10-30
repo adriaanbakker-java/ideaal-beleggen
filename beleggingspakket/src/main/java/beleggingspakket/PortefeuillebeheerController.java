@@ -167,6 +167,25 @@ public class PortefeuillebeheerController implements Initializable {
         tableViewPortefeuille.getColumns().add(createColumn("Aantal", "aantal"));
         tableViewPortefeuille.getColumns().add(createColumn("Koers", "koers"));
         tableViewPortefeuille.getColumns().add(createColumn("Waarde", "waarde"));
+        tableViewPortefeuille.getColumns().add(createColumn("GAK", "gak"));
+        tableViewPortefeuille.getColumns().add(createColumn("Gerealiseerd", "gerealiseerd"));
+        tableViewPortefeuille.getColumns().add(createColumn("Ongerealiseerd", "ongerealiseerd"));
+
+/* Kolommen voor winst/verlies:
+   •	totaal aantal gekocht TG is 50 + 50 = 100 stuks.
+•	Gemiddelde aankoopkoers GAK is gewogen gemiddelde = (50*50 + 60*50)/100 = 55 euro.
+•	totaal aantal verkocht TV is 50.
+•	Gemiddelde verkoopkoers GVK is gewogen gemiddelde van de verkoopkoersen is 70 euro.
+•	Gerealiseerde winst/verlies GRW = is TV * (GVK – GAK ) = 50 * (70 – 55) euro = 50 * 15 = 750 euro.
+•	Openstaande positie POS is gelijk aan POS = TG – TV = 50
+•	Ongerealiseerde winst OW = POS * ( K – GAK ) waarbij K de huidige koers is
+    Stel huidige koers K = 60 dan is ongerealiseerde winst/verlies gelijk aan
+    POS * ( K – GAK) = 50 * ( 60  - 55 ) = 50 * 5 = 250 euro.
+
+    Te tonen kolommen: POS, Gerealiseerd, Ongerealiseerd, GAK
+
+*/
+
         tableViewPortefeuille.setPrefHeight(10000);
 
 
@@ -370,18 +389,22 @@ public class PortefeuillebeheerController implements Initializable {
         double totaleWaarde = 0.0;
         for (Map.Entry<String, Integer> entry : portefeuille.getPosities()) {
             String aandeel = entry.getKey();
-            int aantal = entry.getValue();
-            String sAantal = Integer.toString(aantal);
             double dKoers = bufferedPrices.getClosePrice(aandeel,
                     year, month, day);
+            /*int aantal = entry.getValue();
+            String sAantal = Integer.toString(aantal);
+
             double dWaarde = dKoers * aantal;
-            totaleWaarde += dWaarde;
-            PositieDTO positieDTO = new PositieDTO(
-                    aandeel,
-                    sAantal,
-                    Util.toCurrency(dKoers),
-                    Util.toCurrency(dWaarde));
+            totaleWaarde += dWaarde;*/
+
+            // bereken winst/verlies op de positie
+
+            Positie pos = new Positie(aandeel, true);
+            pos.berekenWinstVerlies(portefeuille.getTransactions(), dKoers);
+
+            PositieDTO positieDTO = new PositieDTO(pos);
             tableViewPortefeuille.getItems().add(positieDTO);
+            totaleWaarde += dKoers * pos.getPOS();
         }
         txtPortefeuillewaarde.setText(Util.toCurrency(totaleWaarde));
         double rekeningTegoed =
@@ -389,8 +412,11 @@ public class PortefeuillebeheerController implements Initializable {
         double rekeningTegoedGestort = portefeuille.getRekeningTegoedGestort();
         double winstVerlies =
                         totaleWaarde + rekeningTegoed - rekeningTegoedGestort;
-        txtWinstVerlies.setText(Util.toCurrency(winstVerlies));
         txtTotaleWaarde.setText(Util.toCurrency(totaleWaarde));
+        txtWinstVerlies.setText(Util.toCurrency(winstVerlies));
+
+
+        // Bereken winst/verlies op de posities
     }
 
     public void verwijderOrder() {

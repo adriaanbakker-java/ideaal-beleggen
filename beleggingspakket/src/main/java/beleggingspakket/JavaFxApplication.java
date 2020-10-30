@@ -45,7 +45,6 @@ public class JavaFxApplication extends Application {
     }
 
 
-
     @Override
     public void start(Stage stage) {
         mainStage = stage;
@@ -98,63 +97,69 @@ public class JavaFxApplication extends Application {
 
 
     /*
-    *  Er zijn twee versies voor het openen van een grafiekenscherm
-    *     1. Vanuit de main module, met "aantal dagen retro" vanaf huidige datum
-    *     2. Vanuit de portefeuille, met de einddatum uit de portefeuille
-    *
-    *  Het candlesticks object werkt met aantal dagen retro vanaf de laatste dagkoers.
-    *  Om deze twee met elkaar te verenigen wordt het volgende ondernomen
-    *
-    *  Bij 1. wordt een einddatum berekend door van de huidige datum het aantal dagen retro af te trekken.
-    *
-    *  Bij 2. wordt de einddatum uit de portefeuille genomen
-    *
-    * Vervolgens wordt een effectief aantal dagen retro bepaald door te bepalen welke datum in de koersreeks nog net
-    * vlak voor of op deze einddatum valt. Het effectief aantal dagen retro is als volgt bepaald:
-    *
-    *   eindindex (index laatst zichtbare candle)  = myDayPriceArray.size() -1 - aantalDagenRetroEffectief;
-    *
-    */
+     *  Er zijn twee versies voor het openen van een grafiekenscherm
+     *     1. Vanuit de main module, met "aantal dagen retro" vanaf huidige datum
+     *     2. Vanuit de portefeuille, met de einddatum uit de portefeuille
+     *
+     *  Het candlesticks object werkt met aantal dagen retro vanaf de laatste dagkoers.
+     *  Om deze twee met elkaar te verenigen wordt het volgende ondernomen
+     *
+     *  Bij 1. wordt een einddatum berekend door van de huidige datum het aantal dagen retro af te trekken.
+     *
+     *  Bij 2. wordt de einddatum uit de portefeuille genomen
+     *
+     * Vervolgens wordt een effectief aantal dagen retro bepaald door te bepalen welke datum in de koersreeks nog net
+     * vlak voor of op deze einddatum valt. Het effectief aantal dagen retro is als volgt bepaald:
+     *
+     *   eindindex (index laatst zichtbare candle)  = myDayPriceArray.size() -1 - aantalDagenRetroEffectief;
+     *
+     */
 
     // 1. Aangeroepen vanuit hoofdscherm
     public void toonGrafiekenschermRetroDagen(String gekozenAandeel, int aantalBeursdagen, int aantalDagenRetro)
-      throws Exception {
-        LocalDateTime eindDT =  LocalDateTime.now().minusDays(aantalDagenRetro);
+            throws Exception {
+        LocalDateTime eindDT = LocalDateTime.now().minusDays(aantalDagenRetro);
         toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, Util.toIDate(eindDT));
     }
 
     // 2. Aangeroepen vanuit portefeuille
     public void toonGrafiekenschermTot(String gekozenAandeel, int aantalBeursdagen, IDate einddatum)
-      throws Exception {
-        toonGrafiekenscherm(gekozenAandeel,aantalBeursdagen, einddatum);
+            throws Exception {
+        toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, einddatum);
     }
 
 
-    // bepaal effectief aantal dagen retro
-    private int bepaalAantalDagenRetro(ArrayList<DayPriceRecord> prices, IDate einddatum) {
-        int index = 0;
+    // Bepaal de index waarop de koersreeks in de grafiek moet beginnen
+    private int bepaalStartindex(ArrayList<DayPriceRecord> prices, IDate einddatum) {
+        int index = 1; // let op index loopt vanaf 1
         LocalDateTime ldtEinddatum = Util.toLocalDateTime(einddatum);
-
         // bepaal dayprice record dat in de tijd nog net op of voor de einddatum ligt
-        Boolean found = false;
-        Boolean eof = false;
+        Boolean found;
 
         do {
-            eof = (index >= prices.size());
-            if (!eof) {
-                DayPriceRecord dpr = prices.get(index);
-                found = !(dpr.isBefore(ldtEinddatum));
-            }
-            if (!found)
-                index ++;
-        } while ((!found) && (!eof));
-        index--;
-        if (index < prices.size()) {
-            DayPriceRecord dpr = prices.get(index);
+            DayPriceRecord dpr = prices.get(index - 1);
+            found = !(dpr.isBefore(ldtEinddatum));
+            // stoppen zodra dpr niet langer voor de beoogde einddatum ligt
+
+            if ((!found) && (index < prices.size()))
+                index++;
+        } while ((!found) && (index < prices.size()));
+
+        if (found) {
+            DayPriceRecord dpr = prices.get(index - 1);
+            // het kan zijn dat dpr precies op de einddatum ligt
+            // het kan ook zijn dat dpr na de beoogde einddatum ligt.
+            // in dat laatste geval een stapje terug
+
             if (!dpr.isOnDate(ldtEinddatum))
                 index = index - 1;
         }
-        return prices.size() - 1 - index;
+        // let op, array met prices is nul gebaseerd en index is 1 gebaseerd
+
+        index = index - 1;
+        if (index < 0 )
+            return 0;
+        return index;
     }
 
     public void toonGrafiekenscherm(String gekozenAandeel,
@@ -166,7 +171,7 @@ public class JavaFxApplication extends Application {
         stage.setScene(scene);
         stage.show();*/
         ArrayList<DayPriceRecord> prices = readPrices(gekozenAandeel);
-        int aantalDagenRetro = bepaalAantalDagenRetro(prices, einddatum);
+        int startindex = bepaalStartindex(prices, einddatum);
 
         Class<? extends JavaFxApplication> x = getClass();
         URL resourceURL = x.getResource("grafiekenscherm.fxml");
@@ -180,6 +185,8 @@ public class JavaFxApplication extends Application {
 
         Stage stage = new Stage();
         stage.setScene(grafiekenScene);
+        int aantalDagenRetro = prices.size() - startindex  - 1;
+
         CandlestickClass candlestickClassObject = new CandlestickClass(
                 prices,
                 gekozenAandeel,
@@ -189,8 +196,6 @@ public class JavaFxApplication extends Application {
         grafiekenschermController.createCandleChart(gekozenAandeel);
         stage.show();
     }
-
-
 
 
     private void createPortefeuilleScherm(String portefeuilleNaam) throws Exception {
