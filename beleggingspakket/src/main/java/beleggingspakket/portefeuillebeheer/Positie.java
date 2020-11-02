@@ -6,16 +6,16 @@ public class Positie {
     private String instrumentnaam; // ticker van het aandeel (naam van het instrument)
     private boolean isAandeel;     // in geval van aandeel kan huidige koers worden gebruikt
     private int POS; // huidige positie
-    private double HK; // huidige koers
     private double GAK; // gemiddelde aankoopkoers
     private int TA; // totaal aantal aangekocht
     private int TV; // totaal aantal verkocht
+    private Double huidigeKoers;
 
     public Double getHuidigeKoers() {
         return huidigeKoers;
     }
 
-    private Double huidigeKoers;
+
 
     public String getInstrumentnaam() {
         return instrumentnaam;
@@ -27,10 +27,6 @@ public class Positie {
 
     public int getPOS() {
         return POS;
-    }
-
-    public double getHK() {
-        return HK;
     }
 
     public double getGAK() {
@@ -74,16 +70,17 @@ public class Positie {
         this.TV = 0;
         this.GAK = 0.0;
         this.GVK = 0.0;
+
         for (Transaction t: transactions) {
-            if (t.getTicker().equals(this.instrumentnaam)) {
+            if (t.getInstrumentname().equals(this.instrumentnaam)) {
                 if (!t.isSaleOrder()) {
-                   POS += t.getNrOfShares();
-                   TA  += t.getNrOfShares();
-                   GAK += t.getNrOfShares() * t.getSharePrice();
+                   POS += t.getNrOfItems();
+                   TA  += t.getNrOfItems();
+                   GAK += t.getNrOfItems() * t.getPrice();
                 } else {
-                    POS -= t.getNrOfShares();
-                    TV  += t.getNrOfShares();
-                    GVK += t.getNrOfShares() * t.getSharePrice();
+                    POS -= t.getNrOfItems();
+                    TV  += t.getNrOfItems();
+                    GVK += t.getNrOfItems() * t.getPrice();
                 }
             }
         }

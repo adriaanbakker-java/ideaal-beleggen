@@ -10,6 +10,8 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static java.time.LocalDateTime.now;
+
 public class Portefeuille {
 
 
@@ -188,4 +190,36 @@ public class Portefeuille {
     }
 
 
+    // nb de af/bij is bij (gewone) optie 100 keer de optieprijs
+    // transactiekosten worden (nog) genegeerd.
+    public void AddOptieTransactie(
+            String ticker,
+            boolean isCall,
+            int aantal,
+            int expMaand,
+            int expJaar,
+            double afBij) {
+        String sCall = "C";
+        if (!isCall)
+            sCall = "P";
+        String optieserie = sCall + " " + ticker + " " +
+              expMaand + "-" + expJaar + Util.toCurrency(afBij);
+
+        Transaction t = new Transaction(
+                einddatum,
+                optieserie,
+                (aantal < 0),
+                aantal,
+                Util.toLocalDateTime(einddatum),
+                afBij
+        );
+
+        transactions.add(t);
+
+        addToPositie(t);
+    }
+
+    private void addToPositie(Transaction optieTransactie) {
+        posities.addToPositie(optieTransactie);
+    }
 }

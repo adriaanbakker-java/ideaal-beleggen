@@ -62,4 +62,8 @@ public class Posities {
     public void deletePositions() {
         posities.clear();
     }
+
+    public void addToPositie(Transaction optieTransactie) {
+        System.out.println("add to positie van optietransactie nog implementeren");
+    }
 }

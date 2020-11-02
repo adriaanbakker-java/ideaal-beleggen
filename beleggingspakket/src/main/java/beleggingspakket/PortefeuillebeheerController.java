@@ -30,13 +30,16 @@ public class PortefeuillebeheerController implements Initializable {
     // for now, just for the ticker set to be able to order
     private GetPriceHistory getPriceHistory = new GetPriceHistory();
 
-
+    private String pfNaam = "";
     private Portefeuille portefeuille = new Portefeuille();
 
     private TableView tableViewOrders = new TableView();
     private TableView tableViewTx = new TableView();
     private TableView tableViewPortefeuille = new TableView();
     private BufferedPrices bufferedPrices = new BufferedPrices();
+    // The price history from each stock in current portfolio
+    // is kept in buffer
+    // NB note that position 0 stocks could be removed from this buffer
 
     @FXML
     private Label lblMessage;
@@ -47,6 +50,12 @@ public class PortefeuillebeheerController implements Initializable {
     @FXML
     private TextField txtAantal;
 
+    @FXML
+    private TextField txtAantalOpties;
+
+    @FXML
+    private TextField txtBijAf
+            ;
 
     @FXML
     private TextField txtEinddatum;
@@ -81,6 +90,11 @@ public class PortefeuillebeheerController implements Initializable {
     @FXML
     private RadioButton rbtVerkoop;
 
+    @FXML
+    private RadioButton rbtKoopOptie;
+
+    @FXML
+    private RadioButton rbtVerkoopOptie;
 
     @FXML
     private RadioButton rbtBestens;
@@ -97,7 +111,16 @@ public class PortefeuillebeheerController implements Initializable {
 
     @FXML
     private ChoiceBox<String> selecteerAandeel;
-    private String pfNaam = "";
+
+    @FXML
+    private ChoiceBox<String> cmbCallPut;
+
+    @FXML
+    private ComboBox<String> cmbExpMaand;
+
+    @FXML
+    private ComboBox<String> cmbExpJaar;
+
 
     TableColumn<String, OrderDTO> createColumn(String displayName, String name) {
         TableColumn<String, OrderDTO> column1 = new TableColumn<>(displayName);
@@ -118,6 +141,18 @@ public class PortefeuillebeheerController implements Initializable {
         tickerSet.addAll( getPriceHistory.getTickers() );
         Collections.sort(tickerSet);
 
+        for (int i=1; i<= 12; i++) {
+           cmbExpMaand.getItems().add(Integer.toString(i));
+        }
+
+        cmbCallPut.getItems().add("Call");
+        cmbCallPut.getItems().add("Put");
+
+
+        for (int i=2014; i<= 2030; i++) {
+            cmbExpJaar.getItems().add(Integer.toString(i));
+        }
+
         for (String ticker1 : tickerSet) {
             aandelenlijst.add(ticker1);
         }
@@ -132,6 +167,15 @@ public class PortefeuillebeheerController implements Initializable {
         rbtBestens.setToggleGroup(groupOrderType);
         rbtStopLimit.setToggleGroup(groupOrderType);
         rbtStopLoss.setToggleGroup(groupOrderType);
+
+        final ToggleGroup groupOptieOrderType = new ToggleGroup();
+        rbtKoopOptie.setToggleGroup(groupOptieOrderType);
+        rbtVerkoopOptie.setToggleGroup(groupOptieOrderType);
+        rbtKoopOptie.setSelected(true);
+        txtAantalOpties.setText("1");
+        cmbCallPut.setValue("Call");
+        cmbExpMaand.setValue("1");
+        cmbExpJaar.setValue("2025");
 
         rbtLimiet.setSelected(true);
         txtAantal.setText("20");
@@ -316,6 +360,55 @@ public class PortefeuillebeheerController implements Initializable {
         showMessage("order aangemaakt");
     }
 
+    public void enterOptieOrder() {
+        String veldnaam = "";
+        try {
+            System.out.println("enter optie order");
+            String ticker = selecteerAandeel.getValue();
+            if (ticker == null) {
+                throw new Exception("svp eerst aandeel kiezen");
+            }
+            veldnaam = "aantal";
+            int aantal = Integer.parseInt(txtAantalOpties.getText());
+            veldnaam = "expiratiemaand";
+            int expMaand = Integer.parseInt(cmbExpMaand.getValue().toString());
+            veldnaam = "expiratiejaar";
+            int expJaar = Integer.parseInt(cmbExpJaar.getValue().toString());
+            veldnaam = "callput";
+            boolean isCall = cmbCallPut.getValue().equals("Call");
+            veldnaam = "bijaf";
+            String sBijAf = txtBijAf.getText();
+            double bijAf = Util.toDouble(sBijAf);
+            verwerkOptieTransactie(
+                    ticker,
+                    isCall,
+                    aantal,
+                    expMaand,
+                    expJaar,
+                    bijAf
+            );
+
+
+        } catch (Exception e) {
+            if (veldnaam.equals("aantal")) {
+                logInTextArea("formaat van aantal onjuist");
+            }
+            else if (veldnaam.equals("expiratiemaand")) {
+                logInTextArea("svp geldige expiratiemaand ingeven");
+            }
+            else if (veldnaam.equals("expiratiejaar")) {
+                logInTextArea("svp geldig expiratiejaar ingeven");
+            }
+            else if (veldnaam.equals("bijaf")) {
+                logInTextArea("fout in formaat bij/af bedrag");
+            }
+            else if (veldnaam.equals("callput")) {
+                logInTextArea("svp call of put ingeven");
+            } else
+               logInTextArea(e.getLocalizedMessage());
+        }
+    }
+
     public void addOrdersToScreen() throws Exception {
         tableViewOrders.getItems().clear();
 
@@ -361,7 +454,7 @@ public class PortefeuillebeheerController implements Initializable {
         for (Transaction tx : portefeuille.getTransactions()) {
 
 
-            double bedrag = tx.getNrOfShares() * tx.getSharePrice();
+            double bedrag = tx.getNrOfItems() * tx.getPrice();
             if (tx.isSaleOrder()) {
                 bedrag = -bedrag;
             }
@@ -370,10 +463,10 @@ public class PortefeuillebeheerController implements Initializable {
             TransactionDTO transactionDTO = new TransactionDTO(
                     datum.toString(),
                     Integer.toString(tx.getTxNumber()),
-                    tx.getTicker(),
-                    Integer.toString(tx.getNrOfShares()),
-                    Integer.toString(tx.getNrOfShares()),
-                    Util.toCurrency(tx.getSharePrice()),
+                    tx.getInstrumentname(),
+                    Integer.toString(tx.getNrOfItems()),
+                    Integer.toString(tx.getNrOfItems()),
+                    Util.toCurrency(tx.getPrice()),
                     Util.toCurrency(bedrag)
             );
 
@@ -414,8 +507,6 @@ public class PortefeuillebeheerController implements Initializable {
                         totaleWaarde + rekeningTegoed - rekeningTegoedGestort;
         txtTotaleWaarde.setText(Util.toCurrency(totaleWaarde));
         txtWinstVerlies.setText(Util.toCurrency(winstVerlies));
-
-
         // Bereken winst/verlies op de posities
     }
 
@@ -460,16 +551,48 @@ public class PortefeuillebeheerController implements Initializable {
         }
         for (Transaction transaction : transactionsToBeCreated) {
             portefeuille.addTransaction(transaction);
-            double bedrag = transaction.getSharePrice() * transaction.getNrOfShares();
+            double bedrag = transaction.getPrice() * transaction.getNrOfItems();
             int sign = 1;
             if (transaction.isSaleOrder()) {
                 sign *= -1;
             }
             portefeuille.setRekeningTegoed(
                     portefeuille.getRekeningTegoed() -
-                    sign * transaction.getSharePrice() * transaction.getNrOfShares());
+                    sign * transaction.getPrice() * transaction.getNrOfItems());
 
-            portefeuille.addToPositie(transaction.getTicker(), transaction.getNrOfShares() * sign);
+            portefeuille.addToPositie(transaction.getInstrumentname(), transaction.getNrOfItems() * sign);
+        }
+    }
+
+
+    // Anders dan een aandelenorder wordt een optieorder direct verwerkt
+    // met als beursdag de beursdag de laatst zichtbare beursdag in
+    // de grafiek
+    public void verwerkOptieTransactie(
+            String ticker, boolean isCall,
+            int aantal, int expMaand, int expJaar,
+            double afBij) {
+        System.out.println("Toevoegen optietransactie:" +
+                ticker + " " + isCall + " " + aantal + " "
+                + expMaand + "-" + expJaar + "  af/bij:" + Util.toCurrency(afBij));
+        try {
+            portefeuille.AddOptieTransactie(
+                    ticker,
+                    isCall,
+                    aantal,
+                    expMaand,
+                    expJaar,
+                    afBij
+            );
+
+            addOrdersToScreen();
+            addTransactionsToScreen();
+            IDate einddatum = portefeuille.getEinddatum();
+            addPositionsToScreen(einddatum.getYear(),
+                    einddatum.getMonth(), einddatum.getDay());
+
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
     }
 

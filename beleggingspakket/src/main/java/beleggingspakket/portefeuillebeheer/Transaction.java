@@ -8,23 +8,24 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-
     private IDate executionDate;
     private IDate orderdate;
-    private String ticker;
+    private String Instrumentname;  // ticker in geval van aandeel, anders optieserie
+                                    // in de vorm van bijv "PHI C 40.0 0920" voor de september
+                                    // call voor Philips met uitoefenprijs 40.0 expiratie in sept 2020
     private int txNumber;
     private boolean isSaleOrder;
-    private int nrOfShares;
-    private double sharePrice;
+    private int nrOfItems;
+    private double price;
 
     static int transactionSeq = 1000;
 
-    public String getTicker() {
-        return ticker;
+    public String getInstrumentname() {
+        return Instrumentname;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setInstrumentname(String instrumentname) {
+        this.Instrumentname = instrumentname;
     }
 
     public static int getTransactionSeq() {
@@ -51,21 +52,21 @@ public class Transaction {
         isSaleOrder = saleOrder;
     }
 
-    public int getNrOfShares() {
-        return nrOfShares;
+    public int getNrOfItems() {
+        return nrOfItems;
     }
 
-    public void setNrOfShares(int nrOfShares) {
-        this.nrOfShares = nrOfShares;
+    public void setNrOfItems(int nrOfItems) {
+        this.nrOfItems = nrOfItems;
     }
 
 
-    public double getSharePrice() {
-        return sharePrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setSharePrice(double sharePrice) {
-        this.sharePrice = sharePrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public IDate getExecutionDate() {
@@ -78,26 +79,26 @@ public class Transaction {
     
     public Transaction(
                         IDate aDate,   // execution date
-                        String ticker,
+                        String instrumentname,
                        boolean isSaleOrder,
-                       int nrOfShares,
+                       int nrOfItems,
                        LocalDateTime orderDate,   // order date
                        Double sharePrice) {
         this.executionDate = aDate;
-        this.ticker = ticker;
+        this.Instrumentname = instrumentname;
         this.txNumber = transactionSeq++;
         this.isSaleOrder = isSaleOrder;
-        this.nrOfShares = nrOfShares;
-        this.sharePrice = sharePrice;
+        this.nrOfItems = nrOfItems;
+        this.price = sharePrice;
     }
 
 
     public String toString() {
         return getTxNumber() + "," +
-                getTicker() + "," +
+                getInstrumentname() + "," +
                 executionDate + "," +
                 isSaleOrder + "," +
-                nrOfShares + "," +
-                Util.toCurrency(getSharePrice());
+                nrOfItems + "," +
+                Util.toCurrency(getPrice());
     }
 }

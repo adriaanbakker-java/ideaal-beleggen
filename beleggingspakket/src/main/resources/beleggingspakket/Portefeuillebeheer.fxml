@@ -98,9 +98,26 @@
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Geld storten/opnemen">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="110.0" prefHeight="0.0" prefWidth="202.0" text="Geld storten/opnemen">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Optieorder uitvoeren">
+                     <content>
+                        <AnchorPane fx:id="aantalOpties" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="rbtKoopOptie" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Koop" />
+                              <RadioButton fx:id="rbtVerkoopOptie" layoutX="99.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Verkoop" />
+                              <TextField fx:id="txtAantalOpties" layoutX="-1.0" layoutY="37.0" prefHeight="25.0" prefWidth="50.0" promptText="Aantal" text="1" />
+                              <ComboBox fx:id="cmbExpJaar" layoutX="105.0" layoutY="96.0" prefHeight="25.0" prefWidth="75.0" />
+                              <ComboBox fx:id="cmbExpMaand" layoutX="8.0" layoutY="96.0" prefHeight="25.0" prefWidth="84.0" />
+                              <Label layoutX="10.0" layoutY="68.0" text="Expiratiedatum" />
+                              <Button layoutX="126.0" layoutY="200.0" mnemonicParsing="false" onAction="#enterOptieOrder" text="OK" />
+                              <ChoiceBox fx:id="cmbCallPut" layoutX="57.0" layoutY="37.0" prefWidth="150.0" />
+                              <TextField fx:id="txtBijAf" layoutX="101.0" layoutY="139.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="30.00" />
+                              <Label layoutX="8.0" layoutY="143.0" text="Bij/Af" />
+                           </children></AnchorPane>
                      </content>
                   </TitledPane>
               </panes>
