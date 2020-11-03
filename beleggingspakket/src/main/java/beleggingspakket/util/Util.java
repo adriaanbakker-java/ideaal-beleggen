@@ -34,14 +34,17 @@ public class Util {
 
 
 
-    public static IDate toIDate(String orderDate) {
-        int dd = Integer.parseInt(orderDate.substring(0,2));
-        int mm = Integer.parseInt(orderDate.substring(3,5));
-        int yyyy =  Integer.parseInt(orderDate.substring(6,10));
-        return new IDate(yyyy, mm, dd);
+    public static IDate toIDate(String orderDate) throws Exception {
+        try { int dd = Integer.parseInt(orderDate.substring(0,2));
+            int mm = Integer.parseInt(orderDate.substring(3,5));
+            int yyyy =  Integer.parseInt(orderDate.substring(6,10));
+            return new IDate(yyyy, mm, dd);
+        } catch (Exception e) {
+            throw new Exception("Util.toIDate: ongeldige datum:" + orderDate + ":" + e.getLocalizedMessage());
+        }
     }
 
-    public static IDate toIDate(LocalDateTime orderDate) {
+    public static IDate toIDate(LocalDateTime orderDate) throws Exception {
        String ddmmyyyy = toDDMMYYYY(orderDate);
        return toIDate(ddmmyyyy);
     }
@@ -51,7 +54,7 @@ public class Util {
         return ld.atStartOfDay();
     }
 
-    public static LocalDateTime toLocalDateTime(String sYYYYMMDD) {
+    public static LocalDateTime toLocalDateTime(String sYYYYMMDD) throws Exception {
         //default, ISO_LOCAL_DATE
         LocalDateTime localDate = toLocalDateTime(toIDate(sYYYYMMDD));
         return localDate;

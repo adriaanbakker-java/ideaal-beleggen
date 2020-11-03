@@ -11,11 +11,23 @@ public class Positie {
     private int TV; // totaal aantal verkocht
     private Double huidigeKoers;
 
-    public Double getHuidigeKoers() {
-        return huidigeKoers;
+    // koers van instrument wordt na het doen van een transactie aangepast via de portefeuillebeheercontroller
+    // voor de koers van een aandeel wordt de koershistorie geraadpleegd bij het tonen van de posities op het scherm
+    // in de portefeuillecontroller. De koers van een optie wordt handmatig bijgehouden en bijgewerkt na een transactie.
+    public void setHuidigeKoers(Double huidigeKoers) {
+        this.huidigeKoers = huidigeKoers;
+    }
+
+    // positie wordt na het doen van een transactie aangepast via de portefeuillebeheercontroller
+    public void setPOS(int POS) {
+        this.POS = POS;
     }
 
 
+
+    public Double getHuidigeKoers() {
+        return huidigeKoers;
+    }
 
     public String getInstrumentnaam() {
         return instrumentnaam;
@@ -63,7 +75,7 @@ public class Positie {
         this.POS = 0;
     }
 
-    public void berekenWinstVerlies(ArrayList<Transaction> transactions, Double huidigeKoers) {
+    public void berekenWinstVerliesInstrument(ArrayList<Transaction> transactions, Double huidigeKoers) {
         this.huidigeKoers = huidigeKoers;
         this.POS = 0;
         this.TA = 0;

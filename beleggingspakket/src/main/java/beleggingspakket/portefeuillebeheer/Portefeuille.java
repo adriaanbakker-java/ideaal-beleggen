@@ -7,7 +7,6 @@ import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.time.LocalDateTime.now;
@@ -37,7 +36,7 @@ public class Portefeuille {
     private double rekeningTegoedGestort = 0.0;
 
 
-    public Set<Map.Entry<String, Integer>> getPosities() {
+    public Set<Map.Entry<String, Positie>> getPosities() {
         return posities.getPosities();
     }
     private Orders orders = new Orders();
@@ -47,8 +46,8 @@ public class Portefeuille {
     public IDate getEinddatum() {
         return einddatum;
     }
-    public void addToPositie(String ticker, int i) {
-        posities.addToPositie(ticker, i);
+    public void addToPositie(String instrumentnaam, int i, double laatsteKoers, boolean isOptie) {
+        posities.addToPositie(instrumentnaam, i, laatsteKoers, isOptie);
     }
     public Portefeuille() {
         rekeningTegoed = 5000.00;
@@ -193,30 +192,38 @@ public class Portefeuille {
     // nb de af/bij is bij (gewone) optie 100 keer de optieprijs
     // transactiekosten worden (nog) genegeerd.
     public void AddOptieTransactie(
+            boolean isVerkoop,
             String ticker,
             boolean isCall,
+            double uitoefenprijs,
             int aantal,
             int expMaand,
             int expJaar,
-            double afBij) {
+            double bedrag) {
         String sCall = "C";
         if (!isCall)
             sCall = "P";
-        String optieserie = sCall + " " + ticker + " " +
-              expMaand + "-" + expJaar + Util.toCurrency(afBij);
+        String optieserie = sCall + " " + ticker + " " + Util.toCurrency(uitoefenprijs) + " " +
+              expMaand + "-" + expJaar;
 
         Transaction t = new Transaction(
                 einddatum,
                 optieserie,
-                (aantal < 0),
+                isVerkoop,
                 aantal,
                 Util.toLocalDateTime(einddatum),
-                afBij
+                bedrag,
+                true
         );
 
         transactions.add(t);
 
         addToPositie(t);
+        if (isVerkoop) {
+            this.rekeningTegoed += bedrag;
+        } else {
+            this.rekeningTegoed -= bedrag;
+        }
     }
 
     private void addToPositie(Transaction optieTransactie) {

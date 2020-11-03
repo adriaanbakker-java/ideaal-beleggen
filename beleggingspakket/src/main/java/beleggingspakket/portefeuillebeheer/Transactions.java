@@ -34,19 +34,37 @@ public class Transactions {
     }
 
 
+    // TRANSACTION, <nr>, <instrumentnaam>, <instrumentsoort>, <>, <is verkoop>, <orderdate>,
+    //              <aantal>, <koers>
+    // bijv voor aandeel ASML
+    //    TRANSACTION, 1003, ASML ,AANDEEL, 15-10-2020,true,10,329.12
+    // bijv voor optie ASML Call feb 2022 met uitoefenprijs 330
+    //    TRANSACTION, 1004, ASML C 02-2022 330.00, OPTIE, 15-10-2020, true, 10, 329.12
     public void addTransactionLineFromDisk(String line) throws Exception {
-        System.out.println("ophalen transaction line:" + line);
-        String[] transactionelements = line.split(",");
-        String sTicker = transactionelements[2];
-        IDate iDate = Util.toIDate(transactionelements[3]);
-        int nrOfShares = Integer.parseInt(transactionelements[5]);
-        double sharePrice = Util.toDouble(transactionelements[6]);
-        boolean isSalesOrder = false;
-        if (transactionelements[4].equals("true"))
-            isSalesOrder = true;
+        try {
+            System.out.println("ophalen transaction line:" + line);
+            String[] transactionelements = line.split(",");
+            String sTicker = transactionelements[2];
+            boolean isOptietransactie = (transactionelements[3].equals("OPTIE"));
+            IDate iDate = Util.toIDate(transactionelements[4].trim());
+            boolean isSalesOrder = false;
+            if (transactionelements[5].equals("true"))
+                isSalesOrder = true;
+            int nrOfShares = Integer.parseInt(transactionelements[6]);
+            double koers = Util.toDouble(transactionelements[7]);
 
-        Transaction transaction = new Transaction(iDate, sTicker, isSalesOrder, nrOfShares, Util.toLocalDateTime(iDate), sharePrice);
-        transactions.add(transaction);
+            Transaction transaction = new Transaction(
+                    iDate,
+                    sTicker,
+                    isSalesOrder,
+                    nrOfShares,
+                    Util.toLocalDateTime(iDate),
+                    koers,
+                    isOptietransactie);
+            transactions.add(transaction);
+        } catch (Exception e) {
+            throw new Exception("addTransactionLineFromDisk:" + line + ":" + e.getLocalizedMessage());
+        }
     }
 
     // delete all transactions

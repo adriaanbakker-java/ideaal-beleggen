@@ -18,7 +18,31 @@ public class Transaction {
     private int nrOfItems;
     private double price;
 
+
+
+    private boolean isOptietransactie;
     static int transactionSeq = 1000;
+
+    public Transaction(
+            IDate aDate,   // execution date
+            String instrumentname,
+            boolean isSaleOrder,
+            int nrOfItems,
+            LocalDateTime orderDate,   // order date
+            double sharePrice,
+            boolean isOptietransactie) {
+        this.executionDate = aDate;
+        this.Instrumentname = instrumentname;
+        this.txNumber = transactionSeq++;
+        this.isSaleOrder = isSaleOrder;
+        this.nrOfItems = nrOfItems;
+        this.price = sharePrice;
+        this.isOptietransactie = isOptietransactie;
+    }
+
+    public boolean getIsOptieTransactie() {
+        return isOptietransactie;
+    }
 
     public String getInstrumentname() {
         return Instrumentname;
@@ -77,25 +101,16 @@ public class Transaction {
         this.executionDate = executionDate;
     }
     
-    public Transaction(
-                        IDate aDate,   // execution date
-                        String instrumentname,
-                       boolean isSaleOrder,
-                       int nrOfItems,
-                       LocalDateTime orderDate,   // order date
-                       Double sharePrice) {
-        this.executionDate = aDate;
-        this.Instrumentname = instrumentname;
-        this.txNumber = transactionSeq++;
-        this.isSaleOrder = isSaleOrder;
-        this.nrOfItems = nrOfItems;
-        this.price = sharePrice;
-    }
+
 
 
     public String toString() {
+        String soort = "AANDEEL";
+        if (this.isOptietransactie)
+            soort = "OPTIE";
         return getTxNumber() + "," +
                 getInstrumentname() + "," +
+                soort + "," +
                 executionDate + "," +
                 isSaleOrder + "," +
                 nrOfItems + "," +

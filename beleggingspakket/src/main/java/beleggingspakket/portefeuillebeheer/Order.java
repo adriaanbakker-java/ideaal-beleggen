@@ -277,7 +277,8 @@ public class Order {
                 isSale,
                 getNrOfShares(),
                 now(),
-                price
+                price,
+                false
         );
         return t;
     }
