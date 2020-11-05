@@ -17,10 +17,8 @@ public class Transaction {
     private boolean isSaleOrder;
     private int nrOfItems;
     private double price;
-
-
-
     private boolean isOptietransactie;
+    private int contractgrootte = 100;
     static int transactionSeq = 1000;
 
     public Transaction(
@@ -30,7 +28,8 @@ public class Transaction {
             int nrOfItems,
             LocalDateTime orderDate,   // order date
             double sharePrice,
-            boolean isOptietransactie) {
+            boolean isOptietransactie,
+            int contractgrootte) {
         this.executionDate = aDate;
         this.Instrumentname = instrumentname;
         this.txNumber = transactionSeq++;
@@ -38,6 +37,11 @@ public class Transaction {
         this.nrOfItems = nrOfItems;
         this.price = sharePrice;
         this.isOptietransactie = isOptietransactie;
+        this.contractgrootte = contractgrootte;
+    }
+
+    public int getContractgrootte() {
+        return contractgrootte;
     }
 
     public boolean getIsOptieTransactie() {
@@ -108,12 +112,43 @@ public class Transaction {
         String soort = "AANDEEL";
         if (this.isOptietransactie)
             soort = "OPTIE";
-        return getTxNumber() + "," +
+        String result =
+                "TRANSACTION," +
+                getTxNumber() + "," +
                 getInstrumentname() + "," +
                 soort + "," +
                 executionDate + "," +
                 isSaleOrder + "," +
                 nrOfItems + "," +
                 Util.toCurrency(getPrice());
+        if (this.isOptietransactie)
+            result += "," + contractgrootte;
+
+        return result;
     }
+
+    public Transaction(String line) throws Exception {
+        System.out.println("ophalen optietransactie via regel:" + line);
+        String[] transactionelements = line.split(",");
+        if (transactionelements.length < 8)
+            throw new Exception("minstens 8 elementen op regel verwacht");
+
+        this.txNumber = transactionSeq++;
+        setInstrumentname( transactionelements[2].trim());
+        isOptietransactie = (transactionelements[3].trim().equals("OPTIE"));
+        if (isOptietransactie && (transactionelements.length < 9))
+            throw new Exception("minstens 9 elementen op regel verwacht bij een optietransactie");
+
+        IDate iDate = Util.toIDate(transactionelements[4].trim());
+        setExecutionDate(iDate);
+
+        isSaleOrder = false;
+        if (transactionelements[5].trim().toLowerCase().equals("true"))
+            isSaleOrder = true;
+        nrOfItems = Integer.parseInt(transactionelements[6]);
+        price = Util.toDouble(transactionelements[7]);
+        if (isOptietransactie)
+            contractgrootte = Integer.parseInt(transactionelements[8]);
+    }
+
 }

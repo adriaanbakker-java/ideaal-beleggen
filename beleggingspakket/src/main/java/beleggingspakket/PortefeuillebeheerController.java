@@ -252,10 +252,10 @@ public class PortefeuillebeheerController implements Initializable {
 
         tableViewTx.getColumns().add(createColumn("Datum", "datum"));
         tableViewTx.getColumns().add(createColumn("TxNr", "txNr"));
-        tableViewTx.getColumns().add(createColumn("Aandeel", "aandeelNaam"));
+        tableViewTx.getColumns().add(createColumn("Instrumentnaam", "aandeelNaam"));
         tableViewTx.getColumns().add(createColumn("Aantal", "aantal"));
         tableViewTx.getColumns().add(createColumn("Koop/Verkoop", "koopVerkoop"));
-        tableViewTx.getColumns().add(createColumn("Prijs", "aandeelPrijs"));
+        tableViewTx.getColumns().add(createColumn("Koers", "aandeelPrijs"));
         tableViewTx.getColumns().add(createColumn("Bedrag", "bedrag"));
 
         tableViewTx.setPrefHeight(10000);
@@ -478,9 +478,13 @@ public class PortefeuillebeheerController implements Initializable {
     public void addTransactionsToScreen() throws Exception {
         tableViewTx.getItems().clear();
         for (Transaction tx : portefeuille.getTransactions()) {
+            double bedrag = 0.0;
+            if (tx.getIsOptieTransactie()) {
+                bedrag = tx.getNrOfItems() * tx.getPrice() * tx.getContractgrootte();
+            } else {
+                bedrag = tx.getNrOfItems() * tx.getPrice();
+            }
 
-
-            double bedrag = tx.getNrOfItems() * tx.getPrice();
             if (tx.isSaleOrder()) {
                 bedrag = -bedrag;
             }
@@ -518,7 +522,7 @@ public class PortefeuillebeheerController implements Initializable {
 
             // bereken winst/verlies op de positie
             Double dKoers = 0.0;
-            if (pos.isAandeel()) {
+            if (pos.getIsAandeel()) {
                 dKoers = bufferedPrices.getClosePrice(instrumentnaam,
                         year, month, day);
             } else {
@@ -527,7 +531,8 @@ public class PortefeuillebeheerController implements Initializable {
             pos.berekenWinstVerliesInstrument(portefeuille.getTransactions(), dKoers);
             PositieDTO positieDTO = new PositieDTO(pos);
             tableViewPortefeuille.getItems().add(positieDTO);
-            totaleWaarde += dKoers * pos.getPOS();
+            totaleWaarde += pos.geefHuidigeWaarde();
+
         }
 
         txtPortefeuillewaarde.setText(Util.toCurrency(totaleWaarde));
@@ -596,8 +601,8 @@ public class PortefeuillebeheerController implements Initializable {
                     transaction.getInstrumentname(),
                     transaction.getNrOfItems() * sign,
                     transaction.getPrice(),
-                    transaction.getIsOptieTransactie()
-                    );
+                    transaction.getIsOptieTransactie(),
+                    transaction.getContractgrootte());
         }
     }
 
@@ -677,11 +682,6 @@ public class PortefeuillebeheerController implements Initializable {
         haalPortefeuilleVanSchijf(this.pfNaam);
     }
 
-    public void opslaanPortefeuille() {
-        System.out.println("Portefeuille opslaan");
-        portefeuille.slaOp();
-        showMessage("portefeuille opgeslagen");
-    }
 
     public void toonGrafiekenscherm(ActionEvent actionEvent) throws Exception {
         System.out.println("Toon grafiekenscherm");
@@ -704,6 +704,13 @@ public class PortefeuillebeheerController implements Initializable {
         showMessage(logmessage);
     }
 
+
+    public void beursdagNaarRechts(IDate lastDate) {
+        portefeuille.setEinddatum(lastDate);
+        String einddatum = lastDate.toString();
+        txtEinddatum.setText(einddatum);
+    }
+
     public void haalPortefeuilleVanSchijf(String portefeuilleNaam) throws Exception {
         pfNaam = portefeuilleNaam;
         portefeuille = new Portefeuille();
@@ -720,9 +727,10 @@ public class PortefeuillebeheerController implements Initializable {
         addPositionsToScreen(iEinddatum.getYear(), iEinddatum.getMonth(), iEinddatum.getDay());
     }
 
-    public void beursdagNaarRechts(IDate lastDate) {
-        portefeuille.setEinddatum(lastDate);
-        String einddatum = lastDate.toString();
-        txtEinddatum.setText(einddatum);
+    public void opslaanPortefeuille() {
+        System.out.println("Portefeuille opslaan");
+        portefeuille.slaOp();
+        showMessage("portefeuille opgeslagen");
     }
+
 }

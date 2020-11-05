@@ -46,8 +46,10 @@ public class Portefeuille {
     public IDate getEinddatum() {
         return einddatum;
     }
-    public void addToPositie(String instrumentnaam, int i, double laatsteKoers, boolean isOptie) {
-        posities.addToPositie(instrumentnaam, i, laatsteKoers, isOptie);
+    public void addToPositie(String instrumentnaam, int i, double laatsteKoers,
+                             boolean isOptie,
+                             int contractgrootte) {
+        posities.addToPositie(instrumentnaam, i, laatsteKoers, isOptie, contractgrootte);
     }
     public Portefeuille() {
         rekeningTegoed = 5000.00;
@@ -84,43 +86,61 @@ public class Portefeuille {
 
 
 
-    public void slaOp() {
-        System.out.println("Portefeuille opslaan");
-        String folder = Constants.getPFfolder();
-        String filenamePF = Constants.getFilenamePF();
-
-        try {
-            String filename = Constants.getPFfolder()  + filenamePF;
-            // check if file exists, otherwise create
-            File myFile = new File(filename);
-            if (!myFile.exists()) {
-                myFile.createNewFile();
-            } else {
-                myFile.delete();
-            }
-            
-            try (	FileWriter writer = new FileWriter(myFile);
-                     BufferedWriter bw = new BufferedWriter(writer)) {
-
-                // exporteer de einddatum
-                String laatsteDatum = this.einddatum.toString();
-                writer.write(laatsteDatum +  "\n");
 
 
-                // exporteer het rekeningtegoed
-                String currentLine = Util.toCurrency(rekeningTegoed);
-                writer.write(currentLine +  "\n");
 
-                // ... sla posities op
-                orders.slaOp(writer);
-                transactions.slaOp(writer);
-                posities.slaOp(writer);
+    public double getRekeningTegoed() {
+        return rekeningTegoed;
+    }
 
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public void setRekeningTegoed(double rekeningTegoed) {
+        this.rekeningTegoed = rekeningTegoed;
+    }
+
+
+    // nb de af/bij is bij (gewone) optie 100 keer de optieprijs
+    // transactiekosten worden (nog) genegeerd.
+    public void AddOptieTransactie(
+            boolean isVerkoop,
+            String ticker,
+            boolean isCall,
+            double uitoefenprijs,
+            int aantal,
+            int expMaand,
+            int expJaar,
+            double optiepremie,
+            int contractgrootte) {
+        String sCall = "C";
+        if (!isCall)
+            sCall = "P";
+        String optieserie = sCall + " " + ticker + " " + Util.toCurrency(uitoefenprijs) + " " +
+              expMaand + "-" + expJaar;
+
+        double transactieBedrag = optiepremie * contractgrootte;
+
+        Transaction t = new Transaction(
+                einddatum,
+                optieserie,
+                isVerkoop,
+                aantal,
+                Util.toLocalDateTime(einddatum),
+                optiepremie,
+                true,
+                contractgrootte
+        );
+
+        transactions.add(t);
+
+        addToPositie(t);
+        if (isVerkoop) {
+            this.rekeningTegoed += transactieBedrag;
+        } else {
+            this.rekeningTegoed -= transactieBedrag;
         }
+    }
 
+    private void addToPositie(Transaction optieTransactie) {
+        posities.addToPositie(optieTransactie);
     }
 
     public void haalOp(String pfNaam) {
@@ -180,56 +200,44 @@ public class Portefeuille {
         }
     }
 
-    public double getRekeningTegoed() {
-        return rekeningTegoed;
-    }
+    public void slaOp() {
+        System.out.println("Portefeuille opslaan");
+        String folder = Constants.getPFfolder();
+        String filenamePF = Constants.getFilenamePF();
 
-    public void setRekeningTegoed(double rekeningTegoed) {
-        this.rekeningTegoed = rekeningTegoed;
-    }
+        try {
+            String filename = Constants.getPFfolder()  + filenamePF;
+            // check if file exists, otherwise create
+            File myFile = new File(filename);
+            if (!myFile.exists()) {
+                myFile.createNewFile();
+            } else {
+                myFile.delete();
+            }
+
+            try (	FileWriter writer = new FileWriter(myFile);
+                     BufferedWriter bw = new BufferedWriter(writer)) {
+
+                // exporteer de einddatum
+                String laatsteDatum = this.einddatum.toString();
+                writer.write(laatsteDatum +  "\n");
 
 
-    // nb de af/bij is bij (gewone) optie 100 keer de optieprijs
-    // transactiekosten worden (nog) genegeerd.
-    public void AddOptieTransactie(
-            boolean isVerkoop,
-            String ticker,
-            boolean isCall,
-            double uitoefenprijs,
-            int aantal,
-            int expMaand,
-            int expJaar,
-            double optiepremie,
-            int contractgrootte) {
-        String sCall = "C";
-        if (!isCall)
-            sCall = "P";
-        String optieserie = sCall + " " + ticker + " " + Util.toCurrency(uitoefenprijs) + " " +
-              expMaand + "-" + expJaar;
+                // exporteer het rekeningtegoed
+                String currentLine = Util.toCurrency(rekeningTegoed);
+                writer.write(currentLine +  "\n");
 
-        double transactieBedrag = optiepremie * contractgrootte;
+                // ... sla posities op
+                orders.slaOrdersOpNaarDisk(writer);
+                transactions.slaTransactionOpNaarDisk(writer);
+                posities.slaPositiesOpNaarDisk(writer);
 
-        Transaction t = new Transaction(
-                einddatum,
-                optieserie,
-                isVerkoop,
-                aantal,
-                Util.toLocalDateTime(einddatum),
-                transactieBedrag,
-                true
-        );
-
-        transactions.add(t);
-
-        addToPositie(t);
-        if (isVerkoop) {
-            this.rekeningTegoed += transactieBedrag;
-        } else {
-            this.rekeningTegoed -= transactieBedrag;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
-    private void addToPositie(Transaction optieTransactie) {
-        posities.addToPositie(optieTransactie);
-    }
 }
+

@@ -18,9 +18,10 @@ public class Posities {
             String instrumentnaam,
             int aantal,
             double laatsteKoers,
-            boolean isOptie) {
+            boolean isOptie,
+            int contractgrootte) {
         if (!positieAantalMap.containsKey(instrumentnaam)) {
-           Positie pos = new Positie(instrumentnaam, !isOptie);
+           Positie pos = new Positie(instrumentnaam, !isOptie, contractgrootte);
            pos.setPOS(aantal);
            pos.setHuidigeKoers(laatsteKoers);
 
@@ -38,8 +39,18 @@ public class Posities {
         addToPositie(optieTransactie.getInstrumentname(),
                 optieTransactie.getNrOfItems(),
                 optieTransactie.getPrice(),
-                true
+                true,
+                optieTransactie.getContractgrootte()
         );
+    }
+
+    public void addToPositie(Positie pos) {
+        addToPositie(
+                pos.getInstrumentnaam(),
+                pos.getPOS(),
+                pos.getHuidigeKoers(),
+                !pos.getIsAandeel(),
+                pos.getContractgrootte());
     }
 
     public PositieDTO geefPositieDTO(String aTicker, double aKoers) {
@@ -53,21 +64,12 @@ public class Posities {
         return dto;
     }
 
-    public void slaOp(FileWriter writer) throws Exception {
-        System.out.println("orders ->sla de orders op");
+    public void slaPositiesOpNaarDisk(FileWriter writer) throws Exception {
+        System.out.println("posities opslaan op schijf");
         try {
             for (Map.Entry<String, Positie> entry : getPosities()) {
-                String instrumentnaam = entry.getKey();
-                Positie pos = entry.getValue();
-                int aantal = pos.getPOS();
-
-                String sPositie = "POSITIE," + instrumentnaam + ", ";
-                if (pos.isAandeel()) {
-                    sPositie  += " AANDEEL,";
-                } else {
-                    sPositie += "OPTIE,";
-                }
-                sPositie += aantal + "," + pos.getHuidigeKoers();
+               Positie pos = entry.getValue();
+               String sPositie = pos.toString();
                 writer.write(sPositie + "\n");
             }
         } catch (Exception e) {
@@ -81,17 +83,9 @@ public class Posities {
     public void addPositionLineFromDisk(String line) throws Exception {
         try {
             System.out.println("aanmaken positie via string:" + line);
-            String[] positionelements = line.split(",");
-            if (positionelements.length < 5) {
-                throw new Exception("5 elementen op regel verwacht");
-            }
-            String sInstrumentnaam = positionelements[1].trim();
-            String sInstrumentsoort = positionelements[2].trim();
-            boolean bIsOptie = (sInstrumentsoort.equals("OPTIE"));
-            String sAantal = positionelements[3].trim();
-            double dHuidigeKoers = Util.toDouble(positionelements[4].trim());
-            int aantal = Integer.parseInt(sAantal);
-            addToPositie(sInstrumentnaam, aantal, dHuidigeKoers, bIsOptie);
+            Positie pos = Positie.maakPositie(line);
+            addToPositie(pos.getInstrumentnaam(), pos.getPOS(), pos.getHuidigeKoers(),
+                    !pos.getIsAandeel(), pos.getContractgrootte());
         } catch (Exception e) {
             throw new Exception("addPositionLineFromDisk():" + line + "+" + e.getLocalizedMessage());
         }

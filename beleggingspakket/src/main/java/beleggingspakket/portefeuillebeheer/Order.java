@@ -278,7 +278,8 @@ public class Order {
                 getNrOfShares(),
                 now(),
                 price,
-                false
+                false,
+                0
         );
         return t;
     }

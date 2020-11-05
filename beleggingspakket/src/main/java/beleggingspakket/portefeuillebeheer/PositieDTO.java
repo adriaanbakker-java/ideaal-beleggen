@@ -31,7 +31,8 @@ public class PositieDTO {
         aandeelNaam = pos.getInstrumentnaam();
         aantal = Integer.toString(pos.getPOS());
         koers = Util.toCurrency(pos.getHuidigeKoers());
-        waarde = Util.toCurrency(pos.getHuidigeKoers() * pos.getPOS());
+        double dWaarde = pos.geefHuidigeWaarde();
+        waarde = Util.toCurrency(dWaarde);
         gak = Util.toCurrency(pos.getGAK());
         gerealiseerd = Util.toCurrency(pos.getGWV());
         ongerealiseerd = Util.toCurrency(pos.getOWV());

@@ -21,7 +21,7 @@ public class Transactions {
         transactions.add(transaction);
     }
 
-    public void slaOp(FileWriter writer) throws Exception {
+    public void slaTransactionOpNaarDisk(FileWriter writer) throws Exception {
         System.out.println("transactions ->sla de transacties op");
         try {
             for (Transaction t:transactions) {
@@ -42,25 +42,7 @@ public class Transactions {
     //    TRANSACTION, 1004, ASML C 02-2022 330.00, OPTIE, 15-10-2020, true, 10, 329.12
     public void addTransactionLineFromDisk(String line) throws Exception {
         try {
-            System.out.println("ophalen transaction line:" + line);
-            String[] transactionelements = line.split(",");
-            String sTicker = transactionelements[2];
-            boolean isOptietransactie = (transactionelements[3].equals("OPTIE"));
-            IDate iDate = Util.toIDate(transactionelements[4].trim());
-            boolean isSalesOrder = false;
-            if (transactionelements[5].equals("true"))
-                isSalesOrder = true;
-            int nrOfShares = Integer.parseInt(transactionelements[6]);
-            double koers = Util.toDouble(transactionelements[7]);
-
-            Transaction transaction = new Transaction(
-                    iDate,
-                    sTicker,
-                    isSalesOrder,
-                    nrOfShares,
-                    Util.toLocalDateTime(iDate),
-                    koers,
-                    isOptietransactie);
+            Transaction transaction = new Transaction( line );
             transactions.add(transaction);
         } catch (Exception e) {
             throw new Exception("addTransactionLineFromDisk:" + line + ":" + e.getLocalizedMessage());

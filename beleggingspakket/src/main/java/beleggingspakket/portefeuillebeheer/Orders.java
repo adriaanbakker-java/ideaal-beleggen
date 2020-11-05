@@ -34,7 +34,7 @@ public class Orders {
         }
     }
 
-    public void slaOp(FileWriter writer) throws Exception {
+    public void slaOrdersOpNaarDisk(FileWriter writer) throws Exception {
         System.out.println("orders ->sla de orders op");
         try {
             for (Order order: orders) {
