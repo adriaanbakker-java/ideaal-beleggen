@@ -58,7 +58,7 @@ public class PortefeuillebeheerController implements Initializable {
     private TextField txtAantalOpties;
 
     @FXML
-    private TextField txtBedragOptietx;
+    private TextField txtBedragOptiePremie;
 
     @FXML
     private TextField txtEinddatum;
@@ -98,6 +98,14 @@ public class PortefeuillebeheerController implements Initializable {
 
     @FXML
     private RadioButton rbtVerkoopOptie;
+
+    @FXML
+    private RadioButton rbtOptieContract100;
+
+    @FXML
+    private RadioButton rbtOptieContract10;
+
+
 
     @FXML
     private RadioButton rbtBestens;
@@ -175,6 +183,12 @@ public class PortefeuillebeheerController implements Initializable {
         rbtKoopOptie.setToggleGroup(groupOptieOrderType);
         rbtVerkoopOptie.setToggleGroup(groupOptieOrderType);
         rbtKoopOptie.setSelected(true);
+
+        final ToggleGroup groupContractgrootte = new ToggleGroup();
+        rbtOptieContract10.setToggleGroup(groupContractgrootte);
+        rbtOptieContract100.setToggleGroup(groupContractgrootte);
+        rbtOptieContract100.setSelected(true);
+
         txtAantalOpties.setText("1");
         cmbCallPut.setValue("Call");
         cmbExpMaand.setValue("1");
@@ -381,11 +395,14 @@ public class PortefeuillebeheerController implements Initializable {
             veldnaam = "callput";
             boolean isCall = cmbCallPut.getValue().equals("Call");
             veldnaam = "bijaf";
-            String sBedrag = txtBedragOptietx.getText();
-            double bedrag = Util.toDouble(sBedrag);
+            String sOptiepremie = txtBedragOptiePremie.getText();
+            double optiePremie = Util.toDouble(sOptiepremie);
             veldnaam = "uitoefenprijs";
             double uitoefenprijs = Util.toDouble(txtUitoefenprijs.getText());
 
+            int nContract = 100;
+            if (rbtOptieContract10.isSelected())
+                nContract = 10;
             boolean isVerkoop = rbtVerkoopOptie.isSelected();
             verwerkOptieTransactie(
                     isVerkoop,
@@ -395,7 +412,8 @@ public class PortefeuillebeheerController implements Initializable {
                     aantal,
                     expMaand,
                     expJaar,
-                    bedrag
+                    optiePremie,
+                    nContract
             );
 
 
@@ -588,9 +606,15 @@ public class PortefeuillebeheerController implements Initializable {
     // met als beursdag de beursdag de laatst zichtbare beursdag in
     // de grafiek
     public void verwerkOptieTransactie(
-              boolean isVerkoop, String ticker, boolean isCall,
-            double uitoefenprijs, int aantal, int expMaand, int expJaar,
-            double bedrag) {
+            boolean isVerkoop,
+            String ticker,
+            boolean isCall,
+            double uitoefenprijs,
+            int aantal,
+            int expMaand,
+            int expJaar,
+            double optiepremie,
+            int iContactgrootte) {
         String sCall = "Call";
         if (!isCall)
             sCall = "Put";
@@ -600,7 +624,8 @@ public class PortefeuillebeheerController implements Initializable {
         System.out.println("Toevoegen optietransactie:" + sKoopVerkoop + " " +
                 aantal + " " + ticker + " " + sCall + " " +
                 Util.toCurrency(uitoefenprijs) +
-                " " + expMaand + "-" + expJaar + "  af/bij:" + Util.toCurrency(bedrag));
+                " " + expMaand + "-" + expJaar + "  af/bij:" + Util.toCurrency(optiepremie) + " contractgrootte = " +
+                iContactgrootte);
         try {
             portefeuille.AddOptieTransactie(
                     isVerkoop,
@@ -610,7 +635,8 @@ public class PortefeuillebeheerController implements Initializable {
                     aantal,
                     expMaand,
                     expJaar,
-                    bedrag
+                    optiepremie,
+                    iContactgrootte
             );
 
             addOrdersToScreen();

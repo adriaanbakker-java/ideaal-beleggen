@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
    <top>
       <Label text="Portefeuillebeheer" BorderPane.alignment="CENTER">
          <font>
@@ -98,7 +98,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Optieorder uitvoeren">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Optietransactie uitvoeren">
                      <content>
                         <AnchorPane fx:id="aantalOpties" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -108,12 +108,14 @@
                               <ComboBox fx:id="cmbExpJaar" layoutX="93.0" layoutY="123.0" prefHeight="27.0" prefWidth="107.0" />
                               <ComboBox fx:id="cmbExpMaand" layoutX="-3.0" layoutY="123.0" prefHeight="27.0" prefWidth="87.0" />
                               <Label layoutX="10.0" layoutY="106.0" text="Expiratiedatum" />
-                              <Button layoutX="126.0" layoutY="200.0" mnemonicParsing="false" onAction="#enterOptieOrder" text="OK" />
+                              <Button layoutX="143.0" layoutY="259.0" mnemonicParsing="false" onAction="#enterOptieOrder" text="OK" />
                               <ChoiceBox fx:id="cmbCallPut" layoutX="57.0" layoutY="37.0" prefWidth="150.0" />
-                              <TextField fx:id="txtBedragOptietx" layoutX="101.0" layoutY="161.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="30.75" />
-                              <Label layoutX="9.0" layoutY="166.0" text="Tx bedrag" />
+                              <TextField fx:id="txtBedragOptiePremie" layoutX="101.0" layoutY="161.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="30.75" />
+                              <Label layoutX="9.0" layoutY="166.0" text="Optiepremie" />
                               <TextField fx:id="txtUitoefenprijs" layoutX="103.0" layoutY="79.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="41.00" />
                               <Label layoutX="10.0" layoutY="84.0" prefHeight="17.0" prefWidth="83.0" text="Uitoefenprijs" />
+                              <RadioButton fx:id="rbtOptieContract100" layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#klikOrderControl" text="100" />
+                              <RadioButton fx:id="rbtOptieContract10" layoutX="17.0" layoutY="228.0" mnemonicParsing="false" onAction="#klikOrderControl" text="10" />
                            </children></AnchorPane>
                      </content>
                   </TitledPane>
@@ -121,7 +123,7 @@
             </Accordion>
             <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="38.0" prefWidth="202.0" text="Portefeuille opslaan" />
             <Button layoutX="10.0" layoutY="548.0" mnemonicParsing="false" onAction="#laadPortefeuille" prefHeight="38.0" prefWidth="202.0" text="Portefuille laden" />
-            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="38.0" prefWidth="202.0" text="Toon Grafiekenscherm" />
+            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="42.0" prefWidth="206.0" text="Toon Grafiekenscherm" />
          </children>
       </VBox>
    </left>

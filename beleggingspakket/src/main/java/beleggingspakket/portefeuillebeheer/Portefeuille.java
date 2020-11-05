@@ -199,12 +199,15 @@ public class Portefeuille {
             int aantal,
             int expMaand,
             int expJaar,
-            double bedrag) {
+            double optiepremie,
+            int contractgrootte) {
         String sCall = "C";
         if (!isCall)
             sCall = "P";
         String optieserie = sCall + " " + ticker + " " + Util.toCurrency(uitoefenprijs) + " " +
               expMaand + "-" + expJaar;
+
+        double transactieBedrag = optiepremie * contractgrootte;
 
         Transaction t = new Transaction(
                 einddatum,
@@ -212,7 +215,7 @@ public class Portefeuille {
                 isVerkoop,
                 aantal,
                 Util.toLocalDateTime(einddatum),
-                bedrag,
+                transactieBedrag,
                 true
         );
 
@@ -220,9 +223,9 @@ public class Portefeuille {
 
         addToPositie(t);
         if (isVerkoop) {
-            this.rekeningTegoed += bedrag;
+            this.rekeningTegoed += transactieBedrag;
         } else {
-            this.rekeningTegoed -= bedrag;
+            this.rekeningTegoed -= transactieBedrag;
         }
     }
 
