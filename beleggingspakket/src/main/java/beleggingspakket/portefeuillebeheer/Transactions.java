@@ -26,7 +26,7 @@ public class Transactions {
         try {
             for (Transaction t:transactions) {
                 String sTransaction = t.toString();
-                writer.write("TRANSACTION," + sTransaction + "\n");
+                writer.write( sTransaction + "\n");
             }
         } catch (Exception e) {
             throw new Exception("Exception in slaOp() transactie:" + e.getLocalizedMessage());

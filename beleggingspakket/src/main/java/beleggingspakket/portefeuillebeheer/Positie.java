@@ -5,6 +5,11 @@ import beleggingspakket.util.Util;
 import java.util.ArrayList;
 
 public class Positie {
+    private static int PositionSeq = 1000;
+
+
+
+    private int seqNr;
     private String instrumentnaam; // ticker van het aandeel (naam van het instrument)
     private boolean isAandeel;     // in geval van aandeel kan huidige koers worden gebruikt
     private int contractgrootte;
@@ -85,8 +90,12 @@ public class Positie {
         return OWV;
     }
 
+    public int getSeqNr() {
+        return seqNr;
+    }
 
     public Positie(String instrumentnaam, boolean isAandeel, int contractgrootte) {
+        this.seqNr = PositionSeq++;
         this.instrumentnaam = instrumentnaam;
         this.isAandeel = isAandeel;
         this.POS = 0;

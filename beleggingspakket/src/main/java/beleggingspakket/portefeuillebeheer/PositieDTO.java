@@ -4,6 +4,10 @@ import beleggingspakket.util.Util;
 
 public class PositieDTO {
 
+
+
+
+    private String volgnr;
     private String aandeelNaam;
     private String aantal;
     private String koers;
@@ -12,12 +16,9 @@ public class PositieDTO {
     private String gerealiseerd;
     private String ongerealiseerd;
 
-/*
-    aandeel,
-    sAantal,
-            Util.toCurrency(dKoers),
-            Util.toCurrency(dWaarde));
-*/
+    public String getVolgnr() {
+        return volgnr;
+    }
 
     public String getGerealiseerd() {
         return gerealiseerd;
@@ -28,6 +29,7 @@ public class PositieDTO {
     }
 
     public PositieDTO(Positie pos) {
+        volgnr = Integer.toString(pos.getSeqNr());
         aandeelNaam = pos.getInstrumentnaam();
         aantal = Integer.toString(pos.getPOS());
         koers = Util.toCurrency(pos.getHuidigeKoers());
@@ -58,7 +60,12 @@ public class PositieDTO {
         return gak;
     }
 
-    public PositieDTO(String aandeelNaam, String aantal, String koers, String waarde) {
+    public PositieDTO(String aandeelNaam,
+                      String aantal,
+                      String koers,
+                      String waarde,
+                      String volgnr) {
+        this.volgnr = volgnr;
         this.aandeelNaam = aandeelNaam;
         this.aantal = aantal;
         this.koers = koers;

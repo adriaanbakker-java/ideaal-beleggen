@@ -41,6 +41,13 @@ public class PortefeuillebeheerController implements Initializable {
     // is kept in buffer
     // NB note that position 0 stocks could be removed from this buffer
 
+
+    @FXML
+    private TextField txtPositievolgnr;
+
+    @FXML
+    private TextField txtNieuweOptiekoers;
+
     @FXML
     private Label lblMessage;
 
@@ -224,6 +231,7 @@ public class PortefeuillebeheerController implements Initializable {
         tableViewOrders.setPrefHeight(10000);
 
 
+        tableViewPortefeuille.getColumns().add(createColumn("volgnr", "volgnr"));
         tableViewPortefeuille.getColumns().add(createColumn("Aandeel", "aandeelNaam"));
         tableViewPortefeuille.getColumns().add(createColumn("Aantal", "aantal"));
         tableViewPortefeuille.getColumns().add(createColumn("Koers", "koers"));
@@ -677,10 +685,8 @@ public class PortefeuillebeheerController implements Initializable {
         return orderProcessed;
     }
 
-    public void laadPortefeuille() throws Exception {
-        System.out.println("Portefeuille van schijf halen");
-        haalPortefeuilleVanSchijf(this.pfNaam);
-    }
+
+
 
 
     public void toonGrafiekenscherm(ActionEvent actionEvent) throws Exception {
@@ -725,6 +731,27 @@ public class PortefeuillebeheerController implements Initializable {
         addTransactionsToScreen();
         IDate iEinddatum = portefeuille.getEinddatum();
         addPositionsToScreen(iEinddatum.getYear(), iEinddatum.getMonth(), iEinddatum.getDay());
+    }
+
+    public void pasOptiekoersAan() {
+        try {
+            System.out.println("optiekoers aanpassen van positie " + txtPositievolgnr.getText() +
+                    " Nieuwe optiekoers:" + txtNieuweOptiekoers.getText() );
+            double nieuweKoers = Util.toDouble(txtNieuweOptiekoers.getText());
+            int volgnr = Integer.parseInt(txtPositievolgnr.getText());
+            portefeuille.pasOptiekoersAan(volgnr, nieuweKoers);
+            IDate einddatum = portefeuille.getEinddatum();
+            addPositionsToScreen(einddatum.getYear(),
+                    einddatum.getMonth(), einddatum.getDay());
+            toonPortefeuille();
+        } catch (Exception e) {
+            showMessage(e.getLocalizedMessage());
+        }
+    }
+
+    public void laadPortefeuille() throws Exception {
+        System.out.println("Portefeuille van schijf halen");
+        haalPortefeuilleVanSchijf(this.pfNaam);
     }
 
     public void opslaanPortefeuille() {

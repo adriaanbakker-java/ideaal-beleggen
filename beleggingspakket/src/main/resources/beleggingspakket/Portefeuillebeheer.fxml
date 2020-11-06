@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Accordion?>
@@ -16,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
    <top>
       <Label text="Portefeuillebeheer" BorderPane.alignment="CENTER">
          <font>
@@ -84,12 +90,17 @@
                            <children>
                               <TextField fx:id="txtRekeningtegoed" editable="false" layoutX="15.0" layoutY="24.0" promptText="Rekeningtegoed" text="5000,00" />
                               <Label layoutX="15.0" layoutY="7.0" text="Rekeningtegoed" />
-                              <Label layoutX="15.0" layoutY="68.0" text="Portefeuillewaarde" />
-                              <TextField fx:id="txtPortefeuillewaarde" editable="false" layoutX="15.0" layoutY="85.0" promptText="Portefeuillewaarde" text="1500" />
-                              <Label layoutX="14.0" layoutY="217.0" text="Winst / Verlies" />
-                              <TextField fx:id="txtWinstVerlies" editable="false" layoutX="15.0" layoutY="234.0" promptText="Winst / Verlies" text="500,00" />
-                              <TextField fx:id="txtTotaleWaarde" editable="false" layoutX="15.0" layoutY="157.0" promptText="Totale waarde" text="5500,00" />
-                              <Label layoutX="15.0" layoutY="138.0" text="Totale waarde" />
+                              <Label layoutX="15.0" layoutY="60.0" text="Portefeuillewaarde" />
+                              <TextField fx:id="txtPortefeuillewaarde" editable="false" layoutX="15.0" layoutY="77.0" promptText="Portefeuillewaarde" text="1500" />
+                              <Label layoutX="14.0" layoutY="158.0" text="Winst / Verlies" />
+                              <TextField fx:id="txtWinstVerlies" editable="false" layoutX="15.0" layoutY="175.0" promptText="Winst / Verlies" text="500,00" />
+                              <TextField fx:id="txtTotaleWaarde" editable="false" layoutX="15.0" layoutY="125.0" promptText="Totale waarde" text="5500,00" />
+                              <Label layoutX="15.0" layoutY="108.0" text="Totale waarde" />
+                              <Button layoutX="19.0" layoutY="224.0" mnemonicParsing="false" onAction="#pasOptiekoersAan" prefHeight="25.0" prefWidth="145.0" text="Optiekoers aanpassen" />
+                              <TextField fx:id="txtPositievolgnr" layoutX="91.0" layoutY="255.0" prefHeight="25.0" prefWidth="76.0" promptText="volgnr" text="1000" />
+                              <Label layoutX="48.0" layoutY="259.0" text="volgnr" />
+                              <Label layoutX="48.0" layoutY="284.0" text="koers" />
+                              <TextField fx:id="txtNieuweOptiekoers" layoutX="91.0" layoutY="280.0" prefHeight="25.0" prefWidth="76.0" promptText="koers" text="0.30" />
                            </children></AnchorPane>
                   </content>
                 </TitledPane>

@@ -13,29 +13,10 @@ import static java.time.LocalDateTime.now;
 
 public class Portefeuille {
 
-
-    public String getPortefeuillenaam() {
-        return portefeuillenaam;
-    }
-
-    public void setPortefeuillenaam(String portefeuillenaam) {
-        this.portefeuillenaam = portefeuillenaam;
-    }
-
     private String portefeuillenaam = "nog-toekennen";
-
-    public void setEinddatum(IDate einddatum) {
-        this.einddatum = einddatum;
-    }
-
     private IDate einddatum = new IDate(1800,1,1);
     private double rekeningTegoed = 0.0;
-
-
-
     private double rekeningTegoedGestort = 0.0;
-
-
     public Set<Map.Entry<String, Positie>> getPosities() {
         return posities.getPosities();
     }
@@ -54,6 +35,10 @@ public class Portefeuille {
     public Portefeuille() {
         rekeningTegoed = 5000.00;
         rekeningTegoedGestort = rekeningTegoed;
+    }
+
+    public void setEinddatum(IDate einddatum) {
+        this.einddatum = einddatum;
     }
     public double getRekeningTegoedGestort() {
         return rekeningTegoedGestort;
@@ -83,6 +68,13 @@ public class Portefeuille {
         transactions.getTransactions().add(transaction);
     }
 
+    public String getPortefeuillenaam() {
+        return portefeuillenaam;
+    }
+
+    public void setPortefeuillenaam(String portefeuillenaam) {
+        this.portefeuillenaam = portefeuillenaam;
+    }
 
 
 
@@ -239,5 +231,8 @@ public class Portefeuille {
 
     }
 
+    public void pasOptiekoersAan(int volgnr, double nieuweKoers) throws Exception {
+        posities.pasKoersAan(volgnr, nieuweKoers);
+    }
 }
 

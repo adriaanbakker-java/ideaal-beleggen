@@ -3,14 +3,40 @@ package beleggingspakket.portefeuillebeheer;
 import beleggingspakket.util.Util;
 
 import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Posities {
     private HashMap<String, Positie> positieAantalMap = new HashMap<>();
     public Set<Map.Entry<String, Positie>> getPosities() {
         return positieAantalMap.entrySet();
+    }
+
+
+    public void pasKoersAan(int volgnr, double nieuweKoers) throws Exception {
+        boolean found = false;
+        for (Positie pos: positieAantalMap.values()) {
+            if (pos.getSeqNr() == volgnr) {
+                pos.setHuidigeKoers(nieuweKoers);
+                found = true;
+            }
+        }
+        if (!found)
+            throw new Exception("positie met volgnr " + volgnr + " niet gevonden");
+    }
+    // Voeg een nieuwe positie toe
+    // (wordt eigenlijk geacht nog niet te bestaan)
+    private void addToPosities(Positie aPositie) {
+        String instrumentnaam = aPositie.getInstrumentnaam();
+        if (!positieAantalMap.containsKey(instrumentnaam)) {
+            positieAantalMap.put(instrumentnaam, aPositie);
+        } else {
+            System.out.println("waarschuwing - positie hoort nog niet te bestaan in addToPosities()");
+            Positie pos = positieAantalMap.get(instrumentnaam);
+            Integer totAantal = pos.getPOS() + aPositie.getPOS();
+            pos.setPOS(totAantal);
+            pos.setHuidigeKoers(aPositie.getHuidigeKoers());
+            positieAantalMap.replace(instrumentnaam, pos);
+        }
     }
 
     // voeg aantal toe aan nieuwe positie als die nog niet bestaat
@@ -53,16 +79,6 @@ public class Posities {
                 pos.getContractgrootte());
     }
 
-    public PositieDTO geefPositieDTO(String aTicker, double aKoers) {
-        int aantal = positieAantalMap.get(aTicker).getPOS();
-        double waarde = aKoers * aantal;
-        PositieDTO dto = new PositieDTO(
-                aTicker,
-                Integer.toString(aantal),
-                Util.toCurrency(aKoers),
-                Util.toCurrency(waarde));
-        return dto;
-    }
 
     public void slaPositiesOpNaarDisk(FileWriter writer) throws Exception {
         System.out.println("posities opslaan op schijf");
@@ -84,8 +100,9 @@ public class Posities {
         try {
             System.out.println("aanmaken positie via string:" + line);
             Positie pos = Positie.maakPositie(line);
-            addToPositie(pos.getInstrumentnaam(), pos.getPOS(), pos.getHuidigeKoers(),
-                    !pos.getIsAandeel(), pos.getContractgrootte());
+            /*addToPositie(pos.getInstrumentnaam(), pos.getPOS(), pos.getHuidigeKoers(),
+                    !pos.getIsAandeel(), pos.getContractgrootte());*/
+            addToPosities(pos);
         } catch (Exception e) {
             throw new Exception("addPositionLineFromDisk():" + line + "+" + e.getLocalizedMessage());
         }
