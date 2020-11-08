@@ -74,7 +74,7 @@ public class KoersenModuleApplication {
         }
         Main.main(args);
 
-        return "Greetings from Spring Boot!";
+        return "Koersen ververst!";
     }
 
 

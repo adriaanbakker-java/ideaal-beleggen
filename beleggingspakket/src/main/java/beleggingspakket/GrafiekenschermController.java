@@ -492,30 +492,32 @@ public class GrafiekenschermController implements Initializable {
     }
 
     // Indien er orders zijn ingelegd, check of je ze kunt uitvoeren
-    private boolean checkUitvoerenOrders(int aantalDagen) {
+    private boolean checkUitvoerenOrders(DayPriceRecord dpr) {
         System.out.println("check orders uitvoeren");
-        int lastIndex = myCandlestickObject.getEindindex();
-        ArrayList<DayPriceRecord> priceArray = myCandlestickObject.getMyDayPriceArray();
-        int endIndex = myCandlestickObject.getMyDayPriceArray().size() - 1;
-        if (lastIndex >= endIndex)
-            return false;   // we zijn al aan het einde van de beschikbare candles
-        DayPriceRecord dpr = priceArray.get(lastIndex + 1);
-
         return main.verwerkOrders(dpr);
     }
 
     public void verwerkEenBeursdag()  {
         try {
-            boolean uitgevoerd = checkUitvoerenOrders(1);
-            if (uitgevoerd) {
-                toonMessage( "Er zijn order(s) uitgevoerd");
+            int lastIndex = myCandlestickObject.getEindindex();
+            ArrayList<DayPriceRecord> priceArray = myCandlestickObject.getMyDayPriceArray();
+            int endIndex = myCandlestickObject.getMyDayPriceArray().size() - 1;
+            if (lastIndex + 1 <= endIndex) {
+                DayPriceRecord dpr = priceArray.get(lastIndex + 1);
+                boolean uitgevoerd = checkUitvoerenOrders(dpr);
+                if (uitgevoerd) {
+                    toonMessage( "Er zijn order(s) uitgevoerd");
+                } else {
+                    toonMessage("geen uitgevoerde orders");
+                }
+                //myCandlestickObject.panPeriod(1);
+                createCandleChart(fondsnaam);
+                beursdagNaarRechts();
             } else {
-                toonMessage("geen uitgevoerde orders");
+                toonMessage("Aan einde van beschikbare koersen");
             }
 
-            //myCandlestickObject.panPeriod(1);
-            createCandleChart(fondsnaam);
-            beursdagNaarRechts();
+
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
 
