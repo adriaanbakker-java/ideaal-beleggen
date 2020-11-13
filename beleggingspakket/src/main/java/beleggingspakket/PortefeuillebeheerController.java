@@ -58,6 +58,16 @@ public class PortefeuillebeheerController implements Initializable {
     private TextField txtAantal;
 
     @FXML
+    private TextField txtAantalDirect;
+
+    @FXML
+    private TextField txtKoersDirect;
+
+    @FXML
+    private TextField txtDatumDirect;
+
+
+    @FXML
     private TextField txtUitoefenprijs;
 
 
@@ -93,6 +103,13 @@ public class PortefeuillebeheerController implements Initializable {
 
     @FXML
     private TextField txtOrdernr;
+
+    @FXML
+    private RadioButton rbtKoopDirect;
+
+    @FXML
+    private RadioButton rbtVerkoopDirect;
+
 
     @FXML
     private RadioButton rbtKoop;
@@ -204,6 +221,11 @@ public class PortefeuillebeheerController implements Initializable {
         rbtLimiet.setSelected(true);
         txtAantal.setText("20");
         txtStopprijs.setVisible(false);
+
+        final ToggleGroup groupDirectKoopVerkoop = new ToggleGroup();
+        rbtKoopDirect.setToggleGroup(groupDirectKoopVerkoop);
+        rbtVerkoopDirect.setToggleGroup(groupDirectKoopVerkoop);
+        rbtKoopDirect.setSelected(true);
 
         final ToggleGroup groupKoopVerkoop = new ToggleGroup();
         rbtKoop.setToggleGroup(groupKoopVerkoop);
@@ -384,6 +406,52 @@ public class PortefeuillebeheerController implements Initializable {
         }
         showMessage("order aangemaakt");
     }
+
+    public void enterDirecteOrder() {
+        System.out.println("direct aandelen kopen/verkopen");
+        String veldnaam = "";
+        try {
+            String ticker = selecteerAandeel.getValue();
+            if (ticker == null) {
+                throw new Exception("svp eerst aandeel kiezen");
+            }
+            veldnaam = "aantal";
+            String sAantal = txtAantalDirect.getText();
+            int aantal = Integer.parseInt(sAantal);
+            veldnaam = "datum";
+            String sDatum = (txtDatumDirect.getText());
+            IDate date = Util.toIDate(sDatum);
+            veldnaam = "koers";
+            String sKoers = txtKoersDirect.getText();
+            double koers = Util.toDouble(sKoers);
+            boolean isKoop = rbtKoopDirect.isSelected();
+            verwerkDirecteOrder(date, ticker, isKoop, aantal, koers);
+        } catch (Exception e) {
+            if (!veldnaam.equals("")) {
+                logInTextArea("formaat van " + veldnaam + " onjuist");
+            } else
+                logInTextArea(e.getLocalizedMessage());
+        }
+    }
+
+    private void verwerkDirecteOrder(
+            IDate date, String ticker, boolean isKoop, int aantal, double koers) {
+        try {
+            portefeuille.addDirecteTransactie(
+                     date,  ticker,  !isKoop,  aantal,  koers
+            );
+
+            addOrdersToScreen();
+            addTransactionsToScreen();
+            IDate einddatum = portefeuille.getEinddatum();
+            addPositionsToScreen(einddatum.getYear(),
+                    einddatum.getMonth(), einddatum.getDay());
+
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
 
     public void enterOptieOrder() {
         String veldnaam = "";

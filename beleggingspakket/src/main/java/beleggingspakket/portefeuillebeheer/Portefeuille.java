@@ -90,6 +90,7 @@ public class Portefeuille {
     }
 
 
+
     // nb de af/bij is bij (gewone) optie 100 keer de optieprijs
     // transactiekosten worden (nog) genegeerd.
     public void AddOptieTransactie(
@@ -233,6 +234,37 @@ public class Portefeuille {
 
     public void pasOptiekoersAan(int volgnr, double nieuweKoers) throws Exception {
         posities.pasKoersAan(volgnr, nieuweKoers);
+    }
+
+    public void addDirecteTransactie(
+            IDate date, String ticker,
+            boolean isVerkoop,
+            int aantal,
+            double koers) throws Exception {
+        try {
+            Transaction t = new Transaction(
+                    date,
+                    ticker,
+                    isVerkoop,
+                    aantal,
+                    Util.toLocalDateTime(date),
+                    koers,
+                    false,
+                    0
+            );
+
+            transactions.add(t);
+            double transactieBedrag = koers * aantal;
+            addToPositie(t);
+            if (isVerkoop) {
+                this.rekeningTegoed += transactieBedrag;
+            } else {
+                this.rekeningTegoed -= transactieBedrag;
+            }
+
+        } catch (Exception e) {
+            throw new Exception("addDirecteTransactie():" + e.getLocalizedMessage());
+        }
     }
 }
 

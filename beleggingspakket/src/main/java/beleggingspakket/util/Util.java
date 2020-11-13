@@ -69,9 +69,9 @@ public class Util {
         return result;
     }
 
-    public static double toDouble(String orderelement) throws Exception {
+    public static double toDouble(String aBedrag) throws Exception {
         NumberFormat format = NumberFormat.getInstance(Locale.US);
-        Number number = format.parse(orderelement);
+        Number number = format.parse(aBedrag);
         return number.doubleValue();
     }
 

@@ -130,6 +130,23 @@
                            </children></AnchorPane>
                      </content>
                   </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="135.0" prefHeight="0.0" prefWidth="202.0" text="Aandelen direct kopen/verkopen">
+                     <content>
+                        <AnchorPane fx:id="aantalOpties1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="rbtKoopDirect" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Koop" />
+                              <RadioButton fx:id="rbtVerkoopDirect" layoutX="99.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Verkoop" />
+                              <TextField fx:id="txtAantalDirect" layoutX="101.0" layoutY="54.0" prefHeight="25.0" prefWidth="50.0" promptText="Aantal" text="20" />
+                              <Label layoutX="10.0" layoutY="106.0" text="Datum" />
+                              <Button layoutX="149.0" layoutY="161.0" mnemonicParsing="false" onAction="#enterDirecteOrder" text="OK" />
+                              <Label layoutX="11.0" layoutY="58.0" text="Aantal" />
+                              <TextField fx:id="txtKoersDirect" layoutX="103.0" layoutY="79.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="14.50" />
+                              <Label layoutX="10.0" layoutY="84.0" prefHeight="17.0" prefWidth="83.0" text="Koers" />
+                              <TextField fx:id="txtDatumDirect" layoutX="103.0" layoutY="102.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="01-04-2021" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
               </panes>
             </Accordion>
             <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="38.0" prefWidth="202.0" text="Portefeuille opslaan" />

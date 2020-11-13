@@ -61,12 +61,12 @@ public class Posities {
         }
     }
 
-    public void addToPositie(Transaction optieTransactie) {
-        addToPositie(optieTransactie.getInstrumentname(),
-                optieTransactie.getNrOfItems(),
-                optieTransactie.getPrice(),
-                true,
-                optieTransactie.getContractgrootte()
+    public void addToPositie(Transaction aTransactie) {
+        addToPositie(aTransactie.getInstrumentname(),
+                aTransactie.getNrOfItems(),
+                aTransactie.getPrice(),
+                aTransactie.getIsOptieTransactie(),
+                aTransactie.getContractgrootte()
         );
     }
 
