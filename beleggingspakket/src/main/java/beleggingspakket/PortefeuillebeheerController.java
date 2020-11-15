@@ -170,11 +170,15 @@ public class PortefeuillebeheerController implements Initializable {
         txtWinstVerlies.setText("winst verlies nog invullen");
         txtTotaleWaarde.setText("totale waarde nog invullen");
 
-        aandelenlijst.removeAll(selecteerAandeel);
 
+        aandelenlijst.removeAll(selecteerAandeel);
         ArrayList<String> tickerSet = new ArrayList<>();
         tickerSet.addAll(getPriceHistory.getTickers());
         Collections.sort(tickerSet);
+
+        for (String ticker1 : tickerSet) {
+            aandelenlijst.add(ticker1);
+        }
 
         for (int i = 1; i <= 12; i++) {
             cmbExpMaand.getItems().add(Integer.toString(i));
@@ -188,9 +192,6 @@ public class PortefeuillebeheerController implements Initializable {
             cmbExpJaar.getItems().add(Integer.toString(i));
         }
 
-
-
-        selecteerAandeel.getItems().addAll(aandelenlijst);
 
         txtRekeningtegoed.setText(Util.toCurrency(
                 portefeuille.getRekeningTegoed()));
@@ -230,15 +231,8 @@ public class PortefeuillebeheerController implements Initializable {
         rbtVerkoop.setToggleGroup(groupKoopVerkoop);
         rbtKoop.setSelected(true);
 
-        aandelenlijst.removeAll(selecteerAandeel);
 
-        tickerSet.addAll(getPriceHistory.getTickers());
-        Collections.sort(tickerSet);
-
-        for (String ticker1 : tickerSet) {
-            aandelenlijst.add(ticker1);
-        }
-
+        selecteerAandeel.getItems().clear();
         selecteerAandeel.getItems().addAll(aandelenlijst);
 
         tableViewOrders.getColumns().add(createColumn("Ordernr", "orderNr"));
