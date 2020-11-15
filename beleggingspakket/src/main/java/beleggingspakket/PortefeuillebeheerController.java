@@ -188,9 +188,7 @@ public class PortefeuillebeheerController implements Initializable {
             cmbExpJaar.getItems().add(Integer.toString(i));
         }
 
-        for (String ticker1 : tickerSet) {
-            aandelenlijst.add(ticker1);
-        }
+
 
         selecteerAandeel.getItems().addAll(aandelenlijst);
 
