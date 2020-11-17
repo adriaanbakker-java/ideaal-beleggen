@@ -19,8 +19,8 @@ public class Constants {
     private static String PricefolderPC = folderPC  + folderStockprices + "\\";
     private static String PFfolderPC = folderPC  + folderPortfolio + "\\";
 
-    private static String Pricefolder = PricefolderPC;
-    private static String PFfolder = PFfolderPC;
+    private static String Pricefolder = PricefolderMACBKWI;
+    private static String PFfolder = PFfolderBKWI;
 
     public static final int startYear = 2014;
     public static final int firstMonth = 1;
