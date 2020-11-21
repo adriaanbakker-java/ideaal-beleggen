@@ -16,7 +16,7 @@ public class Constants {
         Pricefolder = pricefolder;
     }
 
-    private static String Pricefolder = PricefolderMACBKWI;
+    private static String Pricefolder = PricefolderPC;
 
 
     public static String getPricefolder() {
