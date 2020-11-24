@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Accordion?>
@@ -22,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="796.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
    <top>
       <Label text="Portefeuillebeheer" BorderPane.alignment="CENTER">
          <font>
@@ -42,12 +36,12 @@
             <TextField fx:id="txtEinddatum" editable="false" promptText="Einddatum" text="01-09-2020" />
             <ChoiceBox id="selecteerAandeel" fx:id="selecteerAandeel" prefHeight="38.0" prefWidth="202.0">
                <VBox.margin>
-                  <Insets bottom="10.0" top="20.0" />
+                  <Insets bottom="10.0" top="5.0" />
                </VBox.margin>
             </ChoiceBox>
             <Accordion prefHeight="482.0" prefWidth="212.0">
               <panes>
-                <TitledPane animated="false" onMouseClicked="#toonOrders" prefHeight="216.0" prefWidth="202.0" text="Orders inzien/toevoegen">
+                <TitledPane animated="false" onMouseClicked="#toonOrders" prefHeight="400.0" prefWidth="214.0" text="Orders inzien/toevoegen">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="200.0">
                            <children>
@@ -67,6 +61,9 @@
                            </children>
                         </AnchorPane>
                   </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                 </TitledPane>
                   <TitledPane animated="false" layoutX="10.0" layoutY="60.0" onMouseClicked="#toonOrders" prefHeight="0.0" prefWidth="202.0" text="Order verwijderen">
                      <content>
@@ -78,57 +75,25 @@
                            </children>
                         </AnchorPane>
                      </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </TitledPane>
                 <TitledPane animated="false" onMouseClicked="#toonTransacties" text="Transacties inzien">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
-                </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#toonPortefeuille" prefHeight="0.0" prefWidth="202.0" text="Portefeuilleoverzicht">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TextField fx:id="txtRekeningtegoed" editable="false" layoutX="15.0" layoutY="24.0" promptText="Rekeningtegoed" text="5000,00" />
-                              <Label layoutX="15.0" layoutY="7.0" text="Rekeningtegoed" />
-                              <Label layoutX="15.0" layoutY="60.0" text="Portefeuillewaarde" />
-                              <TextField fx:id="txtPortefeuillewaarde" editable="false" layoutX="15.0" layoutY="77.0" promptText="Portefeuillewaarde" text="1500" />
-                              <Label layoutX="14.0" layoutY="158.0" text="Winst / Verlies" />
-                              <TextField fx:id="txtWinstVerlies" editable="false" layoutX="15.0" layoutY="175.0" promptText="Winst / Verlies" text="500,00" />
-                              <TextField fx:id="txtTotaleWaarde" editable="false" layoutX="15.0" layoutY="125.0" promptText="Totale waarde" text="5500,00" />
-                              <Label layoutX="15.0" layoutY="108.0" text="Totale waarde" />
-                              <Button layoutX="19.0" layoutY="224.0" mnemonicParsing="false" onAction="#pasOptiekoersAan" prefHeight="25.0" prefWidth="145.0" text="Optiekoers aanpassen" />
-                              <TextField fx:id="txtPositievolgnr" layoutX="91.0" layoutY="255.0" prefHeight="25.0" prefWidth="76.0" promptText="volgnr" text="1000" />
-                              <Label layoutX="48.0" layoutY="259.0" text="volgnr" />
-                              <Label layoutX="48.0" layoutY="284.0" text="koers" />
-                              <TextField fx:id="txtNieuweOptiekoers" layoutX="91.0" layoutY="280.0" prefHeight="25.0" prefWidth="76.0" promptText="koers" text="0.30" />
-                           </children></AnchorPane>
-                  </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                 </TitledPane>
                   <TitledPane animated="false" layoutX="10.0" layoutY="110.0" prefHeight="0.0" prefWidth="202.0" text="Geld storten/opnemen">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
-                  </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Optietransactie uitvoeren">
-                     <content>
-                        <AnchorPane fx:id="aantalOpties" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <RadioButton fx:id="rbtKoopOptie" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Koop" />
-                              <RadioButton fx:id="rbtVerkoopOptie" layoutX="99.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Verkoop" />
-                              <TextField fx:id="txtAantalOpties" layoutX="-1.0" layoutY="37.0" prefHeight="25.0" prefWidth="50.0" promptText="Aantal" text="1" />
-                              <ComboBox fx:id="cmbExpJaar" layoutX="93.0" layoutY="123.0" prefHeight="27.0" prefWidth="107.0" />
-                              <ComboBox fx:id="cmbExpMaand" layoutX="-3.0" layoutY="123.0" prefHeight="27.0" prefWidth="87.0" />
-                              <Label layoutX="10.0" layoutY="106.0" text="Expiratiedatum" />
-                              <Button layoutX="143.0" layoutY="259.0" mnemonicParsing="false" onAction="#enterOptieOrder" text="OK" />
-                              <ChoiceBox fx:id="cmbCallPut" layoutX="57.0" layoutY="37.0" prefWidth="150.0" />
-                              <TextField fx:id="txtBedragOptiePremie" layoutX="101.0" layoutY="161.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="30.75" />
-                              <Label layoutX="9.0" layoutY="166.0" text="Optiepremie" />
-                              <TextField fx:id="txtUitoefenprijs" layoutX="103.0" layoutY="79.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="41.00" />
-                              <Label layoutX="10.0" layoutY="84.0" prefHeight="17.0" prefWidth="83.0" text="Uitoefenprijs" />
-                              <RadioButton fx:id="rbtOptieContract100" layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#klikOrderControl" text="100" />
-                              <RadioButton fx:id="rbtOptieContract10" layoutX="17.0" layoutY="228.0" mnemonicParsing="false" onAction="#klikOrderControl" text="10" />
-                           </children></AnchorPane>
-                     </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </TitledPane>
                   <TitledPane animated="false" layoutX="10.0" layoutY="135.0" prefHeight="0.0" prefWidth="202.0" text="Aandelen direct kopen/verkopen">
                      <content>
@@ -146,12 +111,82 @@
                            </children>
                         </AnchorPane>
                      </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TitledPane>
+                <TitledPane animated="false" onMouseClicked="#toonPortefeuille" prefHeight="0.0" prefWidth="202.0" text="Portefeuilleoverzicht">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="321.0" prefWidth="212.0">
+                           <children>
+                              <TextField fx:id="txtRekeningtegoed" editable="false" layoutX="15.0" layoutY="24.0" promptText="Rekeningtegoed" text="5000,00" />
+                              <Label layoutX="15.0" layoutY="7.0" text="Rekeningtegoed" />
+                              <Label layoutX="15.0" layoutY="60.0" text="Portefeuillewaarde" />
+                              <TextField fx:id="txtPortefeuillewaarde" editable="false" layoutX="15.0" layoutY="77.0" promptText="Portefeuillewaarde" text="1500" />
+                              <Label layoutX="14.0" layoutY="158.0" text="Winst / Verlies" />
+                              <TextField fx:id="txtWinstVerlies" editable="false" layoutX="15.0" layoutY="175.0" promptText="Winst / Verlies" text="500,00" />
+                              <TextField fx:id="txtTotaleWaarde" editable="false" layoutX="15.0" layoutY="125.0" promptText="Totale waarde" text="5500,00" />
+                              <Label layoutX="15.0" layoutY="108.0" text="Totale waarde" />
+                           </children></AnchorPane>
+                  </content>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="145.0" prefHeight="0.0" prefWidth="202.0" text="Optieprijs aanpassen">
+                     <content>
+                        <AnchorPane fx:id="aantalOpties11" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="txtPositievolgnr" layoutX="30.0" layoutY="141.0" prefHeight="25.0" prefWidth="76.0" promptText="volgnr" text="1000" />
+                              <Label layoutX="24.0" layoutY="124.0" text="volgnr" />
+                              <Label layoutX="125.0" layoutY="124.0" text="koers" />
+                              <TextField fx:id="txtNieuweOptiekoers" layoutX="117.0" layoutY="141.0" prefHeight="25.0" prefWidth="76.0" promptText="koers" text="0.30" />
+                              <Button layoutX="41.0" layoutY="216.0" mnemonicParsing="false" onAction="#pasOptiekoersAan" prefHeight="25.0" prefWidth="145.0" text="Optiekoers aanpassen" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="0.0" prefWidth="202.0" text="Optietransactie uitvoeren">
+                     <content>
+                        <AnchorPane fx:id="aantalOpties" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="rbtKoopOptie" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" prefHeight="18.0" prefWidth="65.0" text="Koop ">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></RadioButton>
+                              <RadioButton fx:id="rbtVerkoopOptie" layoutX="99.0" layoutY="14.0" mnemonicParsing="false" onAction="#klikOrderControl" text="Verkoop">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></RadioButton>
+                              <TextField fx:id="txtAantalOpties" layoutX="-1.0" layoutY="37.0" prefHeight="25.0" prefWidth="50.0" promptText="Aantal" text="1" />
+                              <ComboBox fx:id="cmbExpJaar" layoutX="110.0" layoutY="123.0" prefHeight="27.0" prefWidth="107.0" />
+                              <ComboBox fx:id="cmbExpMaand" layoutX="12.0" layoutY="123.0" prefHeight="27.0" prefWidth="87.0" />
+                              <Label layoutX="10.0" layoutY="106.0" text="Expiratiedatum">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Button layoutX="145.0" layoutY="224.0" mnemonicParsing="false" onAction="#enterOptieOrder" text="OK" />
+                              <ChoiceBox fx:id="cmbCallPut" layoutX="57.0" layoutY="37.0" prefWidth="150.0" />
+                              <TextField fx:id="txtBedragOptiePremie" layoutX="101.0" layoutY="161.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="30.75" />
+                              <Label layoutX="9.0" layoutY="166.0" text="Optiepremie">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <TextField fx:id="txtUitoefenprijs" layoutX="104.0" layoutY="71.0" prefHeight="25.0" prefWidth="83.0" promptText="Aantal" text="41.00" />
+                              <Label layoutX="8.0" layoutY="75.0" prefHeight="17.0" prefWidth="83.0" text="Uitoefenprijs">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <RadioButton fx:id="rbtOptieContract100" layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#klikOrderControl" text="100" />
+                              <RadioButton fx:id="rbtOptieContract10" layoutX="17.0" layoutY="228.0" mnemonicParsing="false" onAction="#klikOrderControl" text="10" />
+                           </children></AnchorPane>
+                     </content>
                   </TitledPane>
               </panes>
             </Accordion>
-            <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="38.0" prefWidth="202.0" text="Portefeuille opslaan" />
-            <Button layoutX="10.0" layoutY="548.0" mnemonicParsing="false" onAction="#laadPortefeuille" prefHeight="38.0" prefWidth="202.0" text="Portefuille laden" />
-            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="42.0" prefWidth="206.0" text="Toon Grafiekenscherm" />
+            <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="30.0" prefWidth="234.0" text="Portefeuille opslaan" />
+            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="30.0" prefWidth="230.0" text="Toon Grafiekenscherm" />
+            <Button layoutX="10.0" layoutY="548.0" mnemonicParsing="false" onAction="#laadPortefeuille" prefHeight="30.0" prefWidth="230.0" text="Portefuille laden" />
          </children>
       </VBox>
    </left>

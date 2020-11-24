@@ -106,6 +106,9 @@ public class GetPriceHistory {
 		bMap.put("UNILEVER", new BeleggerLinkRec("11962", "UNILEVER"));
 		bMap.put("VOPAK", new BeleggerLinkRec("101431", "Vopak-Koninklijke"));
 		bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer"));
+// Enkele midkappers
+//		bMap.put("AIRFRANCE-KLM", new BeleggerLinkRec("11795", "Air France-KLM"));
+
 
 	}
 
