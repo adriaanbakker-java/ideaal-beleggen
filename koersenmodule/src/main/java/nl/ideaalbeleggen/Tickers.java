@@ -33,6 +33,8 @@ public class Tickers {
         bMap.put("UNILEVER", new BeleggerLinkRec("11962", "UNILEVER"));
         bMap.put("VOPAK", new BeleggerLinkRec("101431", "Vopak-Koninklijke"));
         bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer"));
+// toevoegen van enkele midkapfondsen
+        bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer"));
     }
 
 

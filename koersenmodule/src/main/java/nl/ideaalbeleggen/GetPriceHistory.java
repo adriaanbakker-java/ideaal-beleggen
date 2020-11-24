@@ -95,6 +95,15 @@ public class GetPriceHistory {
 		bMap.put("VOPAK", new BeleggerLinkRec("101431", "Vopak-Koninklijke"));
 		bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer"));
 
+
+		// enkele midkappers
+
+		//https://www.iex.nl/Aandeel-Koers/11816/BAM-Groep-Koninklijke/historische-koersen.aspx?maand=202010
+		bMap.put("BAM", new BeleggerLinkRec("11816", "BAM-Groep-Koninklijke"));
+		// https://www.iex.nl/Aandeel-Koers/360114884/Air-France-KLM/historische-koersen.aspx?maand=202010
+		bMap.put("AIRFRANCEKLM", new BeleggerLinkRec("360114884", "Air-France-KLM"));
+
+
 	}
 
 	public void testGetPricesMonth()  {
