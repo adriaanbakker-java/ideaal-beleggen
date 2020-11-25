@@ -20,10 +20,10 @@ public class BufferedPrices {
         }
     }
 
-    public Double getClosePrice(String aTicker,
-                                int aYear,
-                                int aMonth,
-                                int aDay) throws Exception {
+    public DayPriceRecord getPricesOnDay(String aTicker,
+                                         int aYear,
+                                         int aMonth,
+                                         int aDay) throws Exception {
         if (!bufferedPrices.containsKey(aTicker)) {
             addPrices(aTicker);
         }
@@ -42,7 +42,16 @@ public class BufferedPrices {
         }
         if (!found)
             return null;
-        return dpr.getClose();
+        return dpr;
+    }
+
+
+    public Double getClosePrice(String aTicker,
+                                int aYear,
+                                int aMonth,
+                                int aDay) throws Exception {
+
+        return getPricesOnDay(aTicker,aYear,aMonth,aDay).getClose();
     }
 
 

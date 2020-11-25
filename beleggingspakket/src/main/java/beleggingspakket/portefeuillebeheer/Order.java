@@ -1,5 +1,6 @@
 package beleggingspakket.portefeuillebeheer;
 
+import beleggingspakket.Koersen.BufferedPrices;
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
@@ -142,7 +143,15 @@ public class Order {
     // DayPriceRecord (dpr) of the trading day
     // If so, return the transaction that corresponds to the processed order
 
-    /*
+    /* checkVerwerkOrder
+    *
+    *  Check if on the date in the dprGiven the order for the given stock should have been
+    *  executed. NOTE!!: the dpr in the parameterlist will only serve to pass the date,
+    *  the dpr may well have been taken from a different stock (bug B005)
+    *
+    *  Input: dprGiven
+    *  Returns: Transaction,  null if order not executed
+    *
     *  At this moment the following orders are implemented:
     *
     * MARKET sell order and MARKET buy order
@@ -178,23 +187,30 @@ public class Order {
     *    2. is opening price higher than stopprice but low is lower, sell at stopprice
     *    3. is opening price lower than limit, but high is higher than limit, sell at limit price.
     */
-    public Transaction verwerkOrder(DayPriceRecord dpr) {
+    public Transaction checkVerwerkOrder(DayPriceRecord dprGiven, BufferedPrices bp) {
         Transaction t = null;
-        int year = dpr.getYear();
-        int month = dpr.getMonth();
-        int day = dpr.getDay();
-        IDate iDate = new IDate(year, month, day);
+        String orderTicket = this.getTicker();
 
-        if (this.getOrderType() == Ordertype.MARKET) {
-            return sell_or_buy_at_price(iDate, dpr.getOpen(), isSaleOrder());
-        } else if (this.getOrderType() == Ordertype.STOPLOSS) { // is always a sell, not a buy
-            return verwerk_ordertype_stoploss(iDate, dpr);
-        } else if (this.getOrderType() == Ordertype.LIMIT) {
-            return verwerk_ordertype_limit(iDate, dpr);
-        } else if (this.getOrderType() == Ordertype.STOPLIMIT) {
-            return verwerk_ordertype_stoplimit(iDate, dpr);
+        int year = dprGiven.getYear();
+        int month = dprGiven.getMonth();
+        int day = dprGiven.getDay();
+        try {
+            DayPriceRecord dpr = bp.getPricesOnDay(orderTicket, year, month, day);
+            IDate iDate = new IDate(year, month, day);
+
+            if (this.getOrderType() == Ordertype.MARKET) {
+                return sell_or_buy_at_price(iDate, dpr.getOpen(), isSaleOrder());
+            } else if (this.getOrderType() == Ordertype.STOPLOSS) { // is always a sell, not a buy
+                return verwerk_ordertype_stoploss(iDate, dpr);
+            } else if (this.getOrderType() == Ordertype.LIMIT) {
+                return verwerk_ordertype_limit(iDate, dpr);
+            } else if (this.getOrderType() == Ordertype.STOPLIMIT) {
+                return verwerk_ordertype_stoplimit(iDate, dpr);
+            }
+            return null;
+        } catch (Exception E) {
+            return null;
         }
-        return null;
     }
 
     /*    Buy order:

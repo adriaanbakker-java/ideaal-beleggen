@@ -593,6 +593,8 @@ public class PortefeuillebeheerController implements Initializable {
             if (pos.getIsAandeel()) {
                 dKoers = bufferedPrices.getClosePrice(instrumentnaam,
                         year, month, day);
+                if (dKoers==null)
+                    throw new Exception("Koers van " + instrumentnaam + " niet gevonden");
             } else {
                 dKoers = pos.getHuidigeKoers();
             }
@@ -735,7 +737,7 @@ public class PortefeuillebeheerController implements Initializable {
         System.out.println("verwerk orders via main en grafiekenscherm");
 
         for (Order order : portefeuille.getOrders()) {
-            Transaction t = order.verwerkOrder(dpr);
+            Transaction t = order.checkVerwerkOrder(dpr, bufferedPrices);
             if (t != null) {
                 ordersToBeDeleted.add(order);
                 transactionsToBeCreated.add(t);
