@@ -579,30 +579,34 @@ public class PortefeuillebeheerController implements Initializable {
 
     // naam dekt niet meer helemaal de lading, toont ook totale portefeuillewaarde
     // en winst/verlies op de posities
-    public void addPositionsToScreen(int year, int month, int day) throws Exception {
+    public String addPositionsToScreen(int year, int month, int day) throws Exception {
+        String foutmeldingen = "";
+
         tableViewPortefeuille.getItems().clear();
         double totaleWaarde = 0.0;
         for (Map.Entry<String, Positie> entry : portefeuille.getPosities()) {
+            try {
+                String instrumentnaam = entry.getKey();
 
-            String instrumentnaam = entry.getKey();
+                Positie pos = entry.getValue();
 
-            Positie pos = entry.getValue();
-
-            // bereken winst/verlies op de positie
-            Double dKoers = 0.0;
-            if (pos.getIsAandeel()) {
-                dKoers = bufferedPrices.getClosePrice(instrumentnaam,
-                        year, month, day);
-                if (dKoers==null)
-                    throw new Exception("Koers van " + instrumentnaam + " niet gevonden");
-            } else {
-                dKoers = pos.getHuidigeKoers();
+                // bereken winst/verlies op de positie
+                Double dKoers = 0.0;
+                if (pos.getIsAandeel()) {
+                    dKoers = bufferedPrices.getClosePrice(instrumentnaam,
+                            year, month, day);
+                    if (dKoers==null)
+                        throw new Exception("Koers van " + instrumentnaam + " niet gevonden");
+                } else {
+                    dKoers = pos.getHuidigeKoers();
+                }
+                pos.berekenWinstVerliesInstrument(portefeuille.getTransactions(), dKoers);
+                PositieDTO positieDTO = new PositieDTO(pos);
+                tableViewPortefeuille.getItems().add(positieDTO);
+                totaleWaarde += pos.geefHuidigeWaarde();
+            } catch (Exception e) {
+                foutmeldingen += " FOUT:" + e.getLocalizedMessage();
             }
-            pos.berekenWinstVerliesInstrument(portefeuille.getTransactions(), dKoers);
-            PositieDTO positieDTO = new PositieDTO(pos);
-            tableViewPortefeuille.getItems().add(positieDTO);
-            totaleWaarde += pos.geefHuidigeWaarde();
-
         }
 
         txtPortefeuillewaarde.setText(Util.toCurrency(totaleWaarde));
@@ -615,6 +619,8 @@ public class PortefeuillebeheerController implements Initializable {
         txtTotaleWaarde.setText(Util.toCurrency(totaleWaarde));
         txtWinstVerlies.setText(Util.toCurrency(winstVerlies));
         // Bereken winst/verlies op de posities
+
+        return foutmeldingen;
     }
 
     public void verwijderOrder() {
@@ -644,7 +650,7 @@ public class PortefeuillebeheerController implements Initializable {
         showMessage("order verwijderd");
     }
 
-    private void showMessage(String localizedMessage) {
+    public void showMessage(String localizedMessage) {
         lblMessage.setText(localizedMessage);
     }
 

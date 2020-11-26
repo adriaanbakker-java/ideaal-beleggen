@@ -50,8 +50,10 @@ public class BufferedPrices {
                                 int aYear,
                                 int aMonth,
                                 int aDay) throws Exception {
-
-        return getPricesOnDay(aTicker,aYear,aMonth,aDay).getClose();
+        DayPriceRecord dpr = getPricesOnDay(aTicker,aYear,aMonth,aDay);
+        if (dpr == null) throw new Exception("Slotkoers niet gevonden op " +
+           aDay + "-" + aMonth + "_" + aYear + " voor " + aTicker);
+        return dpr.getClose();
     }
 
 

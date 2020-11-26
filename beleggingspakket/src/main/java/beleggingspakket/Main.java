@@ -49,9 +49,14 @@ public class Main {
             pfController.processMatchedOrders();
             pfController.addOrdersToScreen();
             pfController.addTransactionsToScreen();
-            pfController.addPositionsToScreen(dpr.getYear(),
+            String positionMessage = pfController.addPositionsToScreen(dpr.getYear(),
                     dpr.getMonth(), dpr.getDay());
-            pfController.toonOrders();
+           pfController.toonOrders();
+
+            if (!positionMessage.equals("")) {
+                pfController.showMessage(positionMessage);
+            }
+
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }

@@ -26,7 +26,7 @@ public class Main {
             endYear = Integer.parseInt(args[0]);
             endMonth = Integer.parseInt(args[1]);
         } else {
-            System.out.println("Geen argumenten gegeven (eindJaar en eindMaand)" );
+            System.out.println("Geen argumenten gegeven (eindJaar en eindMaand)");
         }
 
         System.out.println("Webcomponent aanmaken, duurt ongeveer 20 seconden...");
@@ -38,17 +38,17 @@ public class Main {
             Set<String> tickerSet = gph.getTickers();
 
             for (String ticker1 : tickerSet) {
-                if (ticker1.equals("hier ticket")) {
-                    System.out.println("Skip" + ticker1+"  for now");
-
-                } else {
-                    MainController.LocalLogging localLogging = new MainController.LocalLogging();
-                    gph.updatePriceHistory(
-                            ticker1,
-                            Constants.startYear, 1,
-                            endYear, endMonth,
-                            localLogging);
+                if (ticker1.equals("AIRFRANCEKLM")) {
+                    System.out.println("Gevonden" + ticker1);
                 }
+
+                MainController.LocalLogging localLogging = new MainController.LocalLogging();
+                gph.updatePriceHistory(
+                        ticker1,
+                        Constants.startYear, 1,
+                        endYear, endMonth,
+                        localLogging);
+
 
             }
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class Main {
         }
 
 
-        MainController.logInTextArea( "koersen ververst");
+        MainController.logInTextArea("koersen ververst");
         gph.closeDriver();
     }
 
