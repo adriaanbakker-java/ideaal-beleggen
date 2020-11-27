@@ -49,6 +49,8 @@ public class GetPriceHistory {
 		
 	}
 
+	Constants constants = new Constants();
+
 	public GetPriceHistory() {
 		fillLinkMap();
 	}
@@ -123,8 +125,8 @@ public class GetPriceHistory {
 	public ArrayList<DayPriceRecord> getHistoricPricesFromFile(String aTicker) throws Exception {
 		try {
 			ArrayList<DayPriceRecord> result = new ArrayList<DayPriceRecord>();
-			
-			String filename = Constants.getPricefolder()  + aTicker + ".csv";
+
+			String filename = constants.getPricefolder()  + aTicker + ".csv";
 			// check if file exists, otherwise create
 			File myFile = new File(filename);
 			if (!myFile.exists()) {
@@ -159,8 +161,8 @@ public class GetPriceHistory {
 		int year = today.getYear();
 		// System.out.println("returnBeleggerLink: year =" + year + " month =" + month);
 
-		if (aYear < Constants.startYear)
-			throw new Exception("returnBeleggerLink: year should be >= " + Constants.startYear+": year=" + aYear);
+		if (aYear < constants.startYear)
+			throw new Exception("returnBeleggerLink: year should be >= " + constants.startYear+": year=" + aYear);
 		if (aYear > year) // unfortunately, we can't look in the future
 			throw new Exception("returnBeleggerLink:  year should be <= " + year + " year=" + aYear);
 		if ((aYear == year) && (aMonth > month))

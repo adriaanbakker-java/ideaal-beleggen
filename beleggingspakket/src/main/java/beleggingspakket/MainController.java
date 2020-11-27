@@ -75,7 +75,7 @@ public class MainController {
     private TextField txtKoersenfolder;
 
     @Autowired
-    public MainController(WeatherService weatherService) {
+    public MainController(WeatherService weatherService) throws Exception {
         this.weatherService = weatherService;
         pricefolder = Constants.getPricefolder();
     }
@@ -110,7 +110,7 @@ public class MainController {
     }
 
     @SuppressWarnings("unchecked")
-    public void initialize() {
+    public void initialize() throws Exception  {
         pricefolder = Constants.getPricefolder();
         txtKoersenfolder.setText(pricefolder);
 
