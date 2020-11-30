@@ -13,6 +13,7 @@ import static java.time.LocalDateTime.now;
 
 public class Portefeuille {
 
+    private Constants constants = new Constants();
     private String portefeuillenaam = "nog-toekennen";
     private IDate einddatum = new IDate(1800,1,1);
     private double rekeningTegoed = 0.0;
@@ -138,10 +139,10 @@ public class Portefeuille {
 
     public void haalOp(String pfNaam) {
         System.out.println("Portefeuille " + pfNaam + " van schijf halen");
-        String folder = Constants.getPFfolder();
+        String folder = constants.getPFfolder();
         String filenamePF = pfNaam + ".csv";
         try {
-            String filename = Constants.getPFfolder()  + filenamePF;
+            String filename = constants.getPFfolder()  + filenamePF;
             // check if file exists, otherwise create
             File myFile = new File(filename);
             if (!myFile.exists()) {
@@ -195,11 +196,11 @@ public class Portefeuille {
 
     public void slaOp() {
         System.out.println("Portefeuille opslaan");
-        String folder = Constants.getPFfolder();
-        String filenamePF = Constants.getFilenamePF();
+        String folder = constants.getPFfolder();
+        String filenamePF = constants.getFilenamePF();
 
         try {
-            String filename = Constants.getPFfolder()  + filenamePF;
+            String filename = constants.getPFfolder()  + filenamePF;
             // check if file exists, otherwise create
             File myFile = new File(filename);
             if (!myFile.exists()) {

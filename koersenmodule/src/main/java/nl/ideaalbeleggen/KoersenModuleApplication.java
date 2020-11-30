@@ -64,7 +64,8 @@ public class KoersenModuleApplication {
     */
     @RequestMapping(value = "/verversen")
     public String verversen(@RequestParam(value="eindJaar", defaultValue = "") String eindJaar,
-                            @RequestParam(value="eindMaand", defaultValue = "") String eindMaand) {
+                            @RequestParam(value="eindMaand", defaultValue = "") String eindMaand)
+    {
 
         String[] args = new String[] {};
 
@@ -72,7 +73,11 @@ public class KoersenModuleApplication {
             args[0] = eindJaar;
             args[1] = eindMaand;
         }
-        Main.main(args);
+        try {
+            Main.main(args);
+        } catch (Exception e) {
+            return e.getLocalizedMessage();
+        }
 
         return "Koersen ververst!";
     }

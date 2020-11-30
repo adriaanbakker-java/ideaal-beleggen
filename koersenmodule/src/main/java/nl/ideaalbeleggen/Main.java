@@ -8,7 +8,7 @@ public class Main {
     static String sUrl = "https://www.iex.nl/Aandeel-Koers/613007/ADYEN-NV/historische-koersen.aspx?maand=1";
     static String expectedTitle = "ADYEN NV » Historische koersen (Aandeel) | IEX.nl";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("Koersenmodule: java -jar Koersenmodule<..>.jar [endYear endMonth]");
         System.out.println("ververst koersen in " + Constants.getPricefolder());
         System.out.println("tot aan huidige datum of (indien gegeven) endYear endMonth");
