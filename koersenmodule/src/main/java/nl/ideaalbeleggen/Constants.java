@@ -18,7 +18,7 @@ public class Constants {
     private static String PFfolderMacOrdina = folderOrdina  + folderPortfolio  + "/";
 
     // Windows pc
-    private static final String folderPC = "D:\\Beleggingspakket\\ideaal-beleggen\\";
+    private static final String folderPC = "D:\\Pakket\\ideaal-beleggen\\";
     private static final String PricefolderPC = folderPC  + folderStockprices + "\\";
     private static final String PFfolderPC = folderPC  + folderPortfolio + "\\";
 

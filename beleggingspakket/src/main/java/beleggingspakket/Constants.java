@@ -41,7 +41,7 @@ public class Constants {
     }
 
     // Windows pc
-    private static final String folderPC = "D:\\Beleggingspakket\\ideaal-beleggen\\";
+    private static final String folderPC = "D:\\Pakket\\ideaal-beleggen\\";
     private static final String PricefolderPC = folderPC  + folderStockprices + "\\";
     private static final String PFfolderPC = folderPC  + folderPortfolio + "\\";
 

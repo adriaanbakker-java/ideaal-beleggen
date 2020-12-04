@@ -1,2 +1,2 @@
-cd ~/Pakket/ideaal-beleggen/koersenmodule/target
+cd ./koersenmodule/target
 java -jar koersenmodule-0.0.1-SNAPSHOT.jar
