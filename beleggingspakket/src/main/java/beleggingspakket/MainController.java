@@ -111,6 +111,7 @@ public class MainController {
 
     @SuppressWarnings("unchecked")
     public void initialize() throws Exception  {
+
         pricefolder = Constants.getPricefolder();
         txtKoersenfolder.setText(pricefolder);
 
@@ -122,12 +123,15 @@ public class MainController {
         marktlijst.addAll(a, b, c);
         selecteerMarkt.getItems().addAll(marktlijst);
         selecteerMarkt.setValue("AEX");
+        selecteerMarkt.setStyle("-fx-font: 13 arial;");
 
         selecteerAantalDagen.getItems().addAll("10", "30", "40", "60", "80");
         selecteerAantalDagen.setValue("30");
+        selecteerAantalDagen.setStyle("-fx-font: 13 arial;");
         selecteerAantalDagenVerleden.getItems().addAll("0",
                 "20", "30", "60", "120", "240", "480", "720", "1440");
         selecteerAantalDagenVerleden.setValue("0");
+        selecteerAantalDagenVerleden.setStyle("-fx-font: 13 arial;");
 
 
         aandelenlijst.removeAll(selecteerAandeel);
@@ -139,9 +143,13 @@ public class MainController {
 
         for (String ticker1 : tickerSet) {
             aandelenlijst.add(ticker1);
+
         }
 
         selecteerAandeel.getItems().addAll(aandelenlijst);
+        selecteerAandeel.setStyle("-fx-font: 13 arial;");
+
+
 
 
         ArrayList<String> pfs = findPortefeuillesOnDisk();
@@ -152,6 +160,7 @@ public class MainController {
         portefeuillelijst.removeAll(selecteerPortefeuille);
         ArrayList<String> portefeuilles = findPortefeuillesOnDisk();
         selecteerPortefeuille.getItems().addAll(portefeuilles);
+        selecteerPortefeuille.setStyle("-fx-font: 13 arial;");
 
     }
 

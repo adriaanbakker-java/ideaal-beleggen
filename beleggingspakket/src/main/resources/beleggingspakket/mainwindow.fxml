@@ -11,9 +11,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="534.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
-   <top>
+<BorderPane prefHeight="600.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.MainController">
+   <bottom>
+      <VBox prefHeight="296.0" prefWidth="808.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea id="textArea" fx:id="textArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="792.0" text="dit is een text area">
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></TextArea>
+            <TreeView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="822.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></TreeView>
+         </children>
+      </VBox>
+   </bottom>
+   <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
             <HBox>
@@ -23,11 +41,17 @@
                         <Button mnemonicParsing="false" onAction="#koersenVerversen" text="Koersen verversen">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
-                           </VBox.margin></Button>
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font></Button>
                         <Button mnemonicParsing="false" onAction="#toonPortefeuille" prefHeight="27.0" prefWidth="139.0" text="Portefeuille openen">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Button>
                         <ChoiceBox id="selecteerMarkt" fx:id="selecteerPortefeuille" prefHeight="27.0" prefWidth="141.0">
                            <VBox.margin>
@@ -38,6 +62,9 @@
                            <VBox.margin>
                               <Insets left="20.0" top="10.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Button>
                         <HBox prefHeight="33.0" prefWidth="277.0">
                            <children>
@@ -45,11 +72,17 @@
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
                               </Label>
                               <TextField fx:id="txtEinddatum" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" promptText="Einddatum" text="01-01-2020">
                                  <HBox.margin>
                                     <Insets left="30.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
                               </TextField>
                            </children>
                            <VBox.margin>
@@ -62,11 +95,17 @@
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
                               </Label>
                               <TextField fx:id="txtEinddatum1" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="27.0" prefWidth="139.0" promptText="Portefeuille01" text="Portefeuille01">
                                  <HBox.margin>
                                     <Insets left="30.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
                               </TextField>
                            </children>
                         </HBox>
@@ -78,6 +117,9 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Label>
                         <ChoiceBox id="selecteerMarkt" fx:id="selecteerMarkt" prefWidth="150.0">
                            <VBox.margin>
@@ -91,17 +133,26 @@
                   </VBox>
                   <VBox prefHeight="0.0" prefWidth="196.0">
                      <children>
-                        <Label text="Aandeel:" />
+                        <Label text="Aandeel:">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font></Label>
                         <ChoiceBox id="selecteerAandeel" fx:id="selecteerAandeel" prefWidth="150.0" />
                         <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="25.0" prefWidth="149.0" text="Toon Grafiekenscherm">
                            <VBox.margin>
                               <Insets bottom="8.0" right="8.0" top="8.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Button>
                         <Label prefHeight="17.0" prefWidth="135.0" text="Aantal beursdagen: ">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Label>
                         <ChoiceBox id="selecteerAantalDagen" fx:id="selecteerAantalDagen" prefWidth="150.0">
                            <VBox.margin>
@@ -112,6 +163,9 @@
                            <VBox.margin>
                               <Insets top="8.0" />
                            </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
                         </Label>
                         <ChoiceBox id="selecteerAantalDagenVerleden" fx:id="selecteerAantalDagenVerleden" prefWidth="150.0">
                            <VBox.margin>
@@ -126,31 +180,27 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#test" text="Test -Klik mij" />
-            <Label fx:id="lblTestlabel" text="Testlabel" />
+            <Button mnemonicParsing="false" onAction="#test" text="Test -Klik mij">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></Button>
+            <Label fx:id="lblTestlabel" text="Testlabel">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></Label>
             <Label fx:id="lblKoersfolder" text="Koersenfolder">
                <VBox.margin>
                   <Insets top="10.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="txtKoersenfolder" prefHeight="25.0" prefWidth="116.0" text="d:\prive\stockprices\" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></Label>
+            <TextField fx:id="txtKoersenfolder" prefHeight="25.0" prefWidth="116.0" text="d:\prive\stockprices\">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></TextField>
 
          </children>
       </VBox>
-
-
-   </top>
-   <bottom>
-      <VBox prefHeight="296.0" prefWidth="808.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextArea id="textArea" fx:id="textArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="792.0" text="dit is een text area">
-               <VBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </VBox.margin></TextArea>
-            <TreeView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="822.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></TreeView>
-         </children>
-      </VBox>
-   </bottom>
+   </center>
 </BorderPane>

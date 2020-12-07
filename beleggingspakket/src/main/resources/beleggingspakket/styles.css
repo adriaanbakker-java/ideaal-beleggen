@@ -1,3 +1,7 @@
 .button {
     -fx-text-fill: blue;
 }
+
+.root {
+     -fx-font: 100px Tahoma;
+}

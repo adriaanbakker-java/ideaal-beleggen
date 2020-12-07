@@ -53,6 +53,9 @@ public class JavaFxApplication extends Application {
 
         mainController = fxWeaver.getBean(MainController.class);
         mainScene = new Scene(root);
+        mainScene.getStylesheets().add("styles.css");
+        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
         mainStage.setScene(mainScene);
 
         main = new Main(this);
@@ -182,6 +185,8 @@ public class JavaFxApplication extends Application {
         grafiekenschermController.setFondsnaam(gekozenAandeel);
 
         Scene grafiekenScene = new Scene(grafiekenRoot, 900, 600);
+        grafiekenScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
 
         Stage stage = new Stage();
         stage.setScene(grafiekenScene);
@@ -205,6 +210,7 @@ public class JavaFxApplication extends Application {
         pfController.main = this.main;
         pfController.haalPortefeuilleVanSchijf(portefeuilleNaam);
         pfScene = new Scene(pfRoot, 800, 800);
+        pfScene.getStylesheets().add("styles.css");
         main.setPfController(pfController);
         portefeuilleStage = new Stage();
         portefeuilleStage.setScene(pfScene);
