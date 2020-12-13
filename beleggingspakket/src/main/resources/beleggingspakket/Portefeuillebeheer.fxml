@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Accordion?>
@@ -16,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="796.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="796.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beleggingspakket.PortefeuillebeheerController">
    <top>
       <Label text="Portefeuillebeheer" BorderPane.alignment="CENTER">
          <font>
@@ -184,9 +190,10 @@
                   </TitledPane>
               </panes>
             </Accordion>
-            <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="30.0" prefWidth="234.0" text="Portefeuille opslaan" />
-            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="30.0" prefWidth="230.0" text="Toon Grafiekenscherm" />
-            <Button layoutX="10.0" layoutY="548.0" mnemonicParsing="false" onAction="#laadPortefeuille" prefHeight="30.0" prefWidth="230.0" text="Portefuille laden" />
+            <Button mnemonicParsing="false" onAction="#opslaanPortefeuille" prefHeight="30.0" prefWidth="249.0" text="Portefeuille opslaan" />
+            <Button id="showCandlesticks" mnemonicParsing="false" onAction="#toonGrafiekenscherm" prefHeight="30.0" prefWidth="245.0" text="Toon Grafiekenscherm" />
+            <Button layoutX="10.0" layoutY="548.0" mnemonicParsing="false" onAction="#laadPortefeuille" prefHeight="30.0" prefWidth="246.0" text="Portefuille laden" />
+            <Button layoutX="10.0" layoutY="677.0" mnemonicParsing="false" onAction="#checkSignalen" prefHeight="30.0" prefWidth="246.0" text="Check signalen" />
          </children>
       </VBox>
    </left>

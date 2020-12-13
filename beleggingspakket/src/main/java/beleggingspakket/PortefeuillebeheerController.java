@@ -3,6 +3,8 @@ package beleggingspakket;
 import beleggingspakket.Koersen.BufferedPrices;
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
+import beleggingspakket.indicatoren.MACD;
+import beleggingspakket.indicatoren.MacdSignaal;
 import beleggingspakket.portefeuillebeheer.*;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
@@ -775,7 +777,8 @@ public class PortefeuillebeheerController implements Initializable {
     }
 
     private void logInTextArea(String logmessage) {
-        showMessage(logmessage);
+        main.logInTextArea(logmessage);
+        //showMessage(logmessage);
     }
 
 
@@ -820,6 +823,44 @@ public class PortefeuillebeheerController implements Initializable {
     public void laadPortefeuille() throws Exception {
         System.out.println("Portefeuille van schijf halen");
         haalPortefeuilleVanSchijf(this.pfNaam);
+    }
+
+    // Check whether any of the popular indicators has given a signal in the last few days
+    // for any of the open positions
+    // for now, only for stock positions, not yet implemented how to find the
+    // stock ticker from the position
+    public void checkSignalen() {
+        System.out.println("Signalen checken");
+        for (Map.Entry<String, Positie> entry : portefeuille.getPosities())  {
+            if (entry.getValue().getIsAandeel()) {
+                //if (entry.getValue().getPOS() != 0)
+                System.out.println("Check signalen voor " + entry.getKey());
+                GetPriceHistory myGPH = new GetPriceHistory();
+                ArrayList<DayPriceRecord> prices;
+                try {
+                    prices = myGPH.getHistoricPricesFromFile(entry.getKey());
+                    MACD macd = new MACD(prices);
+                    ArrayList<MacdSignaal> signalen = macd.getMACDSignalen();
+                    MacdSignaal lastSignal = null;
+                    IDate pfDate = portefeuille.getEinddatum();
+                    for (MacdSignaal sig: signalen) {
+                        if (sig.getDate().isSmallerEqual(pfDate)) {
+                            lastSignal = sig;
+                        }
+                    }
+                    if (lastSignal != null) {
+                        String sSignal = "koopsignaal";
+                        if (!lastSignal.getKoopsignaal())
+                            sSignal = "verkoopsignaal";
+                        logInTextArea(entry.getKey() + ":Laatste signaal is een " + sSignal + " op " +
+                         lastSignal.getDate().toString());
+                    }
+                } catch (Exception e) {
+                    String infostring = "kon prijzen niet lezen" + e.getLocalizedMessage();
+                    logInTextArea(infostring);
+                }
+            }
+        }
     }
 
     public void opslaanPortefeuille() {

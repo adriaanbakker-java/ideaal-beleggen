@@ -471,7 +471,7 @@ public class GrafiekenschermController implements Initializable {
                     xAxis,
                     yAxis,
                     macd.getMACDlist(),
-                    macd.getMACDSignal(),
+                    macd.getMACDSmoothed(),
                     "MACD",
                     iStartindex,
                     iEindindex,
@@ -487,7 +487,6 @@ public class GrafiekenschermController implements Initializable {
 
 
     public void toonPortefeuille() {
-
         System.out.println("toonPortefeuille");
     }
 

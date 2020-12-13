@@ -2,6 +2,7 @@ package beleggingspakket.indicatoren;
 
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 
 
 import java.util.ArrayList;
@@ -11,13 +12,18 @@ import java.util.ArrayList;
  *
  * MACD=12-Period EMA − 26-Period EMA
  *
- * MACD is calculated by subtracting the long-term EMA (26 periods) from the short-term EMA (12 periods).
- * An exponential moving average (EMA) is a type of moving average (MA) that places a greater weight
+ * MACD is calculated by subtracting the long-term EMA (26 periods) from
+ * the short-term EMA (12 periods).
+ * An exponential moving average (EMA) is a type of moving average (MA)
+ * that places a greater weight
  * and significance on the most recent data points.
  *
- * The exponential moving average is also referred to as the exponentially weighted moving average.
- * An exponentially weighted moving average reacts more significantly to recent price changes than
- * a simple moving average (SMA), which applies an equal weight to all observations in the period.
+ * The exponential moving average is also referred to as the
+ * exponentially weighted moving average.
+ * An exponentially weighted moving average reacts more significantly to recent price
+ * changes than
+ * a simple moving average (SMA), which applies an equal weight to
+ * all observations in the period.
  */
 public class MACD {
     ArrayList<DayPriceRecord> myClosingPrices;
@@ -33,24 +39,54 @@ public class MACD {
     private ArrayList<Double> slowEMA = null;
     private ArrayList<Double> MACDlist = null;
 
-    public ArrayList<Double> getMACDSignal() {
-        return MACDSignal;
+    public ArrayList<Double> getMACDSmoothed() {
+        return MACDSmoothed;
     }
 
-    private ArrayList<Double> MACDSignal = null;
+    public ArrayList<MacdSignaal> getMACDSignalen() {
+        return MACDSignalen;
+    }
+
+    private ArrayList<MacdSignaal> MACDSignalen = null;
+    private ArrayList<Double> MACDSmoothed = null;
 
 
     public MACD(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
         myClosingPrices = aDayPriceArray;
         calcMACD(myClosingPrices);
         calcMACDSignal();
+        calcSignalen();
+    }
+
+    // Calculate buy- and sell signal moments
+    private void calcSignalen() {
+        MACDSignalen = new ArrayList<>();
+        for (int i=0; i <= myClosingPrices.size()-1; i++) {
+            if (i >= slowDays ) {
+               boolean s1 =   MACDlist.get(i-1) < MACDSmoothed.get(i-2);
+               boolean s2 =   MACDlist.get(i) > MACDSmoothed.get(i);
+               boolean s3 =   MACDlist.get(i-1) > MACDSmoothed.get(i-2);
+               boolean s4 =   MACDlist.get(i) < MACDSmoothed.get(i);
+               boolean koopsig = s1 && s2;
+               boolean verkoopsig = s3 && s4;
+
+               if ((koopsig) || verkoopsig) {
+                   DayPriceRecord dpr = myClosingPrices.get(i);
+                   IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
+                   if (koopsig)
+                       MACDSignalen.add(new MacdSignaal(iDate, true));
+                   else
+                       MACDSignalen.add(new MacdSignaal(iDate, false));
+               }
+            }
+        }
     }
 
     void calcMACDSignal() throws Exception {
         if (MACDlist == null ) {
             throw new Exception("MACD calcMACDSignal: eerst MACD laten berekenen");
         }
-        MACDSignal =  calcEma(MACDlist, 9);
+        MACDSmoothed =  calcEma(MACDlist, 9);
     }
 
     void calcMACD(ArrayList<DayPriceRecord> aClosingPrices) {

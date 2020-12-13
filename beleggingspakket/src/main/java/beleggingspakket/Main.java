@@ -72,4 +72,8 @@ public class Main {
     public void beursdagNaarRechts(IDate lastDate) {
         pfController.beursdagNaarRechts(lastDate);
     }
+
+    public void logInTextArea(String logmessage) {
+        mainController.logInTextArea(logmessage);
+    }
 }
