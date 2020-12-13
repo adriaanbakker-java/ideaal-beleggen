@@ -195,12 +195,12 @@ public class Portefeuille {
     }
 
     public void slaOp() {
-        System.out.println("Portefeuille opslaan");
+        System.out.println("Portefeuille opslaan:" + getPortefeuillenaam());
         String folder = constants.getPFfolder();
-        String filenamePF = constants.getFilenamePF();
+        String filenamePF = getPortefeuillenaam();
 
         try {
-            String filename = constants.getPFfolder()  + filenamePF;
+            String filename = constants.getPFfolder()  + filenamePF + ".csv";
             // check if file exists, otherwise create
             File myFile = new File(filename);
             if (!myFile.exists()) {
