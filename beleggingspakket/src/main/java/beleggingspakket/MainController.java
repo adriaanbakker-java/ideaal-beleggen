@@ -7,8 +7,11 @@ import javafx.scene.control.Label;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import beleggingspakket.Koersen.GetPriceHistory;
 import javafx.collections.FXCollections;
@@ -187,8 +190,23 @@ public class MainController {
         System.out.println("maak Portefeuille aan met einddatum "  + txtEinddatum.getText());
     }
 
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @Autowired
+    RestTemplateBuilder builder;
+
     public void koersenVerversen(ActionEvent actionEvent) {
         System.out.println("Roept via spring boot de REST service aan voor koersen verversen");
+        RestTemplate restTemplate= builder.build();
+
+        String koersenResult = restTemplate.getForObject(
+                "http://localhost:8082/koersen/verversen", String.class);
+
+        logInTextArea(koersenResult);
     }
 
     public void test() {
