@@ -200,13 +200,21 @@ public class MainController {
     RestTemplateBuilder builder;
 
     public void koersenVerversen(ActionEvent actionEvent) {
-        System.out.println("Roept via spring boot de REST service aan voor koersen verversen");
-        RestTemplate restTemplate= builder.build();
+        try {
+            System.out.println("Roept via spring boot de REST service aan voor koersen verversen");
+            RestTemplate restTemplate= builder.build();
+            String koersenResult = restTemplate.getForObject(
+                    "http://localhost:8082/koersen/verversen", String.class);
 
-        String koersenResult = restTemplate.getForObject(
-                "http://localhost:8082/koersen/verversen", String.class);
-
-        logInTextArea(koersenResult);
+            logInTextArea(koersenResult);
+        } catch (Exception e) {
+            String msg = e.getLocalizedMessage();
+            if (msg.contains("Connection refused")) {
+                logInTextArea("FOUT: koersenmodule is kennelijk niet gestart");
+            } else {
+                logInTextArea(e.getLocalizedMessage());
+            }
+        }
     }
 
     public void test() {

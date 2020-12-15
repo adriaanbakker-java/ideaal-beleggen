@@ -2,7 +2,7 @@ package beleggingspakket.indicatoren;
 
 import beleggingspakket.util.IDate;
 
-public class MacdSignaal {
+public class IndicatorSignal {
     private IDate date;
 
     public IDate getDate() {
@@ -15,7 +15,7 @@ public class MacdSignaal {
 
     private Boolean isKoopsignaal;
 
-    public MacdSignaal(IDate date, Boolean isKoopsignaal) {
+    public IndicatorSignal(IDate date, Boolean isKoopsignaal) {
         this.date = date;
         this.isKoopsignaal = isKoopsignaal;
     }

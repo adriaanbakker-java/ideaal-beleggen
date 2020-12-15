@@ -43,11 +43,11 @@ public class MACD {
         return MACDSmoothed;
     }
 
-    public ArrayList<MacdSignaal> getMACDSignalen() {
-        return MACDSignalen;
+    public ArrayList<IndicatorSignal> getSignalen() {
+        return signalen;
     }
 
-    private ArrayList<MacdSignaal> MACDSignalen = null;
+    private ArrayList<IndicatorSignal> signalen = null;
     private ArrayList<Double> MACDSmoothed = null;
 
 
@@ -60,7 +60,7 @@ public class MACD {
 
     // Calculate buy- and sell signal moments
     private void calcSignalen() {
-        MACDSignalen = new ArrayList<>();
+        signalen = new ArrayList<>();
         for (int i=0; i <= myClosingPrices.size()-1; i++) {
             if (i >= slowDays ) {
                boolean s1 =   MACDlist.get(i-1) < MACDSmoothed.get(i-2);
@@ -74,9 +74,9 @@ public class MACD {
                    DayPriceRecord dpr = myClosingPrices.get(i);
                    IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
                    if (koopsig)
-                       MACDSignalen.add(new MacdSignaal(iDate, true));
+                       signalen.add(new IndicatorSignal(iDate, true));
                    else
-                       MACDSignalen.add(new MacdSignaal(iDate, false));
+                       signalen.add(new IndicatorSignal(iDate, false));
                }
             }
         }

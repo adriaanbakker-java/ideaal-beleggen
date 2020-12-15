@@ -38,6 +38,7 @@ eighth column is RSI (relative strength)
 
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 
 import java.util.ArrayList;
 
@@ -49,13 +50,33 @@ public class RSI {
     private ArrayList<Double> RSILine = new ArrayList<>();
 
     private ArrayList<DayPriceRecord> DayPriceArray;
+    private ArrayList<IndicatorSignal> signalen = null;
+
 
     public RSI(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
         DayPriceArray =aDayPriceArray;
         calcRsiValues();
+        calcSignalen();
     }
 
-
+    // Calculate buy- and sell signal moments
+    private void calcSignalen() {
+        signalen = new ArrayList<>();
+        for (int i=1; i <= DayPriceArray.size()-1; i++) {
+            double prevVal = getRSILine().get(i-1);
+            double val = getRSILine().get(i);
+            if ((prevVal > 70) && (val < 70)) {
+                DayPriceRecord dpr = DayPriceArray.get(i);
+                IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
+                signalen.add(new IndicatorSignal(iDate, false));
+            }
+            if ((prevVal < 30) && (val > 30)) {
+                DayPriceRecord dpr = DayPriceArray.get(i);
+                IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
+                signalen.add(new IndicatorSignal(iDate, true));
+            }
+        }
+    }
 
 
     private void calcRsiValues() {
@@ -107,5 +128,9 @@ public class RSI {
             RSILine.add(rsi);
             dprPrev = dpr;
         }
+    }
+
+    public ArrayList<IndicatorSignal> getSignalen() {
+        return signalen;
     }
 }
