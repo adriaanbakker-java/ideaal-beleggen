@@ -215,6 +215,16 @@ public class GetPriceHistory {
 		}
 	} // getHistoricPricesFromFile
 	
+/* retrieve the intraday prices (open, high, low, close, volume) for a stock
+   This record can be used to add to the graph to get insight into the stock development when a
+   end-of-day record is not yet available.
+ */
+	public DayPriceRecord getIntraDayPrices(String aTicker) {
+		System.out.println("get intraday record for stock: " + aTicker);
+		DayPriceRecord result = webAccess.getIntraDayPrices(aTicker);
+		return result;
+	}
+
 
 /*
  * 

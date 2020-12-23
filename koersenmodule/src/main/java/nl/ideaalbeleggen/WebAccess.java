@@ -476,4 +476,11 @@ public class WebAccess {
             DayPriceRecord result = new DayPriceRecord(date.day, date.month, date.year, open, high, low, close, volume);
             return result;
         }
+
+        /* retrieve intraday prices for this stock from the internet
+        */
+    public DayPriceRecord getIntraDayPrices(String aTicker) {
+        System.out.println("Webaccess: retrieve intraday prices for " + aTicker);
+        return null;
     }
+}

@@ -1,10 +1,14 @@
 package nl.ideaalbeleggen;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
+
 
 @SpringBootApplication
 @RestController
@@ -12,6 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class KoersenModuleApplication {
 
 
+    @Autowired
+    Koersenmodule koersenModule;
+
+
+    @RequestMapping(value = "/verversdagkoers")
+    public String verversDagkoers(@RequestParam(value="ticker") String ticker) {
+        koersenModule.verversDagkoers(ticker);
+        return "dagkoers ververst voor " + ticker;
+    }
 
     /*
     *  endpoint /koersen/verversen
@@ -74,7 +87,7 @@ public class KoersenModuleApplication {
             args[1] = eindMaand;
         }
         try {
-            Main.main(args);
+            koersenModule.verversKoersenfiles(args);
         } catch (Exception e) {
             return e.getLocalizedMessage();
         }
