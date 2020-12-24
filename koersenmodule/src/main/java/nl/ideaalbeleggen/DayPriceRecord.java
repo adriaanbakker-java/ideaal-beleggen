@@ -182,4 +182,12 @@ public final class DayPriceRecord {
 	public String printLow() {
 		return String.format("%.2f", getLow());
 	}
+
+    public String print() {
+		return "open:" + printPrice(this.getOpen()) +
+				" hoog:" + printPrice(this.getHigh()) +
+				" laag:" + printPrice(this.getLow()) +
+				" slot:" + printPrice(this.getClose()) +
+				" volume:" + printVolume(this.getVolume());
+	}
 }

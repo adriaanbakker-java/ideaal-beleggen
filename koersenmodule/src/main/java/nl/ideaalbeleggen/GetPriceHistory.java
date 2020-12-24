@@ -219,7 +219,7 @@ public class GetPriceHistory {
    This record can be used to add to the graph to get insight into the stock development when a
    end-of-day record is not yet available.
  */
-	public DayPriceRecord getIntraDayPrices(String aTicker) {
+	public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
 		System.out.println("get intraday record for stock: " + aTicker);
 		DayPriceRecord result = webAccess.getIntraDayPrices(aTicker);
 		return result;

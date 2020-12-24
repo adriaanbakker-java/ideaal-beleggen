@@ -13,7 +13,7 @@ public class Koersenmodule {
      String expectedTitle = "ADYEN NV » Historische koersen (Aandeel) | IEX.nl";
 
 
-    public DayPriceRecord verversDagkoers(String aTicker) {
+    public DayPriceRecord verversDagkoers(String aTicker) throws Exception {
         return gph.getIntraDayPrices(aTicker);
     }
 

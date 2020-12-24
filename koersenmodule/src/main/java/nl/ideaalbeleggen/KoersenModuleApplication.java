@@ -21,9 +21,14 @@ public class KoersenModuleApplication {
 
 
     @RequestMapping(value = "/verversdagkoers")
-    public String verversDagkoers(@RequestParam(value="ticker") String ticker) {
-        koersenModule.verversDagkoers(ticker);
-        return "dagkoers ververst voor " + ticker;
+    public String verversDagkoers(@RequestParam(value="ticker") String ticker)  {
+
+        try {
+            DayPriceRecord dpr = koersenModule.verversDagkoers(ticker);
+            return "dagkoers ververst voor " + ticker + dpr.print();
+        } catch (Exception e) {
+            return "Fout bij verversen dagkoers:" + e.getLocalizedMessage();
+        }
     }
 
     /*
