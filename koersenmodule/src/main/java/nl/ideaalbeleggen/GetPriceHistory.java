@@ -221,8 +221,17 @@ public class GetPriceHistory {
  */
 	public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
 		System.out.println("get intraday record for stock: " + aTicker);
-		DayPriceRecord result = webAccess.getIntraDayPrices(aTicker);
-		return result;
+		DayPriceRecord intraDayPrice = webAccess.getIntraDayPrices(aTicker);
+
+		MyDate huidigeDatum = MyDate.geefHuidigeDatum();
+		DayPriceRecord lastprice = getLastPriceFromHistory(aTicker);
+		MyDate dateLastPrice = new MyDate( lastprice.getDay(), lastprice.getMonth(), lastprice.getYear());
+
+		MyDate volgendeHandelsdag = dateLastPrice.geefVolgendeHandelsdag();
+		//if (volgendeHandelsdag.equals(huidigeDatum)) ==
+		// hier nog checken en het intraday record aan koersbestand toevoegen/overschrijven!!
+
+		return intraDayPrice;
 	}
 
 
@@ -361,12 +370,13 @@ public class GetPriceHistory {
 		} 	
 	}
 
-	// retrieve today's price info of this stock
-	/*public DayPriceRecord retrievePricesOfToday(String aTicker) throws Exception{
+	public DayPriceRecord getLastPriceFromHistory(String aTicker) throws Exception {
+		GetPriceHistory gph = new GetPriceHistory();
+		ArrayList<DayPriceRecord> prices =
+				gph.getHistoricPricesFromFile(aTicker);
 
-		DayPriceRecord dpr = webAccess.getTodaysPrice(aTicker);
-		return dpr;
-	} */
+		return prices.get(prices.size()-1);
+	}
 
 	// check today is a trading day and current time is after stock market opening hours
 	private boolean checkMarketOpenedToday() {

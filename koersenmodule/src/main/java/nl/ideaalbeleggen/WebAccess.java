@@ -331,7 +331,7 @@ public class WebAccess {
         double close = 0.0;
         Integer volume = 0;
 
-        MyDate date = null;
+        MyDate huidigeDatum = null;
 
 
         /*  panel (0) -> keylist--row (1) -> keylist (2) -> keylist__pair (3) -> (keylist__term, keylist__value) (4)
@@ -379,52 +379,13 @@ public class WebAccess {
             keylist_termvalue = keylist_pair.get(1).children(); // (4)
             String sSlotVorigeDag = keylist_termvalue.text();                    // slot vorige dag plus datum
             System.out.println(sSlotVorigeDag);
-/*            if (elements.get(0).attr("class").equals("SimpleTable")) {
-                // first row from table
-                Elements e_rows = elements.get(0).getElementsByTag("tr");
-                Elements e_cells = e_rows.get(0).getElementsByTag("td");
-                // second cell of first row contains date in format 04-okt-19
-                System.out.println("Found date:" + e_cells.get(1).text());
 
-                date = convertToDate(e_cells.get(1).text());
+            huidigeDatum = new MyDate(0,0,0);
 
-                // second row second cell contains current price
-                e_cells = e_rows.get(1).getElementsByTag("td");
-                System.out.println("Found current price (will be close price end of day):" + e_cells.get(1).text());
-                close = parseDouble(e_cells.get(1).text());
-
-                // fourth row second cell contains high of the day
-                e_cells = e_rows.get(3).getElementsByTag("td");
-                System.out.println("Found high:" + e_cells.get(1).text());
-                high = parseDouble(e_cells.get(1).text());
-
-                // fifth row second cell contains low of the day
-                e_cells = e_rows.get(4).getElementsByTag("td");
-                System.out.println("Found low:" + e_cells.get(1).text());
-                low = parseDouble(e_cells.get(1).text());
-
-                // sixth row second cell contains low of the day
-                e_cells = e_rows.get(5).getElementsByTag("td");
-                System.out.println("Found volume:" + e_cells.get(1).text());
-                volume = parseVolume(e_cells.get(1).text());
-
-            } else {
-                throw new Exception("SimpleTable as first table expected on web page");
-            }
-            if (elements.get(1).attr("class").equals("SimpleTable")) {
-
-                Elements e_rows = elements.get(1).getElementsByTag("tr");
-                Elements e_cells = e_rows.get(3).getElementsByTag("td");
-                // second cell of fourth row contains opening price
-                System.out.println("Found opening price:" + e_cells.get(1).text());
-                open = parseDouble(e_cells.get(1).text());
-            } else {
-                throw new Exception("SimpleTable as second table expected on web page");
-            }*/
         } catch (Exception e) {
             throw new Exception("getTodaysPrice " + paginalink + "\n" + e.getMessage());
         }
-        DayPriceRecord result = new DayPriceRecord(date.day, date.month, date.year, open, high, low, close, volume);
+        DayPriceRecord result = new DayPriceRecord(huidigeDatum.day, huidigeDatum.month, huidigeDatum.year, open, high, low, close, volume);
         return result;
     }
 
