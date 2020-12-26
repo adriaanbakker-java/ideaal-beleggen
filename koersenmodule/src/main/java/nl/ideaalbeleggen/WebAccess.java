@@ -353,19 +353,19 @@ public class WebAccess {
             volume = parseVolume(sVolume);
 
             keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(2).children(); // (3)
+            keylist_pair = keylist.get(0).children(); // (3)
             keylist_termvalue = keylist_pair.get(1).children(); // (4)
             String sLow = keylist_termvalue.text();                    // laag
             low = parseDouble(sLow);
 
             //keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(3).children(); // (3)
+            keylist_pair = keylist.get(1).children(); // (3)
             keylist_termvalue = keylist_pair.get(1).children(); // (4)
             String sHigh = keylist_termvalue.text();                    // hoog
             high = parseDouble(sHigh);
 
             //keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(4).children(); // (3)
+            keylist_pair = keylist.get(2).children(); // (3)
             keylist_termvalue = keylist_pair.get(1).children(); // (4)
             String sOpen = keylist_termvalue.text();                    // openingskoers
             open = parseDouble(sOpen);

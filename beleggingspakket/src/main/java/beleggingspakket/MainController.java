@@ -152,9 +152,6 @@ public class MainController {
         selecteerAandeel.getItems().addAll(aandelenlijst);
         selecteerAandeel.setStyle("-fx-font: 13 arial;");
 
-
-
-
         ArrayList<String> pfs = findPortefeuillesOnDisk();
 
         portefeuillelijst.clear();
@@ -202,9 +199,34 @@ public class MainController {
     public void koersenVerversen(ActionEvent actionEvent) {
         try {
             System.out.println("Roept via spring boot de REST service aan voor koersen verversen");
+            String pfNaam =  selecteerAandeel.getValue();
             RestTemplate restTemplate= builder.build();
             String koersenResult = restTemplate.getForObject(
                     "http://localhost:8082/koersen/verversen", String.class);
+
+            logInTextArea(koersenResult);
+        } catch (Exception e) {
+            String msg = e.getLocalizedMessage();
+            if (msg.contains("Connection refused")) {
+                logInTextArea("FOUT: koersenmodule is kennelijk niet gestart");
+            } else {
+                logInTextArea(e.getLocalizedMessage());
+            }
+        }
+    }
+
+
+    public void haalintradagkoers(ActionEvent actionEvent) {
+        try {
+            System.out.println("Roept via spring boot de REST service aan ophalen dagkoers");
+            String ticker = selecteerAandeel.getValue();
+            if (ticker == null) {
+                logInTextArea("Eerst aandeel kiezen svp");
+                return;
+            }
+            RestTemplate restTemplate= builder.build();
+            String koersenResult = restTemplate.getForObject(
+                    "http://localhost:8082/koersen/haalintradagkoers?ticker=" + ticker , String.class);
 
             logInTextArea(koersenResult);
         } catch (Exception e) {

@@ -6,10 +6,10 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class DayPriceRecord {
-	private final int day, month, year;
-	private final double Open, High, Low, Close;
-	private final int Volume;
+public  class DayPriceRecord {
+	private  int day, month, year;
+	private  double Open, High, Low, Close;
+	private  int Volume;
 
 	public int getDay() {
 		return day;
@@ -189,5 +189,11 @@ public final class DayPriceRecord {
 				" laag:" + printPrice(this.getLow()) +
 				" slot:" + printPrice(this.getClose()) +
 				" volume:" + printVolume(this.getVolume());
+	}
+
+	public void setDate(MyDate aDatum) {
+		this.year = aDatum.year;
+		this.month = aDatum.month;
+		this.day = aDatum.day;
 	}
 }

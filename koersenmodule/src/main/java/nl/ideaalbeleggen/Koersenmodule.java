@@ -13,8 +13,9 @@ public class Koersenmodule {
      String expectedTitle = "ADYEN NV » Historische koersen (Aandeel) | IEX.nl";
 
 
-    public DayPriceRecord verversDagkoers(String aTicker) throws Exception {
-        return gph.getIntraDayPrices(aTicker);
+    public DayPriceRecord haalIntraDagkoers(String aTicker) throws Exception {
+        DayPriceRecord result = gph.haalIntraDagkoers(aTicker);
+        return result;
     }
 
     public  void verversKoersenfiles(String[] args) throws Exception {
@@ -39,8 +40,6 @@ public class Koersenmodule {
 
         System.out.println("Webcomponent aanmaken, duurt ongeveer 20 seconden...");
         System.out.println("svp de volgende waarschuwingen negeren!");
-
-
 
         try {
             Set<String> tickerSet = gph.getTickers();

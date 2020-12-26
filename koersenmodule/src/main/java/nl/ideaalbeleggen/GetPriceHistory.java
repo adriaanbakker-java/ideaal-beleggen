@@ -219,23 +219,45 @@ public class GetPriceHistory {
    This record can be used to add to the graph to get insight into the stock development when a
    end-of-day record is not yet available.
  */
-	public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
-		System.out.println("get intraday record for stock: " + aTicker);
+	public DayPriceRecord haalIntraDagkoers(String aTicker) throws Exception {
+		System.out.println("Haal intradagkoers op voor: " + aTicker);
 		DayPriceRecord intraDayPrice = webAccess.getIntraDayPrices(aTicker);
 
 		MyDate huidigeDatum = MyDate.geefHuidigeDatum();
+		intraDayPrice.setDate(huidigeDatum);
 		DayPriceRecord lastprice = getLastPriceFromHistory(aTicker);
 		MyDate dateLastPrice = new MyDate( lastprice.getDay(), lastprice.getMonth(), lastprice.getYear());
 
 		MyDate volgendeHandelsdag = dateLastPrice.geefVolgendeHandelsdag();
 		//if (volgendeHandelsdag.equals(huidigeDatum)) ==
 		// hier nog checken en het intraday record aan koersbestand toevoegen/overschrijven!!
+		if (volgendeHandelsdag.equals(huidigeDatum)) {
 
+			voegIntradayKoersToeAanBestand(aTicker, intraDayPrice);
+		} else if (dateLastPrice.equals(huidigeDatum)) {
+			vervangIntraDayKoersInBestand(aTicker, intraDayPrice);
+		} else {
+			throw new Exception("Koersfile eerst aanvullen, laatste record van koersbestand is te oud");
+		}
 		return intraDayPrice;
 	}
 
+	private void vervangIntraDayKoersInBestand(String aTicker, DayPriceRecord intraDayPrice)
+	throws Exception {
+		List<DayPriceRecord> pricesFromFile =  getHistoricPricesFromFile(aTicker);
+		pricesFromFile.set(pricesFromFile.size()-1, intraDayPrice);
+		rewritePriceHistoryFile(aTicker, pricesFromFile);
+	}
 
-/*
+	private void voegIntradayKoersToeAanBestand(String aTicker, DayPriceRecord intraDayPrice)
+	throws Exception {
+		List<DayPriceRecord> pricesFromFile =  getHistoricPricesFromFile(aTicker);
+		pricesFromFile.add(intraDayPrice);
+		rewritePriceHistoryFile(aTicker, pricesFromFile);
+	}
+
+
+	/*
  * 
  * Update the stock price history file starting from aYear and aMonth
  * Updates from the net. Current day's stock price may be retrieved from a separate page. 
