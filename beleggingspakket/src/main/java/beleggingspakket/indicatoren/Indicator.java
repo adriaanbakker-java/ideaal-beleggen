@@ -17,6 +17,8 @@ public abstract class Indicator {
         calcSignalen();
     }
 
+    public abstract ArrayList<Double> geefIndicator();
+
     public ArrayList<IndicatorSignal> getSignalen() {
         return signalen;
     }

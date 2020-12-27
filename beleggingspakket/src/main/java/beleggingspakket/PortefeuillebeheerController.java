@@ -5,6 +5,7 @@ import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
 import beleggingspakket.indicatoren.MACD;
 import beleggingspakket.indicatoren.IndicatorSignal;
+import beleggingspakket.indicatoren.Momentum;
 import beleggingspakket.indicatoren.RSI;
 import beleggingspakket.portefeuillebeheer.*;
 import beleggingspakket.util.IDate;
@@ -827,7 +828,7 @@ public class PortefeuillebeheerController implements Initializable {
     }
 
 
-    void listLaatsteSignaal(String msg, ArrayList<IndicatorSignal> signalen) {
+    String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen) {
         IndicatorSignal lastSignal = null;
         IDate pfDate = portefeuille.getEinddatum();
         for (IndicatorSignal sig: signalen) {
@@ -835,13 +836,14 @@ public class PortefeuillebeheerController implements Initializable {
                 lastSignal = sig;
             }
         }
+        String sResult = "";
         if (lastSignal != null) {
-            String sSignal = "koopsignaal";
+            sResult =     "koop    ";
             if (!lastSignal.getKoopsignaal())
-                sSignal = "verkoopsignaal";
-            logInTextArea(msg + ":Laatste signaal is een " + sSignal + " op " +
-                    lastSignal.getDate().toString());
+                sResult = "verkoop ";
+            sResult += lastSignal.getDate().toString();
         }
+        return sResult;
     }
 
     // Check whether any of the popular indicators has given a signal in the last few days
@@ -859,13 +861,27 @@ public class PortefeuillebeheerController implements Initializable {
                 ArrayList<DayPriceRecord> prices;
                 try {
                     prices = myGPH.getHistoricPricesFromFile(ticker);
+                    logInTextArea(ticker + " signalen:");
                     MACD macd = new MACD(prices);
                     ArrayList<IndicatorSignal> signalen = macd.getSignalen();
-                    listLaatsteSignaal("MACD " + ticker, signalen);
+                    String sSignaal = listLaatsteSignaal(signalen);
+                    String sResult = "";
+                    if (!sSignaal.equals(""))
+                        sResult += " MACD:" + sSignaal;
 
                     RSI rsi = new RSI(prices);
                     signalen = rsi.getSignalen();
-                    listLaatsteSignaal("RSI "  + ticker, signalen);
+                    sSignaal = listLaatsteSignaal(signalen);
+                    if (!sSignaal.equals(""))
+                        sResult += " RSI :" + sSignaal;
+
+                    Momentum mom = new Momentum(prices);
+                    signalen = mom.getSignalen();
+                    sSignaal = listLaatsteSignaal(signalen);
+                    if (!sSignaal.equals(""))
+                        sResult += " Mom :" + sSignaal;
+
+                    logInTextArea(sResult);
 
 
                 } catch (Exception e) {

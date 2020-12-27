@@ -8,45 +8,82 @@ closing price ten days ago.
 
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 
 import java.util.ArrayList;
 
-public class Momentum {
-    public ArrayList<Double> MomentumLine () {
-        return MomentumLine;
-    }
+public class Momentum extends Indicator {
 
-    private ArrayList<Double> MomentumLine = new ArrayList<>();
-
-    private ArrayList<DayPriceRecord> DayPriceArray;
+    private ArrayList<Double> momentumLine;
+    private int nrOfDays;
 
     public Momentum(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
-        DayPriceArray =aDayPriceArray;
+        super (aDayPriceArray);
+        //DayPriceArray =aDayPriceArray;
+        //calcMomentumLine();
+    }
+
+    @Override
+    public ArrayList<Double> geefIndicator() {
+        return momentumLine;
+    }
+
+    @Override
+    protected void initSpecifics() {
+        nrOfDays = 10;
+    }
+
+    @Override
+    protected void calcSignalen() {
+        signalen = new ArrayList<>();
+        for (int i=nrOfDays + 1; i <= myClosingPrices.size()-1; i++) {
+            double prev = momentumLine.get(i-1);
+            double val = momentumLine.get(i);
+            boolean koopsig = ((prev < 0) && (val > 0));
+            boolean verkoopsig = ((prev > 0) && (val < 0));
+
+            if ((koopsig) || verkoopsig) {
+                DayPriceRecord dpr = myClosingPrices.get(i);
+                IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
+                if (koopsig)
+                    signalen.add(new IndicatorSignal(iDate, true));
+                else
+                    signalen.add(new IndicatorSignal(iDate, false));
+            }
+        }
+    }
+
+    @Override
+    protected void calcSignalLine() throws Exception {
+            // momentum heeft geen signalline
+    }
+
+    @Override
+    protected void calcIndicator() {
         calcMomentumLine();
     }
 
 
-
-
     private void calcMomentumLine() {
         double price = 0.0;
-        final int nrOfDays = 10;
 
+
+        momentumLine = new ArrayList<>();
         DayPriceRecord dpr  = null;
         DayPriceRecord dprPrev  = null;
 
-        for (int i = 0; i<= DayPriceArray.size()-1; i++) {
+        for (int i = 0; i<= myClosingPrices.size()-1; i++) {
 
             if (i <nrOfDays ) {
                price = 0.0;
             } else {
-                dpr = DayPriceArray.get(i);
-                dprPrev = DayPriceArray.get(i-nrOfDays);
+                dpr = myClosingPrices.get(i);
+                dprPrev = myClosingPrices.get(i-nrOfDays);
                 price = dpr.getClose() - dprPrev.getClose();
             }
 
 
-            MomentumLine.add(price);
+            momentumLine.add(price);
         }
     }
 }

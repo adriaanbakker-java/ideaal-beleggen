@@ -314,7 +314,7 @@ public class GrafiekenschermController implements Initializable {
             IndicatorClass indicator = new IndicatorClass(
                     xAxis,
                     yAxis,
-                    momentum.MomentumLine(),
+                    momentum.geefIndicator(),
                     null,
                     "Momentum",
                     iStartindex,
@@ -470,7 +470,7 @@ public class GrafiekenschermController implements Initializable {
             IndicatorClass indicator = new IndicatorClass(
                     xAxis,
                     yAxis,
-                    macd.getMACDlist(),
+                    macd.geefIndicator(),
                     macd.getMACDSmoothed(),
                     "MACD",
                     iStartindex,

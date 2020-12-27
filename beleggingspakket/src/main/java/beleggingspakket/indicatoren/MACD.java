@@ -34,10 +34,11 @@ public class MACD extends Indicator {
         super(aDayPriceArray);
     }
 
-
-    public ArrayList<Double> getMACDlist() {
+    @Override
+    public ArrayList<Double> geefIndicator() {
         return MACDlist;
     }
+
     private ArrayList<Double> fastEMA;
     private ArrayList<Double> slowEMA;
     private ArrayList<Double> MACDlist;
