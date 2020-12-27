@@ -25,41 +25,40 @@ import java.util.ArrayList;
  * a simple moving average (SMA), which applies an equal weight to
  * all observations in the period.
  */
-public class MACD {
-    ArrayList<DayPriceRecord> myClosingPrices;
-    private int slowDays = 26;
-    private int fastDays = 12;
+public class MACD extends Indicator {
+
+    private int slowDays;
+    private int fastDays;
+
+    public MACD(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
+        super(aDayPriceArray);
+    }
 
 
     public ArrayList<Double> getMACDlist() {
         return MACDlist;
     }
-
-    private ArrayList<Double> fastEMA = null;
-    private ArrayList<Double> slowEMA = null;
-    private ArrayList<Double> MACDlist = null;
+    private ArrayList<Double> fastEMA;
+    private ArrayList<Double> slowEMA;
+    private ArrayList<Double> MACDlist;
 
     public ArrayList<Double> getMACDSmoothed() {
         return MACDSmoothed;
     }
-
-    public ArrayList<IndicatorSignal> getSignalen() {
-        return signalen;
-    }
-
-    private ArrayList<IndicatorSignal> signalen = null;
-    private ArrayList<Double> MACDSmoothed = null;
+    private ArrayList<Double> MACDSmoothed;
 
 
-    public MACD(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
-        myClosingPrices = aDayPriceArray;
-        calcMACD(myClosingPrices);
-        calcMACDSignal();
-        calcSignalen();
+    // MACD used to be a seperate class, is now extended from superclass Indicator.
+    // Because field initializations of the specific indicator only take place AFTER the object
+    // is created via super() we need to initialize MACD fields from within the Indicator superclass
+    @Override
+    protected void initSpecifics() {
+        slowDays = 26;
+        fastDays = 12;
     }
 
     // Calculate buy- and sell signal moments
-    private void calcSignalen() {
+    protected void calcSignalen() {
         signalen = new ArrayList<>();
         for (int i=0; i <= myClosingPrices.size()-1; i++) {
             if (i >= slowDays ) {
@@ -82,17 +81,27 @@ public class MACD {
         }
     }
 
-    void calcMACDSignal() throws Exception {
+    @Override
+    protected void calcSignalLine() throws Exception {
+        calcMACDSignal();
+    }
+
+    @Override
+    protected void calcIndicator() {
+        calcMACD();
+    }
+
+    private void calcMACDSignal() throws Exception {
         if (MACDlist == null ) {
             throw new Exception("MACD calcMACDSignal: eerst MACD laten berekenen");
         }
         MACDSmoothed =  calcEma(MACDlist, 9);
     }
 
-    void calcMACD(ArrayList<DayPriceRecord> aClosingPrices) {
+    private void calcMACD(){
         MACDlist = new ArrayList<>();
         ArrayList<Double> closingPrices = new ArrayList<>();
-        for (DayPriceRecord dpr: aClosingPrices) {
+        for (DayPriceRecord dpr: myClosingPrices) {
             closingPrices.add(dpr.getClose());
         }
         fastEMA = calcEma(closingPrices, fastDays);
@@ -106,7 +115,7 @@ public class MACD {
         }
     }
 
-    ArrayList<Double>  calcEma(ArrayList<Double> aClosingPrices, int nrOfDays) {
+    private ArrayList<Double>  calcEma(ArrayList<Double> aClosingPrices, int nrOfDays) {
         ArrayList<Double> result = new ArrayList<>();
         double avg = 0;
         double ema = 0;
@@ -124,5 +133,4 @@ public class MACD {
         }
         return result;
     }
-
 }
