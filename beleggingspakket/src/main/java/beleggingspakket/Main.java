@@ -1,9 +1,13 @@
 package beleggingspakket;
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.Koersen.GetPriceHistory;
+import beleggingspakket.indicatoren.*;
 import beleggingspakket.util.IDate;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -75,5 +79,49 @@ public class Main {
 
     public void logInTextArea(String logmessage) {
         mainController.logInTextArea(logmessage);
+    }
+
+
+    String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen, IDate aDate) {
+        IndicatorSignal lastSignal = null;
+
+        for (IndicatorSignal sig: signalen) {
+            if (sig.getDate().isSmallerEqual(aDate)) {
+                lastSignal = sig;
+            }
+        }
+        String sResult = "";
+        if (lastSignal != null) {
+            sResult =     "koop    ";
+            if (!lastSignal.getKoopsignaal())
+                sResult = "verkoop ";
+            sResult += lastSignal.getDate().toString();
+        }
+        return sResult;
+    }
+
+    private String checkSignal(String aIndicatorNaam, Indicator aIndicator, IDate aDate) {
+        String sSignaal = listLaatsteSignaal(aIndicator.getSignals(), aDate);
+        String sResult = "";
+        if (!sSignaal.equals(""))
+            sResult += aIndicatorNaam + ":" + sSignaal;
+        return sResult;
+    }
+
+    public void checkSignalen(String ticker, IDate aDate) throws Exception {
+        GetPriceHistory myGPH = new GetPriceHistory();
+        ArrayList<DayPriceRecord> prices;
+        prices = myGPH.getHistoricPricesFromFile(ticker);
+        try {
+            logInTextArea(ticker + " signalen:");
+            String sResult = checkSignal("MACD", new MACD(prices), aDate);
+            sResult += checkSignal(" OBV", new OnBalanceVolume(prices), aDate);
+            sResult += checkSignal(" MOM", new Momentum(prices), aDate);
+            sResult += checkSignal(" RSI", new RSI(prices), aDate);
+
+            logInTextArea(sResult);
+        } catch (Exception e) {
+            throw new Exception (e.getLocalizedMessage());
+        }
     }
 }

@@ -3,10 +3,7 @@ package beleggingspakket;
 import beleggingspakket.Koersen.BufferedPrices;
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
-import beleggingspakket.indicatoren.MACD;
-import beleggingspakket.indicatoren.IndicatorSignal;
-import beleggingspakket.indicatoren.Momentum;
-import beleggingspakket.indicatoren.RSI;
+import beleggingspakket.indicatoren.*;
 import beleggingspakket.portefeuillebeheer.*;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
@@ -828,23 +825,6 @@ public class PortefeuillebeheerController implements Initializable {
     }
 
 
-    String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen) {
-        IndicatorSignal lastSignal = null;
-        IDate pfDate = portefeuille.getEinddatum();
-        for (IndicatorSignal sig: signalen) {
-            if (sig.getDate().isSmallerEqual(pfDate)) {
-                lastSignal = sig;
-            }
-        }
-        String sResult = "";
-        if (lastSignal != null) {
-            sResult =     "koop    ";
-            if (!lastSignal.getKoopsignaal())
-                sResult = "verkoop ";
-            sResult += lastSignal.getDate().toString();
-        }
-        return sResult;
-    }
 
     // Check whether any of the popular indicators has given a signal in the last few days
     // for any of the open positions
@@ -853,42 +833,17 @@ public class PortefeuillebeheerController implements Initializable {
     public void checkSignalen() {
         System.out.println("Signalen checken");
         for (Map.Entry<String, Positie> entry : portefeuille.getPosities())  {
-            if (entry.getValue().getIsAandeel()) {
-                //if (entry.getValue().getPOS() != 0)
-                String ticker = entry.getKey();
-                System.out.println("Check signalen voor " + ticker);
-                GetPriceHistory myGPH = new GetPriceHistory();
-                ArrayList<DayPriceRecord> prices;
-                try {
-                    prices = myGPH.getHistoricPricesFromFile(ticker);
-                    logInTextArea(ticker + " signalen:");
-                    MACD macd = new MACD(prices);
-                    ArrayList<IndicatorSignal> signalen = macd.getSignals();
-                    String sSignaal = listLaatsteSignaal(signalen);
-                    String sResult = "";
-                    if (!sSignaal.equals(""))
-                        sResult += " MACD:" + sSignaal;
-
-                    RSI rsi = new RSI(prices);
-                    signalen = rsi.getSignalen();
-                    sSignaal = listLaatsteSignaal(signalen);
-                    if (!sSignaal.equals(""))
-                        sResult += " RSI :" + sSignaal;
-
-                    Momentum mom = new Momentum(prices);
-                    signalen = mom.getSignals();
-                    sSignaal = listLaatsteSignaal(signalen);
-                    if (!sSignaal.equals(""))
-                        sResult += " Mom :" + sSignaal;
-
-                    logInTextArea(sResult);
-
-
-                } catch (Exception e) {
-                    String infostring = "kon prijzen niet lezen" + e.getLocalizedMessage();
-                    logInTextArea(infostring);
+            try {
+                if (entry.getValue().getIsAandeel()) {
+                    //if (entry.getValue().getPOS() != 0)
+                    String ticker = entry.getKey();
+                    System.out.println("Check signalen voor " + ticker);
+                    main.checkSignalen(ticker, portefeuille.getEinddatum());
                 }
+            } catch (Exception e) {
+                logInTextArea("checkSignalen:" + e.getLocalizedMessage());
             }
+
         }
     }
 

@@ -42,44 +42,53 @@ import beleggingspakket.util.IDate;
 
 import java.util.ArrayList;
 
-public class RSI {
+public class RSI extends Indicator {
     public ArrayList<Double> getRSILine() {
         return RSILine;
     }
-
-    private ArrayList<Double> RSILine = new ArrayList<>();
-
-    private ArrayList<DayPriceRecord> DayPriceArray;
-    private ArrayList<IndicatorSignal> signalen = null;
-
+    private ArrayList<Double> RSILine;
 
     public RSI(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
-        DayPriceArray =aDayPriceArray;
-        calcRsiValues();
-        calcSignalen();
+        super(aDayPriceArray);
     }
 
-    // Calculate buy- and sell signal moments
-    private void calcSignalen() {
+    @Override
+    public ArrayList<Double> getIndicatorLine() {
+        return null;
+    }
+
+    @Override
+    protected void initSpecifics() {
+       RSILine = new ArrayList<>();
+    }
+
+
+    @Override
+    protected void calcSignalLine() throws Exception {
+        // werkt iets anders bij RSI
+    }
+
+    @Override
+    protected void calcSignals() {
         signalen = new ArrayList<>();
-        for (int i=1; i <= DayPriceArray.size()-1; i++) {
+        for (int i = 1; i <= myClosingPrices.size()-1; i++) {
             double prevVal = getRSILine().get(i-1);
             double val = getRSILine().get(i);
             if ((prevVal > 70) && (val < 70)) {
-                DayPriceRecord dpr = DayPriceArray.get(i);
+                DayPriceRecord dpr = myClosingPrices.get(i);
                 IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
                 signalen.add(new IndicatorSignal(iDate, false));
             }
             if ((prevVal < 30) && (val > 30)) {
-                DayPriceRecord dpr = DayPriceArray.get(i);
+                DayPriceRecord dpr = myClosingPrices.get(i);
                 IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
                 signalen.add(new IndicatorSignal(iDate, true));
             }
         }
     }
 
-
-    private void calcRsiValues() {
+    @Override
+    protected void calcIndicator() {
         double price = 0.0;
         double change = 0.0;
         double upw = 0.0;
@@ -91,8 +100,8 @@ public class RSI {
 
         DayPriceRecord dprPrev  = null;
 
-        for (int i = 0; i<= DayPriceArray.size()-1; i++) {
-            DayPriceRecord dpr = DayPriceArray.get(i);
+        for (int i = 0; i<= myClosingPrices.size()-1; i++) {
+            DayPriceRecord dpr = myClosingPrices.get(i);
             if (i > 0) {
                 change = dpr.getClose() - dprPrev.getClose();
                 if (change > 0.0) {

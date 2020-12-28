@@ -433,8 +433,8 @@ public class GrafiekenschermController implements Initializable {
             IndicatorClass indicator = new IndicatorClass(
                     xAxis,
                     yAxis,
-                    obv.getOBVline(),
-                    obv.getOBVMovingAverage(),
+                    obv.getIndicatorLine(),
+                    obv.getIndicatorMALine(),
                     "On Balance Volume",
                     iStartindex,
                     iEindindex,

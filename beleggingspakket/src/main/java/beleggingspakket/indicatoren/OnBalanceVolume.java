@@ -2,57 +2,67 @@ package beleggingspakket.indicatoren;
 
 
 import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.util.IDate;
 
 import java.util.ArrayList;
 
 public class OnBalanceVolume extends Indicator {
     private int AVGCNT;
 
-    public ArrayList<Double> getOBVline() {
-        return OBVline;
+    private ArrayList<Double> indicatorLine;
+    @Override
+    public ArrayList<Double> getIndicatorLine() {
+        return indicatorLine;
     }
 
-    private ArrayList<Double> OBVline;
-
-    public ArrayList<Double> getOBVMovingAverage() {
-        return OBV_movingavg;
+    private ArrayList<Double> indicatorMALine;
+    public ArrayList<Double> getIndicatorMALine() {
+        return indicatorMALine;
     }
-
-    private ArrayList<Double> OBV_movingavg;
 
     public OnBalanceVolume(ArrayList<DayPriceRecord> aClosingPrices) throws Exception {
         super(aClosingPrices);
     }
 
     @Override
-    public ArrayList<Double> getIndicatorLine() {
-        return null;
-    }
-
-    @Override
     protected void initSpecifics() {
         AVGCNT = 20;
-        OBV_movingavg = new ArrayList<>();
-        OBVline = new ArrayList<>();
-        OBV_movingavg = new ArrayList<>();
+        indicatorLine = new ArrayList<>();
+        indicatorMALine = new ArrayList<>();
     }
 
     @Override
     protected void calcSignals() {
+        signalen = new ArrayList<>();
+        for (int i=0; i <= myClosingPrices.size()-1; i++) {
+            if (i >= AVGCNT ) {
+                boolean s1 =   indicatorLine.get(i-1) < indicatorMALine.get(i-2);
+                boolean s2 =   indicatorLine.get(i) > indicatorMALine.get(i);
+                boolean s3 =   indicatorLine.get(i-1) > indicatorMALine.get(i-2);
+                boolean s4 =   indicatorLine.get(i) < indicatorMALine.get(i);
+                boolean koopsig = s1 && s2;
+                boolean verkoopsig = s3 && s4;
 
+                if ((koopsig) || verkoopsig) {
+                    DayPriceRecord dpr = myClosingPrices.get(i);
+                    IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
+                    if (koopsig)
+                        signalen.add(new IndicatorSignal(iDate, true));
+                    else
+                        signalen.add(new IndicatorSignal(iDate, false));
+                }
+            }
+        }
     }
 
     @Override
     protected void calcSignalLine() throws Exception {
-
+        // is part of calcIndicator()
     }
+
 
     @Override
     protected void calcIndicator() {
-        calcOBVValues();
-    }
-
-    private void calcOBVValues() {
         double currentValue = 0L;
 
         DayPriceRecord dprPrev = null;
@@ -60,7 +70,6 @@ public class OnBalanceVolume extends Indicator {
         for (int i = 0; i<= myClosingPrices.size()-1; i++) {
              DayPriceRecord dpr = myClosingPrices.get(i);
 
-            int volume = dpr.getVolume();
             if (dprPrev != null) {
                 if (dpr.getClose() > dprPrev.getClose()) {
                     currentValue += dpr.getVolume();
@@ -73,19 +82,17 @@ public class OnBalanceVolume extends Indicator {
             double movavg = 0.0;
             if (i < AVGCNT) {
                 movavg = 0.0;
-                OBV_movingavg.add(movavg);
+                indicatorMALine.add(movavg);
             } else {
                 movavg = 0.0;
-                int lastindex = OBVline.size()-1;
+                int lastindex = indicatorLine.size()-1;
                 for (int j = 0; j <= AVGCNT - 1; j++) {
-                    movavg += OBVline.get(lastindex - j);
+                    movavg += indicatorLine.get(lastindex - j);
                 }
                 movavg /= AVGCNT;
-                OBV_movingavg.add(movavg);
+                indicatorMALine.add(movavg);
             }
-
-
-            OBVline.add(currentValue);
+            indicatorLine.add(currentValue);
             dprPrev = dpr;
         }
     }
