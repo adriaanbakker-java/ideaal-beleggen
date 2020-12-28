@@ -826,6 +826,7 @@ public class PortefeuillebeheerController implements Initializable {
 
 
 
+
     // Check whether any of the popular indicators has given a signal in the last few days
     // for any of the open positions
     // for now, only for stock positions, not yet implemented how to find the

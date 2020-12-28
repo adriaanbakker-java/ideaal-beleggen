@@ -105,7 +105,10 @@ public class MainController {
 
     }
 
-
+    public void toonSignalen(ActionEvent actionEvent) {
+        String ticker = selecteerAandeel.getValue();
+        main.toonSignalen(ticker);
+    }
 
 
     public void logInTextArea(String infostring) {

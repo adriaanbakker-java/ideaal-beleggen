@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static java.time.LocalDateTime.now;
+
 public class Main {
 
     private JavaFxApplication app;
@@ -81,6 +83,15 @@ public class Main {
         mainController.logInTextArea(logmessage);
     }
 
+    public void toonSignalen(String ticker) {
+        try {
+            IDate date = new IDate(now());
+            checkSignalen(ticker, date);
+        } catch (Exception e) {
+            logInTextArea(e.getLocalizedMessage());
+        }
+
+    }
 
     String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen, IDate aDate) {
         IndicatorSignal lastSignal = null;

@@ -179,15 +179,26 @@
                         </ChoiceBox>
                      </children>
                   </VBox>
+                  <VBox prefHeight="0.0" prefWidth="196.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#haalintradagkoers" prefHeight="26.0" prefWidth="178.0" text="Haal intradagkoers op">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#toonSignalen" prefHeight="26.0" prefWidth="178.0" text="Toon signalen">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children></VBox>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#haalintradagkoers" prefHeight="26.0" prefWidth="178.0" text="Haal intradagkoers op">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="20.0" top="15.0" />
-                     </HBox.margin>
-                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
