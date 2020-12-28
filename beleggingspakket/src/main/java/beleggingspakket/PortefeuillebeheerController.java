@@ -863,7 +863,7 @@ public class PortefeuillebeheerController implements Initializable {
                     prices = myGPH.getHistoricPricesFromFile(ticker);
                     logInTextArea(ticker + " signalen:");
                     MACD macd = new MACD(prices);
-                    ArrayList<IndicatorSignal> signalen = macd.getSignalen();
+                    ArrayList<IndicatorSignal> signalen = macd.getSignals();
                     String sSignaal = listLaatsteSignaal(signalen);
                     String sResult = "";
                     if (!sSignaal.equals(""))
@@ -876,7 +876,7 @@ public class PortefeuillebeheerController implements Initializable {
                         sResult += " RSI :" + sSignaal;
 
                     Momentum mom = new Momentum(prices);
-                    signalen = mom.getSignalen();
+                    signalen = mom.getSignals();
                     sSignaal = listLaatsteSignaal(signalen);
                     if (!sSignaal.equals(""))
                         sResult += " Mom :" + sSignaal;

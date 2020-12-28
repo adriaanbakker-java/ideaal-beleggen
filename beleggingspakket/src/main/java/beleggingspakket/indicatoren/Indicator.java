@@ -14,12 +14,12 @@ public abstract class Indicator {
         myClosingPrices = aDayPriceArray;
         calcIndicator();
         calcSignalLine();
-        calcSignalen();
+        calcSignals();
     }
 
-    public abstract ArrayList<Double> geefIndicator();
+    public abstract ArrayList<Double> getIndicatorLine();
 
-    public ArrayList<IndicatorSignal> getSignalen() {
+    public ArrayList<IndicatorSignal> getSignals() {
         return signalen;
     }
 
@@ -27,9 +27,10 @@ public abstract class Indicator {
     // is created via super() we need to initialize MACD fields from within the Indicator superclass
     protected abstract void initSpecifics();
 
-    protected abstract void calcSignalen();
+    protected abstract void calcSignals();
 
     protected abstract void calcSignalLine() throws Exception;
 
     protected abstract void calcIndicator();
+
 }

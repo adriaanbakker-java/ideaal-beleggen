@@ -5,36 +5,60 @@ import beleggingspakket.Koersen.DayPriceRecord;
 
 import java.util.ArrayList;
 
-public class OnBalanceVolume {
+public class OnBalanceVolume extends Indicator {
+    private int AVGCNT;
+
     public ArrayList<Double> getOBVline() {
         return OBVline;
     }
 
-    private ArrayList<Double> OBVline = new ArrayList<>();
+    private ArrayList<Double> OBVline;
 
     public ArrayList<Double> getOBVMovingAverage() {
         return OBV_movingavg;
     }
 
-    private ArrayList<Double> OBV_movingavg = new ArrayList<>();
+    private ArrayList<Double> OBV_movingavg;
 
-    private ArrayList<DayPriceRecord> DayPriceArray;
+    public OnBalanceVolume(ArrayList<DayPriceRecord> aClosingPrices) throws Exception {
+        super(aClosingPrices);
+    }
 
-    public OnBalanceVolume(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
-        DayPriceArray =aDayPriceArray;
+    @Override
+    public ArrayList<Double> getIndicatorLine() {
+        return null;
+    }
+
+    @Override
+    protected void initSpecifics() {
+        AVGCNT = 20;
+        OBV_movingavg = new ArrayList<>();
+        OBVline = new ArrayList<>();
+        OBV_movingavg = new ArrayList<>();
+    }
+
+    @Override
+    protected void calcSignals() {
+
+    }
+
+    @Override
+    protected void calcSignalLine() throws Exception {
+
+    }
+
+    @Override
+    protected void calcIndicator() {
         calcOBVValues();
     }
-    private final int AVGCNT = 20;
-
-
 
     private void calcOBVValues() {
         double currentValue = 0L;
 
         DayPriceRecord dprPrev = null;
 
-        for (int i = 0; i<= DayPriceArray.size()-1; i++) {
-             DayPriceRecord dpr = DayPriceArray.get(i);
+        for (int i = 0; i<= myClosingPrices.size()-1; i++) {
+             DayPriceRecord dpr = myClosingPrices.get(i);
 
             int volume = dpr.getVolume();
             if (dprPrev != null) {

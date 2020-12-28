@@ -24,7 +24,7 @@ public class Momentum extends Indicator {
     }
 
     @Override
-    public ArrayList<Double> geefIndicator() {
+    public ArrayList<Double> getIndicatorLine() {
         return momentumLine;
     }
 
@@ -34,7 +34,7 @@ public class Momentum extends Indicator {
     }
 
     @Override
-    protected void calcSignalen() {
+    protected void calcSignals() {
         signalen = new ArrayList<>();
         for (int i=nrOfDays + 1; i <= myClosingPrices.size()-1; i++) {
             double prev = momentumLine.get(i-1);

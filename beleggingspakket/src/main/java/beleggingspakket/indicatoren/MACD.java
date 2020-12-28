@@ -35,17 +35,17 @@ public class MACD extends Indicator {
     }
 
     @Override
-    public ArrayList<Double> geefIndicator() {
+    public ArrayList<Double> getIndicatorLine() {
         return MACDlist;
+    }
+
+    public ArrayList<Double> getMACDSmoothed() {
+        return MACDSmoothed;
     }
 
     private ArrayList<Double> fastEMA;
     private ArrayList<Double> slowEMA;
     private ArrayList<Double> MACDlist;
-
-    public ArrayList<Double> getMACDSmoothed() {
-        return MACDSmoothed;
-    }
     private ArrayList<Double> MACDSmoothed;
 
 
@@ -59,7 +59,7 @@ public class MACD extends Indicator {
     }
 
     // Calculate buy- and sell signal moments
-    protected void calcSignalen() {
+    protected void calcSignals() {
         signalen = new ArrayList<>();
         for (int i=0; i <= myClosingPrices.size()-1; i++) {
             if (i >= slowDays ) {
