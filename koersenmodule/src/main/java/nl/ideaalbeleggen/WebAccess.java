@@ -397,7 +397,8 @@ public class WebAccess {
         System.out.println(paginalink);
 
         driver.get(paginalink);
-
+        Thread.sleep(1000);
+        driver.get(paginalink);
         String actualTitle = driver.getTitle();
 
         String docString = driver.getPageSource();
