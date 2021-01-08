@@ -6,6 +6,7 @@ fi
 if [ -d "/c/Program Files/AdoptOpenJDK/jdk-11.0.6.10-hotspot" ]; then
    echo "Directory pc exists."
    JAVA_HOME="/c/Program Files/AdoptOpenJDK/jdk-11.0.6.10-hotspot"
+    PATH="/c/Program Files/AdoptOpenJDK/jdk-11.0.6.10-hotspot/bin":$PATH
 fi
 echo $JAVA_HOME
 
