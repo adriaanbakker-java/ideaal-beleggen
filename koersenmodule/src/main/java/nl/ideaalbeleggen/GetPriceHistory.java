@@ -52,6 +52,8 @@ public class GetPriceHistory {
 	// todays price (latest price record)
 	// https://www.belegger.nl/Aandeel-Koers/11773/ING-Groep/koers.aspx
 
+
+
 	private HashMap<String, BeleggerLinkRec> bMap = new HashMap<String, BeleggerLinkRec>();
 
 	public List<String> printStockOverview() {
@@ -267,7 +269,7 @@ public class GetPriceHistory {
             int startYear, int month,
             int aEndYear,
             int aEndMonth,
-            MainController.LocalLogging aLogging)  {
+            KoersenVerversenMain.LocalLogging aLogging)  {
 		int yearFrom, monthFrom;
 		int currentYear, currentMonth;
 		
@@ -427,7 +429,8 @@ public class GetPriceHistory {
 	public void testReturnBeleggerLink() throws Exception {
 		// BeleggerLinkRec brec = new BeleggerLinkRec("11773", "ING-Groep");
 
-		String link = webAccess.returnBeleggerLink("ING", 2018, 4);
+		boolean aIsIndex;
+		String link = webAccess.returnBeleggerLink("ING", 2018, 4, aIsIndex = true);
 		System.out.println(link);
 	}
 

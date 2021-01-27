@@ -27,7 +27,7 @@ public class Koersenmodule {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
-        MainController.logInTextArea("koersen verversen");
+        KoersenVerversenMain.logInTextArea("koersen verversen");
         int endYear = -1;
         int endMonth = -1;
         if (args.length == 2) {
@@ -45,11 +45,11 @@ public class Koersenmodule {
             Set<String> tickerSet = gph.getTickers();
 
             for (String ticker1 : tickerSet) {
-                if (ticker1.equals("AIRFRANCEKLM")) {
+                if (ticker1.equals("AEX")) {
                     System.out.println("Gevonden" + ticker1);
                 }
 
-                MainController.LocalLogging localLogging = new MainController.LocalLogging();
+                KoersenVerversenMain.LocalLogging localLogging = new KoersenVerversenMain.LocalLogging();
                 gph.updatePriceHistory(
                         ticker1,
                         Constants.startYear, 1,
@@ -59,12 +59,12 @@ public class Koersenmodule {
 
             }
         } catch (Exception e) {
-            MainController.logInTextArea(e.getLocalizedMessage());
-            MainController.logInTextArea(e.getLocalizedMessage());
+            KoersenVerversenMain.logInTextArea(e.getLocalizedMessage());
+            KoersenVerversenMain.logInTextArea(e.getLocalizedMessage());
         }
 
 
-        MainController.logInTextArea("koersen ververst");
+        KoersenVerversenMain.logInTextArea("koersen ververst");
         //gph.closeDriver();
     }
 

@@ -151,10 +151,11 @@ public class WebAccess {
 
 
         List<DayPriceRecord> result = new ArrayList<DayPriceRecord>();
-        String paginalink = returnBeleggerLink(aTicker, aYear, aMonth);
+        Boolean aIsIndex = (aTicker.equals("AEX"));
+        String paginalink = returnBeleggerLink(aTicker, aYear, aMonth, aIsIndex);
 
         driver.get(paginalink);
-
+//https://www.iex.nl/Index-Koers/12272/AEX/historische-koersen.aspx
         String actualTitle = driver.getTitle();
 
         String docString = driver.getPageSource();
@@ -166,10 +167,12 @@ public class WebAccess {
             Element table = elements.get(1); // there are three tables, we need the datatable
             Elements table_elements = table.children();
             Elements rows = table_elements.get(1).getElementsByTag("tr");
-
+            Boolean hasVolume = true;
+            if (aTicker.equals("AEX"))
+                hasVolume = false;
             for (Element row : rows) {
                 Elements e_cells = row.getElementsByTag("td");
-                DayPriceRecord dpr = process_row(aYear, aMonth, e_cells);
+                DayPriceRecord dpr = process_row(aYear, aMonth, e_cells, hasVolume);
                 if (dpr == null)
                     throw new Exception("Null encountered");
                 result.add(dpr);
@@ -182,7 +185,7 @@ public class WebAccess {
     }
 
 
-    private static DayPriceRecord process_row(int aYear, int aMonth, Elements e_cells)
+    private static DayPriceRecord process_row(int aYear, int aMonth, Elements e_cells, boolean aHasVolume)
             throws Exception {
         int ccount = 1;
         DayPriceRecord dpr = null;
@@ -192,13 +195,14 @@ public class WebAccess {
         double high = 0.0;
         double low = 0.0;
         double close = 0.0;
+        int volume = 0;
         for (Element e_cell : e_cells) {
 
             // double fval = Double.parseDouble(e_cell.text());
             String sval = e_cell.text();
             String sout;
 
-            int volume = 0;
+
 
             switch (ccount) {
                 case 1: {
@@ -219,9 +223,12 @@ public class WebAccess {
                     close = parseDouble(sval);
                     break;
                 case 6:
-                    volume = parseVolume(sval);
-                    dpr = new DayPriceRecord(day, aMonth, aYear, open, high, low, close, volume);
-                    // System.out.println("Gelezen:" + dpr);
+                    if (aHasVolume) {
+                        volume = parseVolume(sval);
+
+                        // System.out.println("Gelezen:" + dpr);
+                    }
+
                     break;
                 default:
                     break;
@@ -229,6 +236,7 @@ public class WebAccess {
 
             ccount++;
         } // for element
+        dpr = new DayPriceRecord(day, aMonth, aYear, open, high, low, close, volume);
         return dpr;
 
     }
@@ -287,8 +295,12 @@ public class WebAccess {
         return "https://www.iex.nl/Aandeel-Koers/" + refRec.Stocknr + "/" + refRec.Stockname + ".aspx";
     }
 
+// link voor index
+//  https://www.iex.nl/Index-Koers/12272/AEX/historische-koersen.aspx?maand=202012
+// link voor "normale" ticker
+//	https://www.iex.nl/Aandeel-Koers/12272/AEX/historische-koersen.aspx?maand=201401
 
-    public String returnBeleggerLink(String aTicker, int aYear, int aMonth) throws Exception {
+    public String returnBeleggerLink(String aTicker, int aYear, int aMonth, boolean aIsIndex) throws Exception {
 
         GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
         if (refRec == null)
@@ -311,8 +323,14 @@ public class WebAccess {
         }
         monthString = Integer.toString(aYear) + monthString;
 
-        return "https://www.iex.nl/Aandeel-Koers/" + refRec.Stocknr + "/" + refRec.Stockname
-                + "/historische-koersen.aspx?maand=" + monthString;
+        if (aIsIndex) {
+            return "https://www.iex.nl/Index-Koers/" + refRec.Stocknr + "/" + refRec.Stockname
+                    + "/historische-koersen.aspx?maand=" + monthString;
+        } else {
+            return "https://www.iex.nl/Aandeel-Koers/" + refRec.Stocknr + "/" + refRec.Stockname
+                    + "/historische-koersen.aspx?maand=" + monthString;
+        }
+
     }
 
 
