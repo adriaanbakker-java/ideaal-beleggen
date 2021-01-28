@@ -288,12 +288,7 @@ public class WebAccess {
     }
 
 
-    public String returnBeleggerLinkDay(String aTicker) throws Exception {
-        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
-        if (refRec == null)
-            throw new Exception("Ticker not found:" + aTicker);
-        return "https://www.iex.nl/Aandeel-Koers/" + refRec.Stocknr + "/" + refRec.Stockname + ".aspx";
-    }
+
 
 // link voor index
 //  https://www.iex.nl/Index-Koers/12272/AEX/historische-koersen.aspx?maand=202012
@@ -334,11 +329,8 @@ public class WebAccess {
     }
 
 
-    public DayPriceRecord getTodaysPrice(Document doc, String aTicker) throws Exception {
-        System.out.println("getTodaysPrice:" + aTicker);
-
-        String paginalink = returnBeleggerLinkDay(aTicker);
-        System.out.println("Link:" + paginalink);
+    public DayPriceRecord getTodaysPrice(Document doc, String aTicker, String aFondsnaam) throws Exception {
+        System.out.println("getTodaysPrice:" + aTicker + " fondsnaam" + aFondsnaam);
 
         int day = 0;
         int month = 0;
@@ -351,67 +343,85 @@ public class WebAccess {
 
         MyDate huidigeDatum = null;
 
+            Elements elements = doc.getElementsByTag("table");
+            Element table = elements.get(0);  // eerste tabel
+            Elements tablecontents = table.children();
+            Element tablebody = tablecontents.get(1);
+            Elements rows = tablebody.children();
 
-        /*  panel (0) -> keylist--row (1) -> keylist (2) -> keylist__pair (3) -> (keylist__term, keylist__value) (4)
-        * */
-        try {
-            Elements elements = doc.getElementsByClass("panel");
-            Elements panel = elements.get(1).children();  // let op het is het tweede panel.
-            Elements keylist_row = panel.get(0).children();  // (1)
-            Elements keylist = keylist_row.get(0).children(); // (2)
-            Elements keylist_pair = keylist.get(0).children(); // (3)
-            Elements keylist_termvalue = keylist_pair.get(1).children(); // (4)
-            String sClose = keylist_termvalue.text();                    // laatste koers
-            close = parseDouble(sClose);
+            boolean found = false;
+            int nr = rows.size() -1;
+            for (int i=1; i<=rows.size()-1;i++) {
+                Element row = rows.get(i);
+                String text = row.text();
+                 if (text.contains(aFondsnaam)) {
+                    System.out.println("Gevonden:" + text);
+                }
+            }
+            return null;
 
+//            Elements panel = elements.get(1).children();  // let op het is het tweede panel.
+//            Elements keylist_row = panel.get(0).children();  // (1)
+//            Elements keylist = keylist_row.get(0).children(); // (2)
+//            Elements keylist_pair = keylist.get(0).children(); // (3)
+//            Elements keylist_termvalue = keylist_pair.get(1).children(); // (4)
+//            String sClose = keylist_termvalue.text();                    // laatste koers
+//            close = parseDouble(sClose);
+//
+//
+//            keylist_pair = keylist.get(2).children();                    // dagvolume
+//            keylist_termvalue = keylist_pair.get(1).children();
+//            String sVolume = keylist_termvalue.text();
+//            volume = parseVolume(sVolume);
+//
+//            keylist = keylist_row.get(1).children(); // (2)
+//            keylist_pair = keylist.get(0).children(); // (3)
+//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
+//            String sLow = keylist_termvalue.text();                    // laag
+//            low = parseDouble(sLow);
+//
+//            //keylist = keylist_row.get(1).children(); // (2)
+//            keylist_pair = keylist.get(1).children(); // (3)
+//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
+//            String sHigh = keylist_termvalue.text();                    // hoog
+//            high = parseDouble(sHigh);
+//
+//            //keylist = keylist_row.get(1).children(); // (2)
+//            keylist_pair = keylist.get(2).children(); // (3)
+//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
+//            String sOpen = keylist_termvalue.text();                    // openingskoers
+//            open = parseDouble(sOpen);
+//
+//            // Datum is nog een dingetje: de pagina blijft in het weekeinde staan en tot de volgende dag.
+//            // Aan de hand van de datum van "vandaag" zou wel een datum zijn te achterhalen maar dat is lastig
+//            // Gelukkig staat achter de "slotkoers vorige dag" een datum, (bijv. "(23 dec)"
+//            // we kunnen de volgende handelsdag berekenen aan de hand van deze datum.
+//
+//            keylist_pair = keylist.get(5).children(); // (3)
+//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
+//            String sSlotVorigeDag = keylist_termvalue.text();                    // slot vorige dag plus datum
+//            System.out.println(sSlotVorigeDag);
+//
+//            huidigeDatum = new MyDate(0,0,0);
 
-            keylist_pair = keylist.get(2).children();                    // dagvolume
-            keylist_termvalue = keylist_pair.get(1).children();
-            String sVolume = keylist_termvalue.text();
-            volume = parseVolume(sVolume);
-
-            keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(0).children(); // (3)
-            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-            String sLow = keylist_termvalue.text();                    // laag
-            low = parseDouble(sLow);
-
-            //keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(1).children(); // (3)
-            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-            String sHigh = keylist_termvalue.text();                    // hoog
-            high = parseDouble(sHigh);
-
-            //keylist = keylist_row.get(1).children(); // (2)
-            keylist_pair = keylist.get(2).children(); // (3)
-            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-            String sOpen = keylist_termvalue.text();                    // openingskoers
-            open = parseDouble(sOpen);
-
-            // Datum is nog een dingetje: de pagina blijft in het weekeinde staan en tot de volgende dag.
-            // Aan de hand van de datum van "vandaag" zou wel een datum zijn te achterhalen maar dat is lastig
-            // Gelukkig staat achter de "slotkoers vorige dag" een datum, (bijv. "(23 dec)"
-            // we kunnen de volgende handelsdag berekenen aan de hand van deze datum.
-
-            keylist_pair = keylist.get(5).children(); // (3)
-            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-            String sSlotVorigeDag = keylist_termvalue.text();                    // slot vorige dag plus datum
-            System.out.println(sSlotVorigeDag);
-
-            huidigeDatum = new MyDate(0,0,0);
-
-        } catch (Exception e) {
-            throw new Exception("getTodaysPrice " + paginalink + "\n" + e.getMessage());
-        }
-        DayPriceRecord result = new DayPriceRecord(huidigeDatum.day, huidigeDatum.month, huidigeDatum.year, open, high, low, close, volume);
-        return result;
+//        } catch (Exception e) {
+//            throw new Exception("getTodaysPrice " + paginalink + "\n" + e.getMessage());
+//        }
+//        DayPriceRecord result = new DayPriceRecord(huidigeDatum.day, huidigeDatum.month, huidigeDatum.year, open, high, low, close, volume);
+//        return result;
     }
 
     /* retrieve intraday prices for this stock from the internet
+
+    IEX bleek problemen te geven bij het overdag ophalen van de tussenstand
+    Vandaar dat we het via beleggen.nl proberen
      */
     public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
         System.out.println("Webaccess: retrieve intraday prices for " + aTicker);
-        String paginalink = returnBeleggerLinkDay(aTicker);
+        //String paginalink = returnBeleggerLinkDay(aTicker);
+
+        String paginalink = "https://www.beleggen.nl/koersen/aex.aspx";
+        String fondsnaam = returnFondsnaamIntraDayprice(aTicker);
         System.out.println(paginalink);
 
         driver.get(paginalink);
@@ -422,6 +432,21 @@ public class WebAccess {
         String docString = driver.getPageSource();
         Document doc = Jsoup.parse(docString);
 
-        return getTodaysPrice(doc, aTicker);
+        return getTodaysPrice(doc, aTicker, fondsnaam);
+    }
+
+    private String returnFondsnaamIntraDayprice(String aTicker) throws Exception {
+        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
+        if (refRec == null)
+            throw new Exception("Ticker not found:" + aTicker);
+        return refRec.Stockname;
+    }
+
+    public String returnBeleggerLinkDay(String aTicker) throws Exception {
+        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
+        if (refRec == null)
+            throw new Exception("Ticker not found:" + aTicker);
+
+        return "https://www.iex.nl/Aandeel-Koers/" + refRec.Stocknr + "/" + refRec.Stockname + ".aspx";
     }
 }
