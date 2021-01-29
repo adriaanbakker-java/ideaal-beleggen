@@ -68,42 +68,45 @@ public class GetPriceHistory {
 		  return bMap.keySet();
 	}
 
+	// NB het BeleggerLinkRec bevat het stocknr en de stockname zoals nodig voor IEX
+	// Daarnaast bevat het BeleggerLinkRec de beleggenNLstockname van belang voor intraday
+	// koersen ophalen bij beleggen.nl
 	private void fillLinkMap() {
-		bMap.put("AEX", new BeleggerLinkRec("12272", "AEX"));
-		bMap.put("AALBERTS", new BeleggerLinkRec("11797", "AALBERTS-NV"));
-		bMap.put("ABN", new BeleggerLinkRec("612967", "ABN-AMRO-BANK-NV"));
-		bMap.put("ADYEN", new BeleggerLinkRec("613007", "ADYEN-NV"));
-		bMap.put("AEGON", new BeleggerLinkRec("11754", "Aegon"));
-		bMap.put("DELHAIZE", new BeleggerLinkRec("11755", "Ahold-Delhaize-Koninklijke"));
-		bMap.put("AKZO", new BeleggerLinkRec("11756", "Akzo-Nobel"));
-		bMap.put("ARCELOR", new BeleggerLinkRec("11895", "ArcelorMittal"));
-		bMap.put("ASMI", new BeleggerLinkRec("11808", "ASM-International"));
-		bMap.put("ASML", new BeleggerLinkRec("16923", "ASML-Holding"));
-		bMap.put("ASR", new BeleggerLinkRec("596718", "ASR-Nederland"));
-		bMap.put("DSM", new BeleggerLinkRec("11764", "DSM-Koninklijke"));
-		bMap.put("GALAPAGOS", new BeleggerLinkRec("60189120", "Galapagos"));
-		bMap.put("HEINEKEN", new BeleggerLinkRec("11770", "Heineken"));
-		bMap.put("IMCD", new BeleggerLinkRec("610603", "IMCD"));
-		bMap.put("ING", new BeleggerLinkRec("11773", "ING-Groep"));
-		bMap.put("KPN", new BeleggerLinkRec("25845", "KPN-Koninklijke"));
-		bMap.put("NN", new BeleggerLinkRec("610720", "NN-Group"));
-		bMap.put("PHILIPS", new BeleggerLinkRec("11783", "Philips-Koninklijke"));
-		bMap.put("RANDSTAD", new BeleggerLinkRec("11785", "RANDSTAD-NV"));
-		bMap.put("RELIX", new BeleggerLinkRec("11765", "RELIX"));
-		bMap.put("SHELL", new BeleggerLinkRec("210964", "Royal-Dutch-Shell-A"));
-		bMap.put("TAKEAWAY", new BeleggerLinkRec("561749", "Takeawaycom"));
-		bMap.put("UNIBAIL", new BeleggerLinkRec("360115972", "UNIBAIL-RODAMCO-WESTFIELD"));
-		bMap.put("UNILEVER", new BeleggerLinkRec("11962", "UNILEVER"));
-		bMap.put("VOPAK", new BeleggerLinkRec("101431", "Vopak-Koninklijke"));
-		bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer"));
+		bMap.put("AEX", new BeleggerLinkRec("12272", "AEX", "AEX"));
+		bMap.put("AALBERTS", new BeleggerLinkRec("11797", "AALBERTS-NV", "nietAEXfonds"));
+		bMap.put("ABN", new BeleggerLinkRec("612967", "ABN-AMRO-BANK-NV", "ABN AMRO BANK NV"));
+		bMap.put("ADYEN", new BeleggerLinkRec("613007", "ADYEN-NV", "ADYEN NV"));
+		bMap.put("AEGON", new BeleggerLinkRec("11754", "Aegon", "Aegon"));
+		bMap.put("DELHAIZE", new BeleggerLinkRec("11755", "Ahold-Delhaize-Koninklijke", "Ahold Delhaize"));
+		bMap.put("AKZO", new BeleggerLinkRec("11756", "Akzo-Nobel", "Akzo Nobel"));
+		bMap.put("ARCELOR", new BeleggerLinkRec("11895", "ArcelorMittal", "ArcelorMittal"));
+		bMap.put("ASMI", new BeleggerLinkRec("11808", "ASM-International", "ASMI"));
+		bMap.put("ASML", new BeleggerLinkRec("16923", "ASML-Holding", "ASML"));
+		bMap.put("ASR", new BeleggerLinkRec("596718", "ASR-Nederland", "ASR Nederland"));
+		bMap.put("DSM", new BeleggerLinkRec("11764", "DSM-Koninklijke", "DSM"));
+		bMap.put("GALAPAGOS", new BeleggerLinkRec("60189120", "Galapagos", "Galapagos"));
+		bMap.put("HEINEKEN", new BeleggerLinkRec("11770", "Heineken", "Heineken"));
+		bMap.put("IMCD", new BeleggerLinkRec("610603", "IMCD", "IMCD"));
+		bMap.put("ING", new BeleggerLinkRec("11773", "ING-Groep", "ING"));
+		bMap.put("KPN", new BeleggerLinkRec("25845", "KPN-Koninklijke", "KPN"));
+		bMap.put("NN", new BeleggerLinkRec("610720", "NN-Group", "NN Group"));
+		bMap.put("PHILIPS", new BeleggerLinkRec("11783", "Philips-Koninklijke", "Philips Koninklijke"));
+		bMap.put("RANDSTAD", new BeleggerLinkRec("11785", "RANDSTAD-NV", "RANDSTAD NV"));
+		bMap.put("RELIX", new BeleggerLinkRec("11765", "RELIX", "RELX"));
+		bMap.put("SHELL", new BeleggerLinkRec("210964", "Royal-Dutch-Shell-A", "Royal Dutch Shell A"));
+		bMap.put("TAKEAWAY", new BeleggerLinkRec("561749", "Takeawaycom", "geen AEX fonds"));
+		bMap.put("UNIBAIL", new BeleggerLinkRec("360115972", "UNIBAIL-RODAMCO-WESTFIELD", "UNIBAIL-RODAMCO-Westfield"));
+		bMap.put("UNILEVER", new BeleggerLinkRec("11962", "UNILEVER", "UNILEVER PLC"));
+		bMap.put("VOPAK", new BeleggerLinkRec("101431", "Vopak-Koninklijke", "Geen AEX fonds"));
+		bMap.put("WOLTERS", new BeleggerLinkRec("11795", "Wolters-Kluwer", "Wolters Kluwer"));
 
 
 		// enkele midkappers
 
 		//https://www.iex.nl/Aandeel-Koers/11816/BAM-Groep-Koninklijke/historische-koersen.aspx?maand=202010
-		bMap.put("BAM", new BeleggerLinkRec("11816", "BAM-Groep-Koninklijke"));
+		bMap.put("BAM", new BeleggerLinkRec("11816", "BAM-Groep-Koninklijke", "Geen AEX fonds"));
 		// https://www.iex.nl/Aandeel-Koers/360114884/Air-France-KLM/historische-koersen.aspx?maand=202010
-		bMap.put("AIRFRANCEKLM", new BeleggerLinkRec("360114884", "Air-France-KLM"));
+		bMap.put("AIRFRANCEKLM", new BeleggerLinkRec("360114884", "Air-France-KLM", "Geen AEX fonds"));
 
 
 	}
@@ -225,6 +228,9 @@ public class GetPriceHistory {
 		System.out.println("Haal intradagkoers op voor: " + aTicker);
 		DayPriceRecord intraDayPrice = webAccess.getIntraDayPrices(aTicker);
 
+		if (intraDayPrice.getOpen() < 0.01) {
+			throw new Exception("intradaykoers kon niet worden opgehaald voor " + aTicker);
+		}
 		MyDate huidigeDatum = MyDate.geefHuidigeDatum();
 		intraDayPrice.setDate(huidigeDatum);
 		DayPriceRecord lastprice = getLastPriceFromHistory(aTicker);
@@ -233,10 +239,12 @@ public class GetPriceHistory {
 		MyDate volgendeHandelsdag = dateLastPrice.geefVolgendeHandelsdag();
 		//if (volgendeHandelsdag.equals(huidigeDatum)) ==
 		// hier nog checken en het intraday record aan koersbestand toevoegen/overschrijven!!
-		if (volgendeHandelsdag.equals(huidigeDatum)) {
 
+		if (volgendeHandelsdag.equals(huidigeDatum)) {
+			intraDayPrice.setVolume ( lastprice.getVolume());
 			voegIntradayKoersToeAanBestand(aTicker, intraDayPrice);
 		} else if (dateLastPrice.equals(huidigeDatum)) {
+			intraDayPrice.setVolume ( lastprice.getVolume());
 			vervangIntraDayKoersInBestand(aTicker, intraDayPrice);
 		} else {
 			throw new Exception("Koersfile eerst aanvullen, laatste record van koersbestand is te oud");
@@ -402,6 +410,14 @@ public class GetPriceHistory {
 		return prices.get(prices.size()-1);
 	}
 
+	public DayPriceRecord getPrevPriceFromHistory(String aTicker) throws Exception {
+		GetPriceHistory gph = new GetPriceHistory();
+		ArrayList<DayPriceRecord> prices =
+				gph.getHistoricPricesFromFile(aTicker);
+
+		return prices.get(prices.size()-2);
+	}
+
 	// check today is a trading day and current time is after stock market opening hours
 	private boolean checkMarketOpenedToday() {
 		
@@ -434,15 +450,6 @@ public class GetPriceHistory {
 		System.out.println(link);
 	}
 
-	public class BeleggerLinkRec {
-		String Stocknr;
-		String Stockname;
 
-		public BeleggerLinkRec(String stocknr, String stockname) {
-			super();
-			Stocknr = stocknr;
-			Stockname = stockname;
-		}
-	}
 
 }

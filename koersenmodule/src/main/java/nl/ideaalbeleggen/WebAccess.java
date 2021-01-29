@@ -35,7 +35,7 @@ import java.util.Locale;
 public class WebAccess {
     private WebDriver driver = new HtmlUnitDriver(BrowserVersion.CHROME);
 
-    public WebAccess(HashMap<String, GetPriceHistory.BeleggerLinkRec> bMap) {
+    public WebAccess(HashMap<String,BeleggerLinkRec> bMap) {
         this.bMap = bMap;
     }
 
@@ -43,7 +43,7 @@ public class WebAccess {
         driver.close();
     }
 
-    private HashMap<String, GetPriceHistory.BeleggerLinkRec> bMap;
+    private HashMap<String, BeleggerLinkRec> bMap;
 
     private static Integer parseVolume(String sval) {
         Integer result = 0;
@@ -297,7 +297,7 @@ public class WebAccess {
 
     public String returnBeleggerLink(String aTicker, int aYear, int aMonth, boolean aIsIndex) throws Exception {
 
-        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
+        BeleggerLinkRec refRec = bMap.get(aTicker);
         if (refRec == null)
             throw new Exception("Ticker not found:" + aTicker);
         LocalDateTime today = LocalDateTime.now();
@@ -329,19 +329,23 @@ public class WebAccess {
     }
 
 
-    public DayPriceRecord getTodaysPrice(Document doc, String aTicker, String aFondsnaam) throws Exception {
-        System.out.println("getTodaysPrice:" + aTicker + " fondsnaam" + aFondsnaam);
+    public DayPriceRecord retrieveIntradaysPrice(Document doc, String aTicker, String aFondsnaam) throws Exception {
+        try {
+            System.out.println("getTodaysPrice:" + aTicker + " fondsnaam" + aFondsnaam);
 
-        int day = 0;
-        int month = 0;
-        int year = 0;
-        double open = 0.0;
-        double high = 0.0;
-        double low = 0.0;
-        double close = 0.0;
-        Integer volume = 0;
+            int day = 0;
+            int month = 0;
+            int year = 0;
+            double open = 0.0;
+            double high = 0.0;
+            double low = 0.0;
+            double close = 0.0;
+            Integer volume = 0;
+            // NB volume zal niet te vinden zijn op de overzichtspagina bij beleggen.nl
+            // hiervoor vullen we in een later stadium het volume van de vorige
+            // handelsdag in.
 
-        MyDate huidigeDatum = null;
+            MyDate huidigeDatum = null;
 
             Elements elements = doc.getElementsByTag("table");
             Element table = elements.get(0);  // eerste tabel
@@ -351,64 +355,36 @@ public class WebAccess {
 
             boolean found = false;
             int nr = rows.size() -1;
-            for (int i=1; i<=rows.size()-1;i++) {
+            for (int i=0; i<=rows.size()-1;i++) {
                 Element row = rows.get(i);
                 String text = row.text();
-                 if (text.contains(aFondsnaam)) {
+                String elementarr [] ;
+                if (text.contains(aFondsnaam)) {
                     System.out.println("Gevonden:" + text);
+                    //
+                    // Aegon 3,392 -0,077 -2,22% 3,412 3,454 3,371 14:19
+                    // maar ook
+                    //                   -6   -5    -4       -3    -2       -1   -0
+                    //                  close               open   hoog   laag
+                    // Ahold Delhaize 23,550 -0,560 -2,32% 23,960 24,020 23,510 15:51
+                    // dus van achter naar voren parsen
+                    elementarr = text.split(" ");
+                    int s = elementarr.length - 1;
+                    if (s >= 7) {
+                        close = parseDouble(elementarr[s-6]);
+                        open = parseDouble(elementarr[s-3]);
+                        high = parseDouble(elementarr[s-2]);
+                        low = parseDouble(elementarr[s-1]);
+                        MyDate today = MyDate.geefHuidigeDatum();
+                        return new DayPriceRecord(today.day, today.month, today.year, open, high, low, close, volume);
+                    }
                 }
             }
-            return null;
+            throw new Exception("Aandeel niet gevonden in AEX overzicht");
 
-//            Elements panel = elements.get(1).children();  // let op het is het tweede panel.
-//            Elements keylist_row = panel.get(0).children();  // (1)
-//            Elements keylist = keylist_row.get(0).children(); // (2)
-//            Elements keylist_pair = keylist.get(0).children(); // (3)
-//            Elements keylist_termvalue = keylist_pair.get(1).children(); // (4)
-//            String sClose = keylist_termvalue.text();                    // laatste koers
-//            close = parseDouble(sClose);
-//
-//
-//            keylist_pair = keylist.get(2).children();                    // dagvolume
-//            keylist_termvalue = keylist_pair.get(1).children();
-//            String sVolume = keylist_termvalue.text();
-//            volume = parseVolume(sVolume);
-//
-//            keylist = keylist_row.get(1).children(); // (2)
-//            keylist_pair = keylist.get(0).children(); // (3)
-//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-//            String sLow = keylist_termvalue.text();                    // laag
-//            low = parseDouble(sLow);
-//
-//            //keylist = keylist_row.get(1).children(); // (2)
-//            keylist_pair = keylist.get(1).children(); // (3)
-//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-//            String sHigh = keylist_termvalue.text();                    // hoog
-//            high = parseDouble(sHigh);
-//
-//            //keylist = keylist_row.get(1).children(); // (2)
-//            keylist_pair = keylist.get(2).children(); // (3)
-//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-//            String sOpen = keylist_termvalue.text();                    // openingskoers
-//            open = parseDouble(sOpen);
-//
-//            // Datum is nog een dingetje: de pagina blijft in het weekeinde staan en tot de volgende dag.
-//            // Aan de hand van de datum van "vandaag" zou wel een datum zijn te achterhalen maar dat is lastig
-//            // Gelukkig staat achter de "slotkoers vorige dag" een datum, (bijv. "(23 dec)"
-//            // we kunnen de volgende handelsdag berekenen aan de hand van deze datum.
-//
-//            keylist_pair = keylist.get(5).children(); // (3)
-//            keylist_termvalue = keylist_pair.get(1).children(); // (4)
-//            String sSlotVorigeDag = keylist_termvalue.text();                    // slot vorige dag plus datum
-//            System.out.println(sSlotVorigeDag);
-//
-//            huidigeDatum = new MyDate(0,0,0);
-
-//        } catch (Exception e) {
-//            throw new Exception("getTodaysPrice " + paginalink + "\n" + e.getMessage());
-//        }
-//        DayPriceRecord result = new DayPriceRecord(huidigeDatum.day, huidigeDatum.month, huidigeDatum.year, open, high, low, close, volume);
-//        return result;
+        } catch (Exception e) {
+            throw new Exception("retrieveIntradaysPrice:" + e.getLocalizedMessage());
+        }
     }
 
     /* retrieve intraday prices for this stock from the internet
@@ -417,33 +393,38 @@ public class WebAccess {
     Vandaar dat we het via beleggen.nl proberen
      */
     public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
-        System.out.println("Webaccess: retrieve intraday prices for " + aTicker);
-        //String paginalink = returnBeleggerLinkDay(aTicker);
+        try {
+            System.out.println("Webaccess: retrieve intraday prices for " + aTicker);
+            //String paginalink = returnBeleggerLinkDay(aTicker);
 
-        String paginalink = "https://www.beleggen.nl/koersen/aex.aspx";
-        String fondsnaam = returnFondsnaamIntraDayprice(aTicker);
-        System.out.println(paginalink);
+            String paginalink = "https://www.beleggen.nl/koersen/aex.aspx";
+            String fondsnaam = returnFondsnaamIntraDayprice(aTicker);
+            System.out.println(paginalink);
 
-        driver.get(paginalink);
-        Thread.sleep(1000);
-        driver.get(paginalink);
-        String actualTitle = driver.getTitle();
+            driver.get(paginalink);
+            Thread.sleep(1000);
+            driver.get(paginalink);
+            String actualTitle = driver.getTitle();
 
-        String docString = driver.getPageSource();
-        Document doc = Jsoup.parse(docString);
+            String docString = driver.getPageSource();
+            Document doc = Jsoup.parse(docString);
 
-        return getTodaysPrice(doc, aTicker, fondsnaam);
+            return retrieveIntradaysPrice(doc, aTicker, fondsnaam);
+
+        } catch (Exception e) {
+            throw new Exception ("WebAccess.getIntraDayPrices:" + e.getLocalizedMessage());
+        }
     }
 
     private String returnFondsnaamIntraDayprice(String aTicker) throws Exception {
-        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
+        BeleggerLinkRec refRec = bMap.get(aTicker);
         if (refRec == null)
             throw new Exception("Ticker not found:" + aTicker);
-        return refRec.Stockname;
+        return refRec.StocknameBeleggenNL;
     }
 
     public String returnBeleggerLinkDay(String aTicker) throws Exception {
-        GetPriceHistory.BeleggerLinkRec refRec = bMap.get(aTicker);
+        BeleggerLinkRec refRec = bMap.get(aTicker);
         if (refRec == null)
             throw new Exception("Ticker not found:" + aTicker);
 

@@ -196,4 +196,8 @@ public  class DayPriceRecord {
 		this.month = aDatum.month;
 		this.day = aDatum.day;
 	}
+
+	public void setVolume(int volume) {
+		this.Volume = volume;
+	}
 }
