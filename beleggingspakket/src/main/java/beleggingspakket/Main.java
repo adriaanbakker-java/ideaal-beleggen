@@ -16,6 +16,7 @@ public class Main {
     private JavaFxApplication app;
     private MainController mainController;
     private PortefeuillebeheerController pfController = null;
+    private StatistiekenschermController stController;
 
     public Main(JavaFxApplication javaFxApplication) {
         this.app = javaFxApplication;
@@ -41,6 +42,9 @@ public class Main {
     }
     public void setPfController(PortefeuillebeheerController aPfController) {
         this.pfController = aPfController;
+    }
+    public void setStController(StatistiekenschermController stController) {
+        this.stController = stController;
     }
 
     public void toonPortefeuille(String pfNaam) throws Exception {
@@ -135,4 +139,9 @@ public class Main {
             throw new Exception (e.getLocalizedMessage());
         }
     }
+
+    public void toonStatistieken(String gekozenAandeel, IDate einddatum) throws Exception {
+        app.toonStatistiekenscherm(gekozenAandeel, einddatum);
+    }
+
 }

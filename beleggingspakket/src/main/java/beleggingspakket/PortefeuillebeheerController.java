@@ -848,6 +848,17 @@ public class PortefeuillebeheerController implements Initializable {
         }
     }
 
+    public void checkStatistieken() throws Exception {
+        String gekozenAandeel = selecteerAandeel.getValue();
+        if (gekozenAandeel == null) {
+            showMessage("svp eerst aandeel kiezen");
+            return;
+        }
+        System.out.println("check statistieken voor " + gekozenAandeel);
+
+        main.toonStatistieken(gekozenAandeel, portefeuille.getEinddatum());
+    }
+
     public void opslaanPortefeuille() {
         System.out.println("Portefeuille opslaan");
         portefeuille.slaOp();

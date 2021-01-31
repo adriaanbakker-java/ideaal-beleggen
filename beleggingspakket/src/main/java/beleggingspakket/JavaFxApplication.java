@@ -23,6 +23,7 @@ public class JavaFxApplication extends Application {
 
     private ConfigurableApplicationContext applicationContext;
 
+
     @Override
     public void init() {
         String[] args = getParameters().getRaw().toArray(new String[0]);
@@ -36,8 +37,11 @@ public class JavaFxApplication extends Application {
     Stage mainStage;
     Scene mainScene;
     Stage portefeuilleStage;
+    Stage statistiekStage;
+
     Main main;
     PortefeuillebeheerController pfController;
+    StatistiekenschermController stController;
     Scene pfScene;
 
     public void showMainWindow() {
@@ -216,6 +220,19 @@ public class JavaFxApplication extends Application {
         portefeuilleStage.setScene(pfScene);
     }
 
+    public void toonStatistiekenscherm(String aandeelnaam, IDate einddatum) throws Exception {
+        FXMLLoader loaderPF = new FXMLLoader(getClass().getResource("Statistieken.fxml"));
+        Parent pfRoot = loaderPF.load();
+        stController = loaderPF.getController();
+        stController.setAandeelnaam(aandeelnaam);
+        stController.setEinddatum(einddatum);
+        pfScene = new Scene(pfRoot, 800, 800);
+        pfScene.getStylesheets().add("styles.css");
+        main.setStController(stController);
+        statistiekStage = new Stage();
+        statistiekStage.setScene(pfScene);
+        statistiekStage.show();
+    }
 
     public void toonPortefeuille(String pfNaam) throws Exception {
         createPortefeuilleScherm(pfNaam);
