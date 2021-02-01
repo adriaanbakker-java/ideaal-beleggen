@@ -47,9 +47,9 @@ public class OnBalanceVolume extends Indicator {
                     DayPriceRecord dpr = myClosingPrices.get(i);
                     IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
                     if (koopsig)
-                        signalen.add(new IndicatorSignal(iDate, true));
+                        signalen.add(new IndicatorSignal(iDate, true, dpr, i));
                     else
-                        signalen.add(new IndicatorSignal(iDate, false));
+                        signalen.add(new IndicatorSignal(iDate, false, dpr, i));
                 }
             }
         }

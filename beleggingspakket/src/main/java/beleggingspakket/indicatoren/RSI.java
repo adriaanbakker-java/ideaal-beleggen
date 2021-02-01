@@ -77,12 +77,12 @@ public class RSI extends Indicator {
             if ((prevVal > 70) && (val < 70)) {
                 DayPriceRecord dpr = myClosingPrices.get(i);
                 IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
-                signalen.add(new IndicatorSignal(iDate, false));
+                signalen.add(new IndicatorSignal(iDate, false, dpr, i));
             }
             if ((prevVal < 30) && (val > 30)) {
                 DayPriceRecord dpr = myClosingPrices.get(i);
                 IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
-                signalen.add(new IndicatorSignal(iDate, true));
+                signalen.add(new IndicatorSignal(iDate, true, dpr, i));
             }
         }
     }

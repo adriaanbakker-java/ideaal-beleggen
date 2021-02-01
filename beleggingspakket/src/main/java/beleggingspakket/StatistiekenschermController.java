@@ -1,5 +1,7 @@
 package beleggingspakket;
 
+import beleggingspakket.portefeuillebeheer.GenereerStatistieken;
+import beleggingspakket.portefeuillebeheer.StatistiekUitkomst;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 import javafx.fxml.FXML;
@@ -28,7 +30,7 @@ public class StatistiekenschermController implements Initializable {
     @FXML
     private TextArea taLogArea;
 
-    private String aandeelnaam;
+    private String ticker;
     private IDate einddatum;
 
     @Override
@@ -36,9 +38,9 @@ public class StatistiekenschermController implements Initializable {
         System.out.println("Initialize Statistiekenscherm ");
     }
 
-    public void setAandeelnaam(String aandeelnaam) {
-        this.aandeelnaam = aandeelnaam;
-        lblHeading.setText("Statistieken voor aandeel " + aandeelnaam);
+    public void setTicker(String aTicker) {
+        this.ticker = aTicker;
+        lblHeading.setText("Statistieken voor aandeel " + aTicker);
     }
 
     public void setEinddatum(IDate einddatum) {
@@ -53,7 +55,21 @@ public class StatistiekenschermController implements Initializable {
             int nDagen = Integer.parseInt(txtNDagen.getText());
             String sMsg = "genereren stats " + isKoopsignaal + "|" + delta + "|" + nDagen;
             showMessage( sMsg);
+            taLogArea.clear();
             addLogArea( sMsg );
+
+            for (int n=1; n<=10; n++) {
+                GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, n, einddatum, delta);
+                StatistiekUitkomst uitkomst = stats.berekenStatistiekMACD();
+                String sResult = uitkomst.print();
+                String sKoop = "verkoopsignaal";
+                if (isKoopsignaal)
+                    sKoop = "koopsignaal";
+                addLogArea(sKoop + ": aantal gebeurtenissen = " + uitkomst.getAantalGebeurtenissen());
+                addLogArea( " aantal dagen " + n + ":" + sResult);
+            }
+
+
         } catch (Exception e) {
             showMessage(e.getLocalizedMessage());
         }

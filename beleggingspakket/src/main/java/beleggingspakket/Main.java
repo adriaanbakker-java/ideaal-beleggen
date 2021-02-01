@@ -147,8 +147,8 @@ public class Main {
         }
     }
 
-    public void toonStatistieken(String gekozenAandeel, IDate einddatum) throws Exception {
-        app.toonStatistiekenscherm(gekozenAandeel, einddatum);
+    public void toonStatistieken(String aTicker, IDate einddatum) throws Exception {
+        app.toonStatistiekenscherm(aTicker, einddatum);
     }
 
 }

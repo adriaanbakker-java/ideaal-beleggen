@@ -832,31 +832,36 @@ public class PortefeuillebeheerController implements Initializable {
     // for now, only for stock positions, not yet implemented how to find the
     // stock ticker from the position
     public void checkSignalen() {
-        System.out.println("Signalen checken");
-        for (Map.Entry<String, Positie> entry : portefeuille.getPosities())  {
-            try {
-                if (entry.getValue().getIsAandeel()) {
-                    //if (entry.getValue().getPOS() != 0)
-                    String ticker = entry.getKey();
-                    System.out.println("Check signalen voor " + ticker);
-                    main.checkSignalen(ticker, portefeuille.getEinddatum());
-                }
-            } catch (Exception e) {
-                logInTextArea("checkSignalen:" + e.getLocalizedMessage());
-            }
+        try {
+            System.out.println("Signalen checken");
+            String ticker = selecteerAandeel.getValue();
+            if (ticker== null)
+            for (Map.Entry<String, Positie> entry : portefeuille.getPosities())  {
+                    if (entry.getValue().getIsAandeel()) {
+                        //if (entry.getValue().getPOS() != 0)
+                        ticker = entry.getKey();
+                        System.out.println("Check signalen voor aandeel in portefeuille:" + ticker);
+                        main.checkSignalen(ticker, portefeuille.getEinddatum());
+                    }
 
+            } else {
+                System.out.println("Check signalen voor gekozen aandeel " + ticker);
+                main.checkSignalen(ticker, portefeuille.getEinddatum());
+            }
+        } catch (Exception e) {
+            logInTextArea("checkSignalen:" + e.getLocalizedMessage());
         }
     }
 
     public void checkStatistieken() throws Exception {
-        String gekozenAandeel = selecteerAandeel.getValue();
-        if (gekozenAandeel == null) {
+        String ticker = selecteerAandeel.getValue();
+        if (ticker == null) {
             showMessage("svp eerst aandeel kiezen");
             return;
         }
-        System.out.println("check statistieken voor " + gekozenAandeel);
+        System.out.println("check statistieken voor " + ticker);
 
-        main.toonStatistieken(gekozenAandeel, portefeuille.getEinddatum());
+        main.toonStatistieken(ticker, portefeuille.getEinddatum());
     }
 
     public void opslaanPortefeuille() {

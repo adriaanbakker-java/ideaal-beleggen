@@ -224,7 +224,7 @@ public class JavaFxApplication extends Application {
         FXMLLoader loaderPF = new FXMLLoader(getClass().getResource("Statistieken.fxml"));
         Parent pfRoot = loaderPF.load();
         stController = loaderPF.getController();
-        stController.setAandeelnaam(aandeelnaam);
+        stController.setTicker(aandeelnaam);
         stController.setEinddatum(einddatum);
         pfScene = new Scene(pfRoot, 800, 800);
         pfScene.getStylesheets().add("styles.css");

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public abstract class Indicator {
 
     ArrayList<DayPriceRecord> myClosingPrices;
-    public ArrayList<IndicatorSignal> signalen = null;
+    ArrayList<IndicatorSignal> signalen = null;
 
     public Indicator(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
         initSpecifics();

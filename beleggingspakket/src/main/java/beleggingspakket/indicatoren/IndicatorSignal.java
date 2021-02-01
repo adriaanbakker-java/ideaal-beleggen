@@ -1,9 +1,21 @@
 package beleggingspakket.indicatoren;
 
+import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.util.IDate;
 
 public class IndicatorSignal {
     private IDate date;
+    private DayPriceRecord dpr;
+    private boolean isKoopsignaal;
+    private int indexKoersreeks;
+
+    public int getIndexKoersreeks() {
+        return indexKoersreeks;
+    }
+
+    public DayPriceRecord getDpr() {
+        return dpr;
+    }
 
     public IDate getDate() {
         return date;
@@ -13,10 +25,11 @@ public class IndicatorSignal {
         return isKoopsignaal;
     }
 
-    private Boolean isKoopsignaal;
 
-    public IndicatorSignal(IDate date, Boolean isKoopsignaal) {
+    public IndicatorSignal(IDate date, Boolean isKoopsignaal, DayPriceRecord dpr, int indexKoersreeks) {
         this.date = date;
         this.isKoopsignaal = isKoopsignaal;
+        this.dpr = dpr;
+        this.indexKoersreeks = indexKoersreeks;
     }
 }

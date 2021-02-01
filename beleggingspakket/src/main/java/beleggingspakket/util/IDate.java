@@ -35,6 +35,16 @@ public class IDate {
     }
 
 
+    public IDate addNrDays(int n) throws Exception{
+        try {
+            LocalDateTime ldt = Util.toLocalDateTime(this);
+            LocalDateTime ldtadd = ldt.plusDays(n);
+            return Util.toIDate(ldtadd);
+        } catch (Exception e) {
+            throw new Exception("IDate.addNrDays():" + e.getLocalizedMessage());
+        }
+    }
+
     public IDate(LocalDateTime orderDate) {
         year = orderDate.getYear();
         month = orderDate.getMonthValue();
