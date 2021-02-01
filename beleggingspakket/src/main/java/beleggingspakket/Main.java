@@ -97,42 +97,49 @@ public class Main {
 
     }
 
-    String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen, IDate aDate) {
-        IndicatorSignal lastSignal = null;
+//    private IndicatorSignal geefLaatsteSignaal(ArrayList<IndicatorSignal> signalen, IDate aDate) {
+//        IndicatorSignal lastSignal = null;
+//
+//        for (IndicatorSignal sig: signalen) {
+//            if (sig.getDate().isSmallerEqual(aDate)) {
+//                lastSignal = sig;
+//            }
+//        }
+//        return lastSignal;
+//    }
 
-        for (IndicatorSignal sig: signalen) {
-            if (sig.getDate().isSmallerEqual(aDate)) {
-                lastSignal = sig;
-            }
-        }
-        String sResult = "";
-        if (lastSignal != null) {
-            sResult =     "koop    ";
-            if (!lastSignal.getKoopsignaal())
-                sResult = "verkoop ";
-            sResult += lastSignal.getDate().toString();
-        }
-        return sResult;
-    }
+//    private String listLaatsteSignaal(ArrayList<IndicatorSignal> signalen, IDate aDate) {
+//        IndicatorSignal lastSignal = geefLaatsteSignaal(signalen,  aDate);
+//        String sResult = "";
+//        if (lastSignal != null) {
+//            sResult =     "koop    ";
+//            if (!lastSignal.getKoopsignaal())
+//                sResult = "verkoop ";
+//            sResult += lastSignal.getDate().toString();
+//        }
+//        return sResult;
+//    }
 
-    private String checkSignal(String aIndicatorNaam, Indicator aIndicator, IDate aDate) {
-        String sSignaal = listLaatsteSignaal(aIndicator.getSignals(), aDate);
-        String sResult = "";
-        if (!sSignaal.equals(""))
-            sResult += aIndicatorNaam + ":" + sSignaal;
-        return sResult;
-    }
+//    private String checkSignal(String aIndicatorNaam, Indicator aIndicator, IDate aDate) {
+//        String sSignaal = listLaatsteSignaal(aIndicator.getSignals(), aDate);
+//        String sResult = "";
+//        if (!sSignaal.equals(""))
+//            sResult += aIndicatorNaam + ":" + sSignaal;
+//        return sResult;
+//    }
 
     public void checkSignalen(String ticker, IDate aDate) throws Exception {
-        GetPriceHistory myGPH = new GetPriceHistory();
-        ArrayList<DayPriceRecord> prices;
-        prices = myGPH.getHistoricPricesFromFile(ticker);
+//        GetPriceHistory myGPH = new GetPriceHistory();
+//        ArrayList<DayPriceRecord> prices;
+//        prices = myGPH.getHistoricPricesFromFile(ticker);
+
+        Signalen signalen = new Signalen(ticker);
         try {
             logInTextArea(ticker + " signalen:");
-            String sResult = checkSignal("MACD", new MACD(prices), aDate);
-            sResult += checkSignal(" OBV", new OnBalanceVolume(prices), aDate);
-            sResult += checkSignal(" MOM", new Momentum(prices), aDate);
-            sResult += checkSignal(" RSI", new RSI(prices), aDate);
+            String sResult = signalen.checkSignal("MACD", aDate);
+            sResult += signalen.checkSignal("OBV", aDate);
+            sResult += signalen.checkSignal("MOM", aDate);
+            sResult += signalen.checkSignal("RSI", aDate);
 
             logInTextArea(sResult);
         } catch (Exception e) {

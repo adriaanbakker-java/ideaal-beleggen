@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -24,7 +25,8 @@ public class StatistiekenschermController implements Initializable {
     private TextField txtDelta;
     @FXML
     private TextField txtNDagen;
-
+    @FXML
+    private TextArea taLogArea;
 
     private String aandeelnaam;
     private IDate einddatum;
@@ -49,10 +51,16 @@ public class StatistiekenschermController implements Initializable {
             boolean isKoopsignaal = chkKoopsignaal.isSelected();
             double delta = Util.toDouble(txtDelta.getText());
             int nDagen = Integer.parseInt(txtNDagen.getText());
-            showMessage("genereren stats " + isKoopsignaal + "|" + delta + "|" + nDagen );
+            String sMsg = "genereren stats " + isKoopsignaal + "|" + delta + "|" + nDagen;
+            showMessage( sMsg);
+            addLogArea( sMsg );
         } catch (Exception e) {
             showMessage(e.getLocalizedMessage());
         }
+    }
+
+    private void addLogArea(String sMsg) {
+        taLogArea.setText(taLogArea.getText() + "\n" + sMsg);
     }
 
     private void showMessage(String localizedMessage) {

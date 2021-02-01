@@ -219,8 +219,7 @@ public class MainController {
     }
 
 
-    public void haalintradagkoers(ActionEvent actionEvent) {
-        try {
+    public void haalintradagkoers(ActionEvent actionEvent) { try {
             System.out.println("Roept via spring boot de REST service aan ophalen dagkoers");
             String ticker = selecteerAandeel.getValue();
             if (ticker == null) {
