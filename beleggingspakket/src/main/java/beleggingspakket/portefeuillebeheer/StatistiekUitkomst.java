@@ -1,5 +1,6 @@
 package beleggingspakket.portefeuillebeheer;
 
+import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class StatistiekUitkomst {
     }
 
     private int aantalGebeurtenissen;
+    private ArrayList<IDate> gebHigher;
+    private ArrayList<IDate> gebLower;
 
     private int Kh; // aantal keren  koers "higher" dan k0 + delta% na n dagen
     private int Kl; // aantal keren koers "lower" dan k0 - delta% na n dagen
@@ -22,13 +25,38 @@ public class StatistiekUitkomst {
         aantalGebeurtenissen = 0;
         Kh = 0;
         Kl = 0;
+        gebHigher = new ArrayList<>();
+        gebLower = new ArrayList<>();
     }
 
-    public void incHigher() {
+    public void incHigher(IDate iDate) {
         Kh++;
+        gebHigher.add(iDate);
     }
-    public void incLower() {
+    public void incLower(IDate iDate) {
         Kl++;
+        gebLower.add(iDate);
+    }
+
+    private String printDatelist(String aLabel, ArrayList<IDate> arr) {
+        String sResult = aLabel + "\n";
+        for (int i=0; i<=arr.size()-1; i++) {
+            sResult = sResult + arr.get(i);
+            if (i< arr.size()-1) {
+                sResult += ",";
+            }
+            if (i%10 == 0) {
+                sResult += "\n";
+            }
+        }
+        return sResult;
+    }
+
+    public String printDates() {
+        String result = printDatelist("Dates higher:", gebHigher);
+        result += "\n\n";
+        result += printDatelist("Dates lower:", gebLower);
+        return result;
     }
 
     public String print() {

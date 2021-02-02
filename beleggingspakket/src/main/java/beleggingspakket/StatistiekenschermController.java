@@ -67,6 +67,8 @@ public class StatistiekenschermController implements Initializable {
                     sKoop = "koopsignaal";
                 addLogArea(sKoop + ": aantal gebeurtenissen = " + uitkomst.getAantalGebeurtenissen());
                 addLogArea( " aantal dagen " + n + ":" + sResult);
+                sResult = uitkomst.printDates();
+                addLogArea(sResult);
             }
 
 

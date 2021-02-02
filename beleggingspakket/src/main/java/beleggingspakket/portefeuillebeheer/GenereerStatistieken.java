@@ -40,15 +40,20 @@ public class GenereerStatistieken {
 
             for (IndicatorSignal s: signalen) {
                 int signaalindex = s.getIndexKoersreeks();
+                IDate datum = s.getDate();
+                IDate checkDate = new IDate(2020, 6, 18);
+                if (checkDate.isEqual(datum)) {
+                    System.out.println("ref datum 18 jun 2020 gevonden");
+                }
                 if ((signaalindex + AantalDagen <= prices.size()-1) && (s.getKoopsignaal() == IsKoopsignaal)) {
                     uitk.incAantalGebeurtenissen();
                     double k0 = s.getDpr().getClose();
                     DayPriceRecord dprn = prices.get(signaalindex + AantalDagen);
                     if (dprn.getClose() > k0 * (1 + Delta/100)) {
-                        uitk.incHigher();
+                        uitk.incHigher(s.getDpr().getIDate());
                     }
                     if (dprn.getClose() < k0 * (1 - Delta/100)) {
-                        uitk.incLower();
+                        uitk.incLower(s.getDpr().getIDate());
                     }
                 }
             }
