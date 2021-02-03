@@ -3,7 +3,6 @@ package beleggingspakket.indicatoren;
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
 import beleggingspakket.util.IDate;
-import com.fasterxml.jackson.databind.util.ClassUtil;
 
 import java.util.ArrayList;
 
@@ -13,14 +12,17 @@ public class ToppenEnDalen {
     private final String ticker;
     private final IDate einddatum;
     private  int indexEinddatum;
-    private ArrayList<TopOfDal> entries;
+    private ArrayList<TopOfDal> toppen;
+    private ArrayList<TopOfDal> bodems;
+
     private ArrayList<DayPriceRecord> prices;
-    private final int CToppenDalen = 10;
+    private final int CToppenDalen = 15;
 
 
     public ToppenEnDalen(String aTicker, IDate aEinddatum) throws Exception {
         ticker = aTicker;
-        entries  = new ArrayList<>();
+        toppen = new ArrayList<>();
+        bodems = new ArrayList<>();
         einddatum = aEinddatum;
         GetPriceHistory myGPH = new GetPriceHistory();
         prices = myGPH.getHistoricPricesFromFile(ticker);
@@ -29,12 +31,55 @@ public class ToppenEnDalen {
 
     public void addTopOfDal(boolean aIstop, DayPriceRecord aDpr, int aIndex) {
         TopOfDal tod = new TopOfDal(aIstop, aDpr, aIndex);
-        entries.add(tod);
+        toppen.add(tod);
     }
 
     // Laatste 10 toppen en dalen genereren die voor einddatum liggen
     public void zoekToppenEnDalen() throws Exception {
-        zoekRuweToppenEnDalen(prices);
+        ArrayList<TopOfDal> ruweEntries = zoekRuweToppenEnDalen(prices);
+        ArrayList<TopOfDal> toppenLokaal = new ArrayList<>();
+        ArrayList<TopOfDal> bodemsLokaal = new ArrayList<>();
+
+        // doorloop nu de toppen en de dalen en leg verdere restricties op
+        // restrictie: top moet worden omgeven door twee lagere toppen
+        // restrictie: bodem moet worden omgeven door twee lagere bodems
+
+        for (int ind = 0; ind<= ruweEntries.size()-1; ind++) {
+           TopOfDal td = ruweEntries.get(ind);
+           if (td.isTop())
+               toppenLokaal.add(td);
+           else
+               bodemsLokaal.add(td);
+        }
+        double prev, curr, nxt;
+        // stel vast of eerste top ten opzichte van candle op startdatum en de daaropvolgende
+        // top een omgekeerde V beschrijft, zo ja dan eerste top ook toevoegen
+        prev = prices.get(indexEinddatum).getHigh();
+        curr = toppenLokaal.get(0).getDpr().getHigh();
+        nxt = toppenLokaal.get(1).getDpr().getHigh();
+        if (curr > prev && curr > nxt)
+            this.toppen.add(toppenLokaal.get(0));
+
+        prev = prices.get(indexEinddatum).getLow();
+        curr = bodemsLokaal.get(0).getDpr().getLow();
+        nxt = bodemsLokaal.get(1).getDpr().getLow();
+        if (curr < prev && curr < nxt)
+            this.bodems.add(bodemsLokaal.get(0));
+
+        for (int ind=1; ind <= toppenLokaal.size()-2; ind++) {
+            curr = toppenLokaal.get(ind).getDpr().getHigh();
+            prev  = toppenLokaal.get(ind-1).getDpr().getHigh();
+            nxt = toppenLokaal.get(ind+1).getDpr().getHigh();
+            if (curr > prev && curr > nxt)
+                this.toppen.add(toppenLokaal.get(ind));
+        }
+        for (int ind=1; ind <= bodemsLokaal.size()-2; ind++) {
+            curr = bodemsLokaal.get(ind).getDpr().getHigh();
+            prev  = bodemsLokaal.get(ind-1).getDpr().getHigh();
+            nxt = bodemsLokaal.get(ind+1).getDpr().getHigh();
+            if (curr < prev && curr < nxt)
+                this.bodems.add(bodemsLokaal.get(ind));
+        }
     }
 
     // Zoek de index van het koersrecord waarvan de datum nog net op of voor einddatum ligt
@@ -47,10 +92,13 @@ public class ToppenEnDalen {
         return -1;
     }
 
-    private void zoekRuweToppenEnDalen(ArrayList<DayPriceRecord> prices) {
+    private ArrayList<TopOfDal> zoekRuweToppenEnDalen(ArrayList<DayPriceRecord> prices) {
+        ArrayList<TopOfDal> result = new ArrayList<>();
+
         // vanaf einddatum in prijsverloop teruglopen en geisoleerde toppen en dalen onderkennen
         int aantalToppen = 0;
         int aantalDalen = 0;
+
         for (int i = indexEinddatum-1;
              i>0 && aantalDalen < CToppenDalen &&  aantalToppen < CToppenDalen;
              i--) {
@@ -58,14 +106,15 @@ public class ToppenEnDalen {
             if (td != null) {
                 if (td.isTop() && aantalToppen<= CToppenDalen) {
                     aantalToppen++;
-                    entries.add(td);
+                    result.add(td);
                 }
                 if (!td.isTop() && aantalDalen<= CToppenDalen) {
                     aantalDalen++;
-                    entries.add(td);
+                    result.add(td);
                 }
             }
         }
+        return result;
     }
 
     private TopOfDal checkTopDal(int i) {
@@ -83,7 +132,10 @@ public class ToppenEnDalen {
 
     public String toString() {
         String result = "Toppen en dalen:\n";
-        for (TopOfDal td: entries) {
+        for (TopOfDal td: toppen) {
+            result += td.toString() + "\n";
+        }
+        for (TopOfDal td: bodems) {
             result += td.toString() + "\n";
         }
         return result;
