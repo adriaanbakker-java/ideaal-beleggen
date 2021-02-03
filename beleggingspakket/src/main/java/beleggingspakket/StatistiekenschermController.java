@@ -1,5 +1,6 @@
 package beleggingspakket;
 
+import beleggingspakket.indicatoren.ToppenEnDalen;
 import beleggingspakket.portefeuillebeheer.GenereerStatistieken;
 import beleggingspakket.portefeuillebeheer.StatistiekUitkomst;
 import beleggingspakket.util.IDate;
@@ -36,6 +37,7 @@ public class StatistiekenschermController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initialize Statistiekenscherm ");
+        txtDelta.setText("0.0");
     }
 
     public void setTicker(String aTicker) {
@@ -52,8 +54,7 @@ public class StatistiekenschermController implements Initializable {
         try {
             boolean isKoopsignaal = chkKoopsignaal.isSelected();
             double delta = Util.toDouble(txtDelta.getText());
-            int nDagen = Integer.parseInt(txtNDagen.getText());
-            String sMsg = "genereren stats " + isKoopsignaal + "|" + delta + "|" + nDagen;
+            String sMsg = "genereren stats koopsignaal:" + isKoopsignaal + "|" + delta;
             showMessage( sMsg);
             taLogArea.clear();
             addLogArea( sMsg );
@@ -75,6 +76,25 @@ public class StatistiekenschermController implements Initializable {
         } catch (Exception e) {
             showMessage(e.getLocalizedMessage());
         }
+    }
+
+    public void toonLaatsteSignalen() {
+        String message = GenereerStatistieken.toonLaatsteSignalen(ticker);
+        taLogArea.clear();
+        addLogArea("Laatste 10 MAC signalen:");
+        addLogArea(message);
+    }
+
+    public void toonToppenDalen() {
+        try {
+            System.out.println("toppen en dalen genereren");
+            ToppenEnDalen td = new ToppenEnDalen(ticker, einddatum);
+            td.zoekToppenEnDalen();
+            addLogArea(td.toString());
+        } catch (Exception e) {
+            addLogArea(e.getLocalizedMessage());
+        }
+
     }
 
     private void addLogArea(String sMsg) {

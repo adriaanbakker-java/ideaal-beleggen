@@ -32,4 +32,11 @@ public class IndicatorSignal {
         this.dpr = dpr;
         this.indexKoersreeks = indexKoersreeks;
     }
+
+    public String toString() {
+        String result = (isKoopsignaal ? "Koopsignaal:": "Verkoopsignaal");
+        result += dpr.toString();
+
+        return result;
+    }
 }

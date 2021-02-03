@@ -2,6 +2,7 @@ package beleggingspakket.portefeuillebeheer;
 
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
+import beleggingspakket.indicatoren.Indicator;
 import beleggingspakket.indicatoren.IndicatorSignal;
 import beleggingspakket.indicatoren.MACD;
 import beleggingspakket.indicatoren.Signalen;
@@ -26,6 +27,27 @@ public class GenereerStatistieken {
         Einddatum = aEinddatum;
         Delta = aDelta;
         AantalDagen = aAantalDagen;
+    }
+
+    // negeert Delta en isKoopsignaal, toont laatste 10 signalen
+    public static String toonLaatsteSignalen(String aTicker) {
+        try {
+            GetPriceHistory myGPH = new GetPriceHistory();
+            ArrayList<DayPriceRecord> prices;
+            prices = myGPH.getHistoricPricesFromFile(aTicker);
+            MACD macd = new MACD(prices);
+            ArrayList<IndicatorSignal> signalen = macd.getSignals();
+            String result = "";
+
+            for (int n= signalen.size()-1;n>=signalen.size()-10; n--) {
+                IndicatorSignal s = signalen.get(n);
+                String spacer = (s.getKoopsignaal() ? "" : "   ");
+                result += spacer + s.toString() + "\n";
+            }
+            return result;
+        } catch(Exception e) {
+            return "toonLaatsteSignalen:" + e.getLocalizedMessage();
+        }
     }
 
     // Bereken de statistiek bij het gekozen fonds en gekozen parameters voor indicator MACD
