@@ -20,21 +20,25 @@ public class ToppenEnDalen {
 
 
     public ToppenEnDalen(String aTicker, IDate aEinddatum) throws Exception {
-        ticker = aTicker;
-        toppen = new ArrayList<>();
-        bodems = new ArrayList<>();
-        einddatum = aEinddatum;
-        GetPriceHistory myGPH = new GetPriceHistory();
-        prices = myGPH.getHistoricPricesFromFile(ticker);
-        indexEinddatum = zoekIndex(einddatum);
+        try {
+            ticker = aTicker;
+            toppen = new ArrayList<>();
+            bodems = new ArrayList<>();
+            einddatum = aEinddatum;
+            GetPriceHistory myGPH = new GetPriceHistory();
+            prices = myGPH.getHistoricPricesFromFile(ticker);
+            indexEinddatum = zoekIndex(einddatum);
+        } catch (Exception e) {
+            throw new Exception ("ToppenEnDalen constructor:" + e.getLocalizedMessage());
+        }
+
     }
 
-    public void addTopOfDal(boolean aIstop, DayPriceRecord aDpr, int aIndex) {
-        TopOfDal tod = new TopOfDal(aIstop, aDpr, aIndex);
-        toppen.add(tod);
-    }
+
 
     // Laatste 10 toppen en dalen genereren die voor einddatum liggen
+    // NB code kan waarschijnlijk best een stuk simpeler met wat meer abstractie,
+    // gevalsuitsplitsingen hebben het karakter van code duplicatie
     public void zoekToppenEnDalen() throws Exception {
         ArrayList<TopOfDal> ruweEntries = zoekRuweToppenEnDalen(prices);
         ArrayList<TopOfDal> toppenLokaal = new ArrayList<>();
@@ -54,44 +58,59 @@ public class ToppenEnDalen {
         double prev, curr, nxt;
         // stel vast of eerste top ten opzichte van candle op startdatum en de daaropvolgende
         // top een omgekeerde V beschrijft, zo ja dan eerste top ook toevoegen
+        TopOfDal top = toppenLokaal.get(0);
         prev = prices.get(indexEinddatum).getHigh();
-        curr = toppenLokaal.get(0).getDpr().getHigh();
+        curr = top.getDpr().getHigh();
         nxt = toppenLokaal.get(1).getDpr().getHigh();
-        if (curr > prev && curr > nxt)
-            this.toppen.add(toppenLokaal.get(0));
+        if ((curr > prev && curr > nxt) || (top.getOrde() >=2))
+            this.toppen.add(top);
 
+        // stel vast of eerste bodem ten opzichte van candle op startdatum en de daaropvolgende
+        // top een  V beschrijft, zo ja dan eerste bodem ook toevoegen
         prev = prices.get(indexEinddatum).getLow();
-        curr = bodemsLokaal.get(0).getDpr().getLow();
+        TopOfDal bodem = bodemsLokaal.get(0);
+        curr = bodem.getDpr().getLow();
         nxt = bodemsLokaal.get(1).getDpr().getLow();
-        if (curr < prev && curr < nxt)
-            this.bodems.add(bodemsLokaal.get(0));
+        if ((curr < prev && curr < nxt) || (bodem.getOrde() >=2))
+            this.bodems.add(bodem);
 
         for (int ind=1; ind <= toppenLokaal.size()-2; ind++) {
-            curr = toppenLokaal.get(ind).getDpr().getHigh();
+            top = toppenLokaal.get(ind);
+            curr = top.getDpr().getHigh();
             prev  = toppenLokaal.get(ind-1).getDpr().getHigh();
             nxt = toppenLokaal.get(ind+1).getDpr().getHigh();
-            if (curr > prev && curr > nxt)
-                this.toppen.add(toppenLokaal.get(ind));
+            if ((curr > prev && curr > nxt) || (top.getOrde() >=2))
+                this.toppen.add(top);
         }
         for (int ind=1; ind <= bodemsLokaal.size()-2; ind++) {
-            curr = bodemsLokaal.get(ind).getDpr().getHigh();
+            bodem = bodemsLokaal.get(ind);
+            curr = bodem.getDpr().getHigh();
             prev  = bodemsLokaal.get(ind-1).getDpr().getHigh();
             nxt = bodemsLokaal.get(ind+1).getDpr().getHigh();
-            if (curr < prev && curr < nxt)
-                this.bodems.add(bodemsLokaal.get(ind));
+            if ((curr < prev && curr < nxt) || (bodem.getOrde() >=2))
+                this.bodems.add(bodem);
         }
     }
 
     // Zoek de index van het koersrecord waarvan de datum nog net op of voor einddatum ligt
-    private int zoekIndex(IDate aDatum) {
-        boolean found = false;
-        for (int i=prices.size()-1;(!found) && (i>=0);i++) {
-            found = prices.get(i).getIDate().isSmallerEqual(aDatum);
-            if (found) return i;
+    private int zoekIndex(IDate aDatum) throws Exception {
+        try {
+            boolean found = false;
+            for (int i=prices.size()-1;(!found) && (i>=0);i--) {
+                found = prices.get(i).getIDate().isSmallerEqual(aDatum);
+                if (found) return i;
+            }
+            return -1;
+        } catch (Exception e) {
+            throw new Exception ("ToppenEnDalen.zoekIndex():" + e.getLocalizedMessage());
         }
-        return -1;
+
     }
 
+    // Zoek de toppen en de dalen in het koersverloop
+    // tevens vermelden wat de orde van het top of dal is
+    // orde is het aantal buurcandles dat een lagere hoog heeft (bij top)
+    // dan wel het aantal buurcandles dat een hogere laag heeft (bij bodem).
     private ArrayList<TopOfDal> zoekRuweToppenEnDalen(ArrayList<DayPriceRecord> prices) {
         ArrayList<TopOfDal> result = new ArrayList<>();
 
@@ -121,13 +140,35 @@ public class ToppenEnDalen {
         DayPriceRecord prev = prices.get(i-1);
         DayPriceRecord curr = prices.get(i);
         DayPriceRecord nxt = prices.get(i+1);
-        if (prev.getLow() > curr.getLow() && curr.getLow() < nxt.getLow()) {
-            return new TopOfDal(false, curr, i);
-        }
         if (prev.getHigh() < curr.getHigh() && curr.getHigh() > nxt.getHigh()) {
-            return new TopOfDal(true, curr, i);
+            int orde = bepaalOrde(true, i);
+            return new TopOfDal(true, curr, i, orde);
+        }
+        if (prev.getLow() > curr.getLow() && curr.getLow() < nxt.getLow()) {
+            int orde = bepaalOrde(false, i);
+            return new TopOfDal(false, curr, i, orde);
         }
         return null;
+    }
+
+    // bepaal orde van top of dal dwz aantal buren ten opzichte van welke de top dan wel dal
+    // nog steeds een hogere top dan wel dal is
+    private int bepaalOrde(boolean aIsTop, int aIndex) {
+        int orde = 0;
+        int nextorde = orde + 1;
+        boolean isNogSteedsGoed = true;
+        while ((aIndex + nextorde <= indexEinddatum ) && isNogSteedsGoed) {
+            isNogSteedsGoed = (aIsTop? (prices.get(aIndex).getHigh() > prices.get(aIndex + nextorde).getHigh())
+                    :  (prices.get(aIndex).getLow() < prices.get(aIndex + nextorde).getLow()));
+            if (isNogSteedsGoed)
+                isNogSteedsGoed = (aIsTop? (prices.get(aIndex).getHigh() > prices.get(aIndex - nextorde).getHigh())
+                        :  (prices.get(aIndex).getLow() < prices.get(aIndex - nextorde).getLow()));
+            if (isNogSteedsGoed) {
+                orde = nextorde;
+                nextorde++;
+            }
+        }
+        return orde;
     }
 
     public String toString() {

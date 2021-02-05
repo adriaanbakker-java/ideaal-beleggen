@@ -6,6 +6,7 @@ public class TopOfDal {
     private final boolean isTop;
     private final int index;
     private final DayPriceRecord dpr;
+    private final int orde;
 
     public DayPriceRecord getDpr() {
         return dpr;
@@ -20,13 +21,20 @@ public class TopOfDal {
     }
 
 
-    TopOfDal(boolean aIsTop, DayPriceRecord aDpr, int aIndex) {
+    TopOfDal(boolean aIsTop, DayPriceRecord aDpr, int aIndex, int aOrde) {
         isTop = aIsTop;
         dpr = aDpr;
         index = aIndex;
+        orde = aOrde;
     }
 
     public String toString() {
-        return (isTop? "Top:" : "Dal:")  + dpr.toString();
+        String result = (isTop? "Top:" : "Dal:")  + dpr.toString();
+        result += "  orde =" + orde;
+        return result;
+    }
+
+    public int getOrde() {
+        return orde;
     }
 }
