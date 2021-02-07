@@ -104,7 +104,6 @@ public class ToppenEnDalen {
         } catch (Exception e) {
             throw new Exception ("ToppenEnDalen.zoekIndex():" + e.getLocalizedMessage());
         }
-
     }
 
     // Zoek de toppen en de dalen in het koersverloop
