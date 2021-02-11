@@ -125,6 +125,10 @@ public class GrafiekenschermController implements Initializable {
         this.weatherLabel.setText(weatherService.getWeatherForecast());
     }
 
+    public void toonToppenDalen() {
+        System.out.println("Toon toppen en dalen");
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cmbBeursdagen.getItems().addAll("1", "5", "20", "40", "60");
