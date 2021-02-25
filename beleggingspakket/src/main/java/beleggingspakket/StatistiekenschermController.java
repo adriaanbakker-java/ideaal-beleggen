@@ -13,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StatistiekenschermController implements Initializable {
@@ -50,6 +51,30 @@ public class StatistiekenschermController implements Initializable {
         lblEinddatum.setText("Einddatum:" + einddatum.toString());
     }
 
+
+    public void genereerStatistiekenMACD() throws Exception {
+        boolean isKoopsignaal = chkKoopsignaal.isSelected();
+        double delta = Util.toDouble(txtDelta.getText());
+        String sMsg = "genereren stats koopsignaal:" + isKoopsignaal + "|" + delta;
+        showMessage( sMsg);
+        taLogArea.clear();
+        addLogArea( sMsg );
+
+        for (int n=1; n<=10; n++) {
+            GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, n, einddatum, delta);
+            StatistiekUitkomst uitkomst = stats.berekenStatistiekMACD();
+            String sResult = uitkomst.print();
+            String sKoop = "verkoopsignaal";
+            if (isKoopsignaal)
+                sKoop = "koopsignaal";
+            addLogArea(sKoop + ": aantal gebeurtenissen = " + uitkomst.getAantalGebeurtenissen());
+            addLogArea( " aantal dagen " + n + ":" + sResult);
+            sResult = uitkomst.printDates();
+            addLogArea(sResult);
+        }
+
+    }
+
     public void genereer() {
         try {
             boolean isKoopsignaal = chkKoopsignaal.isSelected();
@@ -58,20 +83,11 @@ public class StatistiekenschermController implements Initializable {
             showMessage( sMsg);
             taLogArea.clear();
             addLogArea( sMsg );
-
-            for (int n=1; n<=10; n++) {
-                GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, n, einddatum, delta);
-                StatistiekUitkomst uitkomst = stats.berekenStatistiekMACD();
-                String sResult = uitkomst.print();
-                String sKoop = "verkoopsignaal";
-                if (isKoopsignaal)
-                    sKoop = "koopsignaal";
-                addLogArea(sKoop + ": aantal gebeurtenissen = " + uitkomst.getAantalGebeurtenissen());
-                addLogArea( " aantal dagen " + n + ":" + sResult);
-                sResult = uitkomst.printDates();
-                addLogArea(sResult);
+            GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, 0, einddatum, delta);
+            ArrayList<String> koopverkopen = stats.berekenBeleggenMACD();
+            for (String msg: koopverkopen) {
+                addLogArea(msg);
             }
-
 
         } catch (Exception e) {
             showMessage(e.getLocalizedMessage());

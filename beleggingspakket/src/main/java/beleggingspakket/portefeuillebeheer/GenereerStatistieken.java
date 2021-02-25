@@ -7,6 +7,7 @@ import beleggingspakket.indicatoren.IndicatorSignal;
 import beleggingspakket.indicatoren.MACD;
 import beleggingspakket.indicatoren.Signalen;
 import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
 
 import java.util.ArrayList;
 
@@ -83,7 +84,51 @@ public class GenereerStatistieken {
         } catch (Exception e) {
             throw new Exception("berekenStatistiekMACD:" + e.getLocalizedMessage());
         }
+    }
 
+    public int trunk(double value){
+        Double result = value - value % 1;
+        return result.intValue();
+    }
 
+    // Bereken de beleggingsuitkomst bij het gekozen fonds en gekozen parameters voor indicator MACD
+    public ArrayList<String> berekenBeleggenMACD() throws Exception {
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            GetPriceHistory myGPH = new GetPriceHistory();
+            ArrayList<DayPriceRecord> prices;
+            prices = myGPH.getHistoricPricesFromFile(Ticker);
+            MACD macd = new MACD(prices);
+            ArrayList<IndicatorSignal> signalen = macd.getSignals();
+            double vermogen = 1000.0;
+            int stuks = 0;
+
+            for (IndicatorSignal s: signalen) {
+                // Zodra er een signaal wordt getoond wordt de eerstvolgende handelsdag aan- of verkocht
+                // tegen de openingskoers van de volgende handelsdag
+
+                int indexKoersreeks = s.getIndexKoersreeks();
+                if ((indexKoersreeks <= prices.size()-2) && (s.getDate().isSmaller(Einddatum))) {
+                    DayPriceRecord nextDayDpr = prices.get(indexKoersreeks + 1);
+                    String sMsg = s.getDate().toString();
+                    sMsg += (s.getKoopsignaal() ? ";Kopen;" : ";Verkopen;") ;
+                    double openingsprijs = nextDayDpr.getOpen();
+                    if (s.getKoopsignaal()) {
+                        stuks = trunk( vermogen/openingsprijs);
+                        vermogen  -=   stuks * openingsprijs;
+                        sMsg +=   stuks + ";" + Util.toCurrency(openingsprijs);
+                    } else {
+                        sMsg +=   stuks + ";" + Util.toCurrency(openingsprijs);
+                        vermogen += stuks * openingsprijs;
+                        stuks = 0;
+                    }
+                    sMsg += ";" + Util.toCurrency(vermogen);
+                    result.add(sMsg);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            throw new Exception("berekenBeleggenMACD:" + e.getLocalizedMessage());
+        }
     }
 }
