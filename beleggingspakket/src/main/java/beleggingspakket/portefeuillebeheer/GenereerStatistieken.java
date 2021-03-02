@@ -30,21 +30,33 @@ public class GenereerStatistieken {
         AantalDagen = aAantalDagen;
     }
 
-    // negeert Delta en isKoopsignaal, toont laatste 10 signalen
-    public static String toonLaatsteSignalen(String aTicker) {
+    // negeert Delta en isKoopsignaal, toont laatste 10 signalen voor de einddatum van de portefeuille
+    public  String toonLaatsteSignalen() {
         try {
             GetPriceHistory myGPH = new GetPriceHistory();
             ArrayList<DayPriceRecord> prices;
-            prices = myGPH.getHistoricPricesFromFile(aTicker);
+            prices = myGPH.getHistoricPricesFromFile(Ticker);
             MACD macd = new MACD(prices);
             ArrayList<IndicatorSignal> signalen = macd.getSignals();
             String result = "";
 
-            for (int n= signalen.size()-1;n>=signalen.size()-10; n--) {
-                IndicatorSignal s = signalen.get(n);
-                String spacer = (s.getKoopsignaal() ? "" : "   ");
-                result += spacer + s.toString() + "\n";
+            int indexSignalen = signalen.size() - 1;
+            int count = 0;
+            while ((indexSignalen >=0) && (count < 10)) {
+                IndicatorSignal s = signalen.get(indexSignalen);
+                if (s.getDate().isSmallerEqual(this.Einddatum)) {
+                    count++;
+                    String spacer = (s.getKoopsignaal() ? "" : "   ");
+                    result += spacer + s.toString() + "\n";
+                }
+                indexSignalen--;
             }
+
+//            for (int n= signalen.size()-1;n>=signalen.size()-10; n--) {
+//                IndicatorSignal s = signalen.get(n);
+//                String spacer = (s.getKoopsignaal() ? "" : "   ");
+//                result += spacer + s.toString() + "\n";
+//            }
             return result;
         } catch(Exception e) {
             return "toonLaatsteSignalen:" + e.getLocalizedMessage();

@@ -25,5 +25,7 @@
       <TextField fx:id="txtMessage" layoutX="33.0" layoutY="363.0" maxHeight="89.0" minHeight="20.0" prefHeight="0.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Button fx:id="toonLaatsteSignalen" layoutX="398.0" layoutY="109.0" mnemonicParsing="false" onAction="#toonLaatsteSignalen" text="Laatste signalen" />
       <Button fx:id="toonLaatsteSignalen1" layoutX="398.0" layoutY="146.0" mnemonicParsing="false" onAction="#toonToppenDalen" text="Toppen en dalen" />
+      <Button layoutX="465.0" layoutY="34.0" mnemonicParsing="false" onAction="#wijzigEinddatum" text="Wijzig einddatum" />
+      <TextField fx:id="txtEinddatum" layoutX="300.0" layoutY="34.0" />
    </children>
 </AnchorPane>

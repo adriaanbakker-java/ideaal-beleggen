@@ -28,6 +28,8 @@ public class StatistiekenschermController implements Initializable {
     @FXML
     private TextField txtDelta;
     @FXML
+    private TextField txtEinddatum;
+    @FXML
     private TextField txtNDagen;
     @FXML
     private TextArea taLogArea;
@@ -75,6 +77,18 @@ public class StatistiekenschermController implements Initializable {
 
     }
 
+    public void wijzigEinddatum() {
+        System.out.println("wijzig einddatum");
+        try {
+            IDate einddatumNieuw = Util.toIDate(txtEinddatum.getText());
+            this.einddatum = einddatumNieuw;
+            lblEinddatum.setText(txtEinddatum.getText());
+        } catch (Exception e) {
+            addLogArea(e.getLocalizedMessage());
+        }
+
+    }
+
     public void genereer() {
         try {
             boolean isKoopsignaal = chkKoopsignaal.isSelected();
@@ -95,7 +109,9 @@ public class StatistiekenschermController implements Initializable {
     }
 
     public void toonLaatsteSignalen() {
-        String message = GenereerStatistieken.toonLaatsteSignalen(ticker);
+        GenereerStatistieken gen = new GenereerStatistieken(
+                ticker, true, 0, einddatum, 0);
+        String message = gen.toonLaatsteSignalen();
         taLogArea.clear();
         addLogArea("Laatste 10 MAC signalen:");
         addLogArea(message);
