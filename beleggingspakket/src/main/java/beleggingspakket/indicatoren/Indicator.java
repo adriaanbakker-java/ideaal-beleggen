@@ -33,4 +33,16 @@ public abstract class Indicator {
 
     protected abstract void calcIndicator();
 
+    public  Boolean getStatus(int indexKoersreeks) {
+        boolean found = false;
+        Boolean result = null;
+        for (IndicatorSignal s: signalen) {
+            if (s.getIndexKoersreeks() < indexKoersreeks) {
+                result = s.getKoopsignaal();
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
 }
