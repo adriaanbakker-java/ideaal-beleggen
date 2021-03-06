@@ -21,6 +21,9 @@ public class GenereerStatistieken {
     double Delta;
 
     private class AanVerkoopParams {
+        public int totaalaantal;
+        public int aantalPositief;
+        public int aantalNegatief;
         boolean koopconditie;
         boolean macdKoopconditie;
         boolean isAangekocht;
@@ -39,6 +42,9 @@ public class GenereerStatistieken {
             geldOpRekening = 1000;
             stoplimit = -1.0;
             stoploss = -1.0;
+            totaalaantal = 0; // totaal aantal verkooptransacties
+            aantalPositief = 0;
+            aantalNegatief = 0;
         }
     }
 
@@ -128,7 +134,8 @@ public class GenereerStatistieken {
     }
 
 
-    public ArrayList<String> berekenBeleggenMACDStopLoss() throws Exception {
+    // Bereken beleggingsresultaat bij beleggen met MACD met stoploss
+    public ArrayList<String> berekenBeleggenMACD() throws Exception {
         ArrayList<String> result = new ArrayList<>();
         try {
             GetPriceHistory myGPH = new GetPriceHistory();
@@ -138,10 +145,17 @@ public class GenereerStatistieken {
             AanVerkoopParams aanVerkoopParams  = new AanVerkoopParams();
             int koersindex = 0;
             for (DayPriceRecord price: prices) {
+                if (!price.getIDate().isSmallerEqual(Einddatum))
+                    break;
                 checkVerwerkAanVerkopen(aanVerkoopParams, price, result);
                 checkMACDstatus(aanVerkoopParams, macd, koersindex, result);
                 koersindex++;
             }
+
+            result.add("");
+            result.add("totaal aantal verkopen:" + aanVerkoopParams.totaalaantal);
+            result.add("totaal aantal positief:" + aanVerkoopParams.aantalPositief);
+            result.add("totaal aantal negatief:" + aanVerkoopParams.aantalNegatief);
         } catch (Exception e) {
             throw new Exception("berekenBeleggenMACDStopLoss:" + e.getLocalizedMessage());
         }
@@ -153,10 +167,19 @@ public class GenereerStatistieken {
             MACD macd,
             int indexKoersreeks,
             ArrayList<String> result) {
-            boolean isKopen = macd.getStatus(indexKoersreeks);
-            if (isKopen) {
-                aanVerkoopParams.koopconditie = true;
-                aanVerkoopParams.macdKoopconditie = true;
+            Boolean isKopen = macd.getStatus(indexKoersreeks);
+            if (isKopen != null) {
+                if (isKopen == true) {
+                    // het kan zijn dat er inmiddels via stoploss is verkocht
+                    // terwijl macdKoopconditie nog waar was. In dat geval koopconditie niet
+                    // wijzigen op basis van het feit dat de macdKoopconditie nog waar is.
+                    if (aanVerkoopParams.macdKoopconditie == false)
+                        aanVerkoopParams.koopconditie = true;
+                    aanVerkoopParams.macdKoopconditie = true;
+                } else {
+                    aanVerkoopParams.koopconditie = false;
+                    aanVerkoopParams.macdKoopconditie = false;
+                }
             } else {
                 aanVerkoopParams.koopconditie = false;
                 aanVerkoopParams.macdKoopconditie = false;
@@ -168,14 +191,13 @@ public class GenereerStatistieken {
             DayPriceRecord price,
             ArrayList<String> result) {
         if (aanVerkoopParams.isAangekocht) {
-            // check stoploss
+            if (aanVerkoopParams.stoplimit < price.getHigh())
+                aanVerkoopParams.stoplimit = price.getHigh();
+            if (!aanVerkoopParams.macdKoopconditie) {
+                verkoopOpeningskoers(aanVerkoopParams, price, result);
+            } else
             if (aanVerkoopParams.stoploss >= price.getLow()) {
                 verkoopStoploss(aanVerkoopParams, price, result);
-            } else {
-                // check MACD koopconditie niet meer geldig
-                if (!aanVerkoopParams.macdKoopconditie) {
-                    verkoopOpeningskoers(aanVerkoopParams, price, result);
-                }
             }
         } else { // niet aangekocht
             if (aanVerkoopParams.koopconditie) {
@@ -189,27 +211,27 @@ public class GenereerStatistieken {
                     koopStoplimit(aanVerkoopParams, price, result);
                 }
             }
-
         }
     }
 
     private void koopStoplimit(AanVerkoopParams aanVerkoopParams,
                                DayPriceRecord price,
                                ArrayList<String> result) {
-        koopKoers("limit", aanVerkoopParams, price.getIDate(),
+        koopKoers("limit", aanVerkoopParams, price.getIDate(), price,
                 aanVerkoopParams.stoplimit, result);
     }
 
     private void koopOpeningskoers(AanVerkoopParams aanVerkoopParams,
                                    DayPriceRecord price,
                                    ArrayList<String> result) {
-        koopKoers("open", aanVerkoopParams, price.getIDate(),
+        koopKoers("open", aanVerkoopParams, price.getIDate(), price,
                 price.getOpen(), result);
     }
 
     private void koopKoers(String msgKoers,
                            AanVerkoopParams aanVerkoopParams,
                            IDate datum,
+                           DayPriceRecord price,
                            double koers,
                            ArrayList<String> result) {
         aanVerkoopParams.stuks = trunk( aanVerkoopParams.geldOpRekening/koers);
@@ -217,11 +239,11 @@ public class GenereerStatistieken {
         double aankoopbedrag = aanVerkoopParams.stuks * aanVerkoopParams.aankoopKoers;
         aanVerkoopParams.geldOpRekening  -=  aankoopbedrag;
         String msg = datum.toString() + "\tKopen " + msgKoers;
-        msg += aanVerkoopParams.stuks + "\t" + Util.toCurrency(koers) ;
+        msg += "\t" + aanVerkoopParams.stuks + "\t" + Util.toCurrency(koers) ;
         msg += "\t" + Util.toCurrency(aanVerkoopParams.geldOpRekening + aankoopbedrag);
         aanVerkoopParams.isAangekocht = true;
-        aanVerkoopParams.stoploss = 0.95 * koers;
-        aanVerkoopParams.stoplimit = -1.0;
+        aanVerkoopParams.stoplimit = price.getHigh();
+        aanVerkoopParams.stoploss = price.getLow();
         result.add(msg);
     }
 
@@ -240,13 +262,30 @@ public class GenereerStatistieken {
             ArrayList<String> result) {
 
         double verkoopbedrag = aanVerkoopParams.stuks * koers;
+        double aankoopbedrag = aanVerkoopParams.stuks * aanVerkoopParams.aankoopKoers;
         aanVerkoopParams.geldOpRekening  +=  verkoopbedrag;
         String msg = datum.toString() + "\tVerkopen " + msgKoers;
         msg += aanVerkoopParams.stuks + "\t" + Util.toCurrency(koers) ;
         msg += "\t" + Util.toCurrency(aanVerkoopParams.geldOpRekening);
         aanVerkoopParams.isAangekocht = false;
-        aanVerkoopParams.stoplimit = 1.05 * koers;
-        aanVerkoopParams.stoploss = -1.0;
+        aanVerkoopParams.totaalaantal++;
+
+        if (verkoopbedrag > aankoopbedrag) {
+            aanVerkoopParams.aantalPositief++;
+            if (verkoopbedrag/aankoopbedrag > 1.05) {
+                msg += "\t\thoger:" + Util.toCurrency(verkoopbedrag / aankoopbedrag);
+            } else {
+                msg +=  "\t\thoger";
+            }
+        }
+        if (verkoopbedrag < aankoopbedrag) {
+            aanVerkoopParams.aantalNegatief++;
+            if (verkoopbedrag/aankoopbedrag < 0.95) {
+                msg += "\t\tlager:" + Util.toCurrency(verkoopbedrag / aankoopbedrag);
+            } else {
+                msg +=  "\t\tlager";
+            }
+        }
         result.add(msg);
     }
 
@@ -258,7 +297,7 @@ public class GenereerStatistieken {
     }
 
     // Bereken de beleggingsuitkomst bij het gekozen fonds en gekozen parameters voor indicator MACD
-    public ArrayList<String> berekenBeleggenMACD() throws Exception {
+    public ArrayList<String> berekenBeleggenMACD1() throws Exception {
         ArrayList<String> result = new ArrayList<>();
         try {
             GetPriceHistory myGPH = new GetPriceHistory();

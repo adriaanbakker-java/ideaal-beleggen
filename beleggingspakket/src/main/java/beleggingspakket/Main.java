@@ -30,10 +30,12 @@ public class Main {
             String gekozenMarkt,
             String gekozenAandeel,
             int aantalKoersdagen,
-            int aantalDagenRetro) throws Exception {
+            IDate eindDt) throws Exception {
+            //int aantalDagenRetro) throws Exception {
         System.out.println("Vanuit Main: Toon grafiekenscherm");
         mainController.logInTextArea("Vanuit Main: Toon GrafiekenschermController");
-        app.toonGrafiekenschermRetroDagen(gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+        //app.toonGrafiekenschermRetroDagen(gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+        app.toonGrafiekenschermRetroDagen(gekozenAandeel, aantalKoersdagen, eindDt);
     }
 
 
