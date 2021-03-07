@@ -135,7 +135,7 @@ public class GenereerStatistieken {
 
 
     // Bereken beleggingsresultaat bij beleggen met MACD met stoploss
-    public ArrayList<String> berekenBeleggenMACD() throws Exception {
+    public ArrayList<String> berekenBeleggenMACDStoploss() throws Exception {
         ArrayList<String> result = new ArrayList<>();
         try {
             GetPriceHistory myGPH = new GetPriceHistory();
@@ -145,6 +145,10 @@ public class GenereerStatistieken {
             AanVerkoopParams aanVerkoopParams  = new AanVerkoopParams();
             int koersindex = 0;
             for (DayPriceRecord price: prices) {
+                IDate testdate = new IDate(2019, 06, 14);
+                if (price.getIDate().isEqual(testdate)) {
+                    System.out.println("14 juni 2019");
+                }
                 if (!price.getIDate().isSmallerEqual(Einddatum))
                     break;
                 checkVerwerkAanVerkopen(aanVerkoopParams, price, result);
@@ -162,6 +166,11 @@ public class GenereerStatistieken {
         return result;
     }
 
+    // Het laatste macd signaal bepaalt of er sprake is van een koopwaardige situatie
+    // let op, tussentijds kan er toch verkocht zijn vanwege een stoploss die werd geraakt
+    // de macd koopconditie wordt alleen in deze methode geset.
+    // de koopconditie wordt op "waar" gezet bij een macd koopsignaal en op "onwaar"
+    // bij een macd verkoopsignaal en daarnaast als het laatste signaal verkopen was
     private void checkMACDstatus(
             AanVerkoopParams aanVerkoopParams,
             MACD macd,
@@ -170,18 +179,18 @@ public class GenereerStatistieken {
             Boolean isKopen = macd.getStatus(indexKoersreeks);
             if (isKopen != null) {
                 if (isKopen == true) {
-                    // het kan zijn dat er inmiddels via stoploss is verkocht
-                    // terwijl macdKoopconditie nog waar was. In dat geval koopconditie niet
-                    // wijzigen op basis van het feit dat de macdKoopconditie nog waar is.
-                    if (aanVerkoopParams.macdKoopconditie == false)
+                    // bij overgang (!) naar macd koopconditie is er een koopconditie ontstaan
+                    // dit geldt onafhankelijk van tussentijds verkopen wegens een stoploss
+                    if (aanVerkoopParams.macdKoopconditie == false) {
                         aanVerkoopParams.koopconditie = true;
-                    aanVerkoopParams.macdKoopconditie = true;
+                        aanVerkoopParams.macdKoopconditie = true;
+                    }
                 } else {
-                    aanVerkoopParams.koopconditie = false;
                     aanVerkoopParams.macdKoopconditie = false;
+                    aanVerkoopParams.koopconditie = false;
                 }
             } else {
-                aanVerkoopParams.koopconditie = false;
+                aanVerkoopParams.macdKoopconditie = false;
                 aanVerkoopParams.macdKoopconditie = false;
             }
     }
@@ -195,20 +204,29 @@ public class GenereerStatistieken {
                 aanVerkoopParams.stoplimit = price.getHigh();
             if (!aanVerkoopParams.macdKoopconditie) {
                 verkoopOpeningskoers(aanVerkoopParams, price, result);
-            } else
-            if (aanVerkoopParams.stoploss >= price.getLow()) {
-                verkoopStoploss(aanVerkoopParams, price, result);
+                aanVerkoopParams.koopconditie = false;
+                aanVerkoopParams.stoplimit = -1;
+                aanVerkoopParams.stoploss = -1;
+            } else {
+                if (aanVerkoopParams.stoploss >= price.getLow()) {
+                    verkoopStoploss(aanVerkoopParams, price, result);
+                    aanVerkoopParams.koopconditie = false;
+                    aanVerkoopParams.stoplimit = price.getHigh();
+                    aanVerkoopParams.stoploss = -1;
+                }
             }
+
         } else { // niet aangekocht
             if (aanVerkoopParams.koopconditie) {
-                // kopen zodra er een MACD koopconditie is
                 koopOpeningskoers(aanVerkoopParams, price, result);
+                aanVerkoopParams.stoploss = price.getLow();
             } else {
-                // onder bepaalde condities bij stoplimit kopen
+                // onder bepaalde condities bij stoplimit kopen zolang het MACD signaal nog geldig is
                 if ((aanVerkoopParams.stoplimit > 0) &&
                         (aanVerkoopParams.macdKoopconditie) &&
                         (price.getHigh() > aanVerkoopParams.stoplimit)) {
                     koopStoplimit(aanVerkoopParams, price, result);
+                    aanVerkoopParams.stoploss = price.getLow();
                 }
             }
         }
@@ -242,8 +260,6 @@ public class GenereerStatistieken {
         msg += "\t" + aanVerkoopParams.stuks + "\t" + Util.toCurrency(koers) ;
         msg += "\t" + Util.toCurrency(aanVerkoopParams.geldOpRekening + aankoopbedrag);
         aanVerkoopParams.isAangekocht = true;
-        aanVerkoopParams.stoplimit = price.getHigh();
-        aanVerkoopParams.stoploss = price.getLow();
         result.add(msg);
     }
 

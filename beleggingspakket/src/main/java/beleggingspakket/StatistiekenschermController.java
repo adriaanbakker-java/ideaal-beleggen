@@ -98,7 +98,7 @@ public class StatistiekenschermController implements Initializable {
             taLogArea.clear();
             addLogArea( sMsg );
             GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, 0, einddatum, delta);
-            ArrayList<String> koopverkopen = stats.berekenBeleggenMACD();
+            ArrayList<String> koopverkopen = stats.berekenBeleggenMACDStoploss();
             for (String msg: koopverkopen) {
                 addLogArea(msg);
             }
