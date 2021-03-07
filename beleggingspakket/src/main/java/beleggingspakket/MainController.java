@@ -192,6 +192,24 @@ public class MainController {
 
     }
 
+    public void toonStatistieken()  {
+        try {
+            System.out.println("toon statistieken");
+
+            String ticker = selecteerAandeel.getValue();
+            if (ticker == null) {
+                logInTextArea("svp eerst aandeel kiezen");
+                return;
+            }
+            System.out.println("check statistieken voor " + ticker);
+
+            IDate eindDt = Util.toIDate(txtEinddatum.getText());
+            main.toonStatistieken(ticker, eindDt);
+        } catch (Exception e) {
+            logInTextArea(e.getLocalizedMessage());
+        }
+    }
+
     public void maakPortefeuilleAan(ActionEvent actionEvent) {
         System.out.println("maak Portefeuille aan met einddatum "  + txtEinddatum.getText());
     }

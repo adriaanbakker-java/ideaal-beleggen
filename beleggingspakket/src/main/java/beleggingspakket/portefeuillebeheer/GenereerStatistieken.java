@@ -2,10 +2,7 @@ package beleggingspakket.portefeuillebeheer;
 
 import beleggingspakket.Koersen.DayPriceRecord;
 import beleggingspakket.Koersen.GetPriceHistory;
-import beleggingspakket.indicatoren.Indicator;
-import beleggingspakket.indicatoren.IndicatorSignal;
-import beleggingspakket.indicatoren.MACD;
-import beleggingspakket.indicatoren.Signalen;
+import beleggingspakket.indicatoren.*;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 
@@ -24,6 +21,7 @@ public class GenereerStatistieken {
         public int totaalaantal;
         public int aantalPositief;
         public int aantalNegatief;
+        public double macdwaarde;
         boolean koopconditie;
         boolean macdKoopconditie;
         boolean isAangekocht;
@@ -61,12 +59,12 @@ public class GenereerStatistieken {
     }
 
     // negeert Delta en isKoopsignaal, toont laatste 10 signalen voor de einddatum van de portefeuille
-    public  String toonLaatsteSignalen() {
+    public  String toonLaatsteSignalen(boolean aCorrBehaviour) {
         try {
             GetPriceHistory myGPH = new GetPriceHistory();
             ArrayList<DayPriceRecord> prices;
             prices = myGPH.getHistoricPricesFromFile(Ticker);
-            MACD macd = new MACD(prices);
+            MACD_corr macd = new MACD_corr(prices, aCorrBehaviour);
             ArrayList<IndicatorSignal> signalen = macd.getSignals();
             String result = "";
 
@@ -77,7 +75,7 @@ public class GenereerStatistieken {
                 if (s.getDate().isSmallerEqual(this.Einddatum)) {
                     count++;
                     String spacer = (s.getKoopsignaal() ? "" : "   ");
-                    result += spacer + s.toString() + "\n";
+                    result += spacer + s.toString() + "\t" + Util.toCurrency(s.getIndicatorWaarde()) + "\n";
                 }
                 indexSignalen--;
             }
@@ -93,40 +91,6 @@ public class GenereerStatistieken {
         }
     }
 
-    // Bereken de statistiek bij het gekozen fonds en gekozen parameters voor indicator MACD
-    public StatistiekUitkomst berekenStatistiekMACD() throws Exception {
-        try {
-            StatistiekUitkomst uitk = new StatistiekUitkomst();
-            GetPriceHistory myGPH = new GetPriceHistory();
-            ArrayList<DayPriceRecord> prices;
-            prices = myGPH.getHistoricPricesFromFile(Ticker);
-            MACD macd = new MACD(prices);
-            ArrayList<IndicatorSignal> signalen = macd.getSignals();
-
-            for (IndicatorSignal s: signalen) {
-                int signaalindex = s.getIndexKoersreeks();
-                IDate datum = s.getDate();
-                IDate checkDate = new IDate(2020, 6, 18);
-                if (checkDate.isEqual(datum)) {
-                    System.out.println("ref datum 18 jun 2020 gevonden");
-                }
-                if ((signaalindex + AantalDagen <= prices.size()-1) && (s.getKoopsignaal() == IsKoopsignaal)) {
-                    uitk.incAantalGebeurtenissen();
-                    double k0 = s.getDpr().getClose();
-                    DayPriceRecord dprn = prices.get(signaalindex + AantalDagen);
-                    if (dprn.getClose() > k0 * (1 + Delta/100)) {
-                        uitk.incHigher(s.getDpr().getIDate());
-                    }
-                    if (dprn.getClose() < k0 * (1 - Delta/100)) {
-                        uitk.incLower(s.getDpr().getIDate());
-                    }
-                }
-            }
-            return uitk;
-        } catch (Exception e) {
-            throw new Exception("berekenStatistiekMACD:" + e.getLocalizedMessage());
-        }
-    }
 
     public int trunk(double value){
         Double result = value - value % 1;
@@ -135,13 +99,13 @@ public class GenereerStatistieken {
 
 
     // Bereken beleggingsresultaat bij beleggen met MACD met stoploss
-    public ArrayList<String> berekenBeleggenMACDStoploss() throws Exception {
+    public ArrayList<String> berekenBeleggenMACDStoploss(boolean aCorr) throws Exception {
         ArrayList<String> result = new ArrayList<>();
         try {
             GetPriceHistory myGPH = new GetPriceHistory();
             ArrayList<DayPriceRecord> prices;
             prices = myGPH.getHistoricPricesFromFile(Ticker);
-            MACD macd = new MACD(prices);
+            MACD_corr macd = new MACD_corr(prices, aCorr);
             AanVerkoopParams aanVerkoopParams  = new AanVerkoopParams();
             int koersindex = 0;
             for (DayPriceRecord price: prices) {
@@ -173,18 +137,19 @@ public class GenereerStatistieken {
     // bij een macd verkoopsignaal en daarnaast als het laatste signaal verkopen was
     private void checkMACDstatus(
             AanVerkoopParams aanVerkoopParams,
-            MACD macd,
+            MACD_corr macd,
             int indexKoersreeks,
             ArrayList<String> result) {
-            Boolean isKopen = macd.getStatus(indexKoersreeks);
-            if (isKopen != null) {
-                if (isKopen == true) {
+            MacdStatus statusKopen = macd.getStatus(indexKoersreeks);
+            if (statusKopen != null) {
+                aanVerkoopParams.macdwaarde = statusKopen.getMacdWaarde();
+                if (statusKopen.getIsKopen()) {
                     // bij overgang (!) naar macd koopconditie is er een koopconditie ontstaan
                     // dit geldt onafhankelijk van tussentijds verkopen wegens een stoploss
                     if (aanVerkoopParams.macdKoopconditie == false) {
                         aanVerkoopParams.koopconditie = true;
-                        aanVerkoopParams.macdKoopconditie = true;
                     }
+                    aanVerkoopParams.macdKoopconditie = true;
                 } else {
                     aanVerkoopParams.macdKoopconditie = false;
                     aanVerkoopParams.koopconditie = false;
@@ -235,28 +200,28 @@ public class GenereerStatistieken {
     private void koopStoplimit(AanVerkoopParams aanVerkoopParams,
                                DayPriceRecord price,
                                ArrayList<String> result) {
-        koopKoers("limit", aanVerkoopParams, price.getIDate(), price,
+        koopKoers("limit", aanVerkoopParams, price.getIDate(),
                 aanVerkoopParams.stoplimit, result);
     }
 
     private void koopOpeningskoers(AanVerkoopParams aanVerkoopParams,
                                    DayPriceRecord price,
                                    ArrayList<String> result) {
-        koopKoers("open", aanVerkoopParams, price.getIDate(), price,
+        koopKoers("open", aanVerkoopParams, price.getIDate(),
                 price.getOpen(), result);
     }
 
     private void koopKoers(String msgKoers,
                            AanVerkoopParams aanVerkoopParams,
                            IDate datum,
-                           DayPriceRecord price,
                            double koers,
                            ArrayList<String> result) {
         aanVerkoopParams.stuks = trunk( aanVerkoopParams.geldOpRekening/koers);
         aanVerkoopParams.aankoopKoers =  koers;
         double aankoopbedrag = aanVerkoopParams.stuks * aanVerkoopParams.aankoopKoers;
         aanVerkoopParams.geldOpRekening  -=  aankoopbedrag;
-        String msg = datum.toString() + "\tKopen " + msgKoers;
+        String msg = datum.toString() + "\tKopen " + msgKoers + "\t macd=\t" +
+                Util.toCurrency(aanVerkoopParams.macdwaarde);
         msg += "\t" + aanVerkoopParams.stuks + "\t" + Util.toCurrency(koers) ;
         msg += "\t" + Util.toCurrency(aanVerkoopParams.geldOpRekening + aankoopbedrag);
         aanVerkoopParams.isAangekocht = true;

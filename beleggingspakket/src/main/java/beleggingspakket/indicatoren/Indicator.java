@@ -6,15 +6,21 @@ import java.util.ArrayList;
 
 public abstract class Indicator {
 
+    protected final boolean corrBehaviour;
     ArrayList<DayPriceRecord> myClosingPrices;
     ArrayList<IndicatorSignal> signalen = null;
 
-    public Indicator(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
+    public Indicator(ArrayList<DayPriceRecord> aDayPriceArray, boolean aCorr) throws Exception {
+        corrBehaviour = aCorr;
         initSpecifics();
         myClosingPrices = aDayPriceArray;
         calcIndicator();
         calcSignalLine();
         calcSignals();
+    }
+
+    public Indicator(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
+        this(aDayPriceArray, false);
     }
 
     public abstract ArrayList<Double> getIndicatorLine();
@@ -33,15 +39,5 @@ public abstract class Indicator {
 
     protected abstract void calcIndicator();
 
-    public  Boolean getStatus(int indexKoersreeks) {
-        Boolean result = null;
-        for (IndicatorSignal s: signalen) {
 
-            if (s.getIndexKoersreeks() > indexKoersreeks) {
-                break;
-            }
-            result = s.getKoopsignaal();
-        }
-        return result;
-    }
 }

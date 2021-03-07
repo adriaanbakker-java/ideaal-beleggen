@@ -26,6 +26,8 @@ public class StatistiekenschermController implements Initializable {
     @FXML
     private CheckBox chkKoopsignaal;
     @FXML
+    private CheckBox chkGecorrMACD;
+    @FXML
     private TextField txtDelta;
     @FXML
     private TextField txtEinddatum;
@@ -54,28 +56,6 @@ public class StatistiekenschermController implements Initializable {
     }
 
 
-    public void genereerStatistiekenMACD() throws Exception {
-        boolean isKoopsignaal = chkKoopsignaal.isSelected();
-        double delta = Util.toDouble(txtDelta.getText());
-        String sMsg = "genereren stats koopsignaal:" + isKoopsignaal + "|" + delta;
-        showMessage( sMsg);
-        taLogArea.clear();
-        addLogArea( sMsg );
-
-        for (int n=1; n<=10; n++) {
-            GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, n, einddatum, delta);
-            StatistiekUitkomst uitkomst = stats.berekenStatistiekMACD();
-            String sResult = uitkomst.print();
-            String sKoop = "verkoopsignaal";
-            if (isKoopsignaal)
-                sKoop = "koopsignaal";
-            addLogArea(sKoop + ": aantal gebeurtenissen = " + uitkomst.getAantalGebeurtenissen());
-            addLogArea( " aantal dagen " + n + ":" + sResult);
-            sResult = uitkomst.printDates();
-            addLogArea(sResult);
-        }
-
-    }
 
     public void wijzigEinddatum() {
         System.out.println("wijzig einddatum");
@@ -98,7 +78,8 @@ public class StatistiekenschermController implements Initializable {
             taLogArea.clear();
             addLogArea( sMsg );
             GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, 0, einddatum, delta);
-            ArrayList<String> koopverkopen = stats.berekenBeleggenMACDStoploss();
+            boolean corr = chkGecorrMACD.isSelected();
+            ArrayList<String> koopverkopen = stats.berekenBeleggenMACDStoploss(corr);
             for (String msg: koopverkopen) {
                 addLogArea(msg);
             }
@@ -111,7 +92,7 @@ public class StatistiekenschermController implements Initializable {
     public void toonLaatsteSignalen() {
         GenereerStatistieken gen = new GenereerStatistieken(
                 ticker, true, 0, einddatum, 0);
-        String message = gen.toonLaatsteSignalen();
+        String message = gen.toonLaatsteSignalen( chkGecorrMACD.isSelected());
         taLogArea.clear();
         addLogArea("Laatste 10 MAC signalen:");
         addLogArea(message);

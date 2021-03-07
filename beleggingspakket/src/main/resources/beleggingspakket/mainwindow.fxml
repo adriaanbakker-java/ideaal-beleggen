@@ -149,6 +149,11 @@
                               <Insets />
                            </VBox.margin>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#toonStatistieken" prefHeight="26.0" prefWidth="178.0" text="Toon statistieken">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Button>
                      </children></VBox>
                   <Region HBox.hgrow="ALWAYS" />
                </children>

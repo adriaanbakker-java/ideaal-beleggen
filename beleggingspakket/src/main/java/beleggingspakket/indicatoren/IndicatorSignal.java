@@ -8,6 +8,17 @@ public class IndicatorSignal {
     private DayPriceRecord dpr;
     private boolean isKoopsignaal;
     private int indexKoersreeks;
+    private double indicatorWaarde;
+
+
+    public double getIndicatorWaarde() {
+        return indicatorWaarde;
+    }
+
+    public void setIndicatorWaarde(double indicatorWaarde) {
+        this.indicatorWaarde = indicatorWaarde;
+    }
+
 
     public int getIndexKoersreeks() {
         return indexKoersreeks;
@@ -26,12 +37,18 @@ public class IndicatorSignal {
     }
 
 
-    public IndicatorSignal(IDate date, Boolean isKoopsignaal, DayPriceRecord dpr, int indexKoersreeks) {
+    public IndicatorSignal(
+            IDate date,
+            Boolean isKoopsignaal,
+            DayPriceRecord dpr,
+            int indexKoersreeks) {
         this.date = date;
         this.isKoopsignaal = isKoopsignaal;
         this.dpr = dpr;
         this.indexKoersreeks = indexKoersreeks;
+        this.indicatorWaarde = 0;
     }
+
 
     public String toString() {
         String result = (isKoopsignaal ? "Koopsignaal:": "Verkoopsignaal");
