@@ -1,4 +1,6 @@
 package beleggingspakket;
+import beleggingspakket.util.IDate;
+import beleggingspakket.util.Util;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -21,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -56,8 +59,8 @@ public class MainController {
     private ChoiceBox<String> selecteerAantalDagen;
 
     // retro beleggen, ga dit aantal dagen terug in verleden
-    @FXML
-    private ChoiceBox<String> selecteerAantalDagenVerleden;
+    //@FXML
+    //private ChoiceBox<String> selecteerAantalDagenVerleden;
 
     @FXML
     private ChoiceBox<String> selecteerAandeel;
@@ -95,12 +98,13 @@ public class MainController {
                 logInTextArea("Eerst aandeel kiezen svp");
             } else {
                 int aantalKoersdagen = Integer.parseInt(selecteerAantalDagen.getValue());
-                int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+                //int aantalDagenRetro = Integer.parseInt(selecteerAantalDagenVerleden.getValue());
+                IDate eindDt = Util.toIDate(txtEinddatum.getText());
 
                 logInTextArea("Vanuit maincontroller: Toon grafiekenscherm voor " + gekozenMarkt + " aandeel:"
                         + gekozenAandeel + " aantalkoersdagen " + aantalKoersdagen
-                        + " aantal dagen retro" + aantalDagenRetro);
-                main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, aantalDagenRetro);
+                        + " einddatum" + txtEinddatum.getText());
+                main.toonGrafiekenscherm(gekozenMarkt, gekozenAandeel, aantalKoersdagen, eindDt);
             }
 
     }
@@ -134,10 +138,10 @@ public class MainController {
         selecteerAantalDagen.getItems().addAll("10", "30", "40", "60", "80");
         selecteerAantalDagen.setValue("30");
         selecteerAantalDagen.setStyle("-fx-font: 13 arial;");
-        selecteerAantalDagenVerleden.getItems().addAll("0",
-                "20", "30", "60", "120", "240", "480", "720", "1440");
-        selecteerAantalDagenVerleden.setValue("0");
-        selecteerAantalDagenVerleden.setStyle("-fx-font: 13 arial;");
+//        selecteerAantalDagenVerleden.getItems().addAll("0",
+//                "20", "30", "60", "120", "240", "480", "720", "1440");
+//        selecteerAantalDagenVerleden.setValue("0");
+//        selecteerAantalDagenVerleden.setStyle("-fx-font: 13 arial;");
 
 
         aandelenlijst.removeAll(selecteerAandeel);
@@ -165,6 +169,8 @@ public class MainController {
         selecteerPortefeuille.getItems().addAll(portefeuilles);
         selecteerPortefeuille.setStyle("-fx-font: 13 arial;");
 
+        LocalDateTime today = LocalDateTime.now();
+        txtEinddatum.setText(Util.toDDMMYYYY(today));
     }
 
 
@@ -184,6 +190,24 @@ public class MainController {
             logInTextArea("Exceptie bij starten portefeuille:" + e.getLocalizedMessage());
         }
 
+    }
+
+    public void toonStatistieken()  {
+        try {
+            System.out.println("toon statistieken");
+
+            String ticker = selecteerAandeel.getValue();
+            if (ticker == null) {
+                logInTextArea("svp eerst aandeel kiezen");
+                return;
+            }
+            System.out.println("check statistieken voor " + ticker);
+
+            IDate eindDt = Util.toIDate(txtEinddatum.getText());
+            main.toonStatistieken(ticker, eindDt);
+        } catch (Exception e) {
+            logInTextArea(e.getLocalizedMessage());
+        }
     }
 
     public void maakPortefeuilleAan(ActionEvent actionEvent) {

@@ -123,10 +123,12 @@ public class JavaFxApplication extends Application {
      */
 
     // 1. Aangeroepen vanuit hoofdscherm
-    public void toonGrafiekenschermRetroDagen(String gekozenAandeel, int aantalBeursdagen, int aantalDagenRetro)
+    public void toonGrafiekenschermRetroDagen(String gekozenAandeel, int aantalBeursdagen, IDate eindDt)
+    //public void toonGrafiekenschermRetroDagen(String gekozenAandeel, int aantalBeursdagen, int aantalDagenRetro)
             throws Exception {
-        LocalDateTime eindDT = LocalDateTime.now().minusDays(aantalDagenRetro);
-        toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, Util.toIDate(eindDT));
+        //LocalDateTime eindDT = LocalDateTime.now().minusDays(aantalDagenRetro);
+        //toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, Util.toIDate(eindDT));
+        toonGrafiekenscherm(gekozenAandeel, aantalBeursdagen, eindDt);
     }
 
     // 2. Aangeroepen vanuit portefeuille

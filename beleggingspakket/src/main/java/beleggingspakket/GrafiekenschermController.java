@@ -470,7 +470,7 @@ public class GrafiekenschermController implements Initializable {
         // Vul het values array met waarden
         MACD macd = null;
         try {
-            macd = new MACD(myCandlestickObject.getMyDayPriceArray());
+            macd = new MACD(myCandlestickObject.getMyDayPriceArray(), false);
             IndicatorClass indicator = new IndicatorClass(
                     xAxis,
                     yAxis,

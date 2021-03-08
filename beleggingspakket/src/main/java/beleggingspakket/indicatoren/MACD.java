@@ -27,12 +27,18 @@ import java.util.ArrayList;
  */
 public class MACD extends Indicator {
 
-    private int slowDays;
+    protected int slowDays;
     private int fastDays;
+
 
     public MACD(ArrayList<DayPriceRecord> aDayPriceArray) throws Exception {
         super(aDayPriceArray);
     }
+
+    public MACD(ArrayList<DayPriceRecord> aDayPriceArray, boolean aCorrBehaviour) throws Exception {
+        super(aDayPriceArray, aCorrBehaviour);
+    }
+
 
     @Override
     public ArrayList<Double> getIndicatorLine() {
@@ -45,8 +51,8 @@ public class MACD extends Indicator {
 
     private ArrayList<Double> fastEMA;
     private ArrayList<Double> slowEMA;
-    private ArrayList<Double> MACDlist;
-    private ArrayList<Double> MACDSmoothed;
+    protected ArrayList<Double> MACDlist;
+    protected ArrayList<Double> MACDSmoothed;
 
 
     // MACD used to be a seperate class, is now extended from superclass Indicator.
@@ -73,13 +79,32 @@ public class MACD extends Indicator {
                if ((koopsig) || verkoopsig) {
                    DayPriceRecord dpr = myClosingPrices.get(i);
                    IDate iDate = new IDate(dpr.getYear(),dpr.getMonth(), dpr.getDay());
-                   if (koopsig)
-                       signalen.add(new IndicatorSignal(iDate, true, dpr, i));
-                   else
-                       signalen.add(new IndicatorSignal(iDate, false, dpr, i));
+                   IndicatorSignal s;
+                   if (koopsig) {
+                       s = new IndicatorSignal(iDate, true, dpr, i);
+                       s.setIndicatorWaarde(MACDlist.get(i));
+                       signalen.add(s);
+                   } else {
+                       s = new IndicatorSignal(iDate, false, dpr, i);
+                       s.setIndicatorWaarde(MACDlist.get(i));
+                       signalen.add(s);
+                   }
                }
             }
         }
+    }
+
+
+    public  MacdStatus getStatus(int indexKoersreeks) {
+        MacdStatus result = null;
+        for (IndicatorSignal s: signalen) {
+
+            if (s.getIndexKoersreeks() > indexKoersreeks) {
+                break;
+            }
+            result = new MacdStatus(s.getKoopsignaal(), MACDlist.get(indexKoersreeks));
+        }
+        return result;
     }
 
     @Override
