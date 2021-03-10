@@ -74,7 +74,7 @@ public class GetPriceHistory {
 	private void fillLinkMap() {
 		bMap.put("AEX", new BeleggerLinkRec("12272", "AEX", "AEX"));
 		bMap.put("AALBERTS", new BeleggerLinkRec("11797", "AALBERTS-NV", "nietAEXfonds"));
-		bMap.put("ABN", new BeleggerLinkRec("612967", "ABN-AMRO-BANK-NV", "ABN AMRO BANK NV"));
+		bMap.put("ABN", new BeleggerLinkRec("612967", "ABN-AMRO-BANK-NV", "ABN AMRO BANK N.V."));
 		bMap.put("ADYEN", new BeleggerLinkRec("613007", "ADYEN-NV", "ADYEN NV"));
 		bMap.put("AEGON", new BeleggerLinkRec("11754", "Aegon", "Aegon"));
 		bMap.put("DELHAIZE", new BeleggerLinkRec("11755", "Ahold-Delhaize-Koninklijke", "Ahold Delhaize"));

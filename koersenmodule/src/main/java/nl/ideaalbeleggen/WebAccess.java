@@ -329,6 +329,9 @@ public class WebAccess {
     }
 
 
+    /*
+    * Ververst op dit moment alleen koers uit AEX overzicht. Dat is heel onhandig. (W0019)
+    */
     public DayPriceRecord retrieveIntradaysPrice(Document doc, String aTicker, String aFondsnaam) throws Exception {
         try {
             System.out.println("getTodaysPrice:" + aTicker + " fondsnaam" + aFondsnaam);
@@ -391,12 +394,18 @@ public class WebAccess {
 
     IEX bleek problemen te geven bij het overdag ophalen van de tussenstand
     Vandaar dat we het via beleggen.nl proberen
+
+    Probleem is nog dat alleen AEX fondsen intraday worden opgehaald. Dat is onhandig.
+
      */
     public DayPriceRecord getIntraDayPrices(String aTicker) throws Exception {
         try {
             System.out.println("Webaccess: retrieve intraday prices for " + aTicker);
             //String paginalink = returnBeleggerLinkDay(aTicker);
 
+            if (aTicker.equals("ABN")) {
+                System.out.println("ticker is ABN, uit midkap halen!");
+            }
             String paginalink = "https://www.beleggen.nl/koersen/aex.aspx";
             String fondsnaam = returnFondsnaamIntraDayprice(aTicker);
             System.out.println(paginalink);
