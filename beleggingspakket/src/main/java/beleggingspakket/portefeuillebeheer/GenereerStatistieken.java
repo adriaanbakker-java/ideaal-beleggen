@@ -11,11 +11,16 @@ import java.util.ArrayList;
 
 
 public class GenereerStatistieken {
-    String Ticker;
+    private final IDate Begindatum;
+    private final IDate Einddatum;
+    private final String Ticker;
     boolean IsKoopsignaal;
     int AantalDagen;
-    IDate Einddatum;
     double Delta;
+
+
+
+    private ArrayList<DayPriceRecord> prices;
 
     private class AanVerkoopParams {
         public int totaalaantal;
@@ -47,12 +52,15 @@ public class GenereerStatistieken {
     }
 
     public GenereerStatistieken(String aTicker,
-                         boolean aIsKoopsignaal,
-                         int aAantalDagen,
-                         IDate aEinddatum,
-                         double aDelta) {
+                                boolean aIsKoopsignaal,
+                                int aAantalDagen,
+                                IDate aBegindatum, IDate aEinddatum,
+                                double aDelta,
+                                ArrayList<DayPriceRecord> aPrices) throws Exception {
+        prices = aPrices;
         Ticker = aTicker;
         IsKoopsignaal = aIsKoopsignaal;
+        Begindatum = aBegindatum;
         Einddatum = aEinddatum;
         Delta = aDelta;
         AantalDagen = aAantalDagen;
@@ -102,24 +110,22 @@ public class GenereerStatistieken {
     public ArrayList<String> berekenBeleggenMACDStoploss(boolean aCorr) throws Exception {
         ArrayList<String> result = new ArrayList<>();
         try {
-            GetPriceHistory myGPH = new GetPriceHistory();
-            ArrayList<DayPriceRecord> prices;
-            prices = myGPH.getHistoricPricesFromFile(Ticker);
             MACD_corr macd = new MACD_corr(prices, aCorr);
             AanVerkoopParams aanVerkoopParams  = new AanVerkoopParams();
             int koersindex = 0;
             for (DayPriceRecord price: prices) {
-                IDate testdate = new IDate(2019, 06, 14);
-                if (price.getIDate().isEqual(testdate)) {
-                    System.out.println("14 juni 2019");
+                if (this.Begindatum.isSmallerEqual(price.getIDate())) {
+                    IDate testdate = new IDate(2019, 06, 14);
+                    if (price.getIDate().isEqual(testdate)) {
+                        System.out.println("14 juni 2019");
+                    }
+                    if (!price.getIDate().isSmallerEqual(Einddatum))
+                        break;
+                    checkVerwerkAanVerkopen(aanVerkoopParams, price, result);
+                    checkMACDstatus(aanVerkoopParams, macd, koersindex, result);
                 }
-                if (!price.getIDate().isSmallerEqual(Einddatum))
-                    break;
-                checkVerwerkAanVerkopen(aanVerkoopParams, price, result);
-                checkMACDstatus(aanVerkoopParams, macd, koersindex, result);
                 koersindex++;
             }
-
             result.add("");
             result.add("totaal aantal verkopen:" + aanVerkoopParams.totaalaantal);
             result.add("totaal aantal positief:" + aanVerkoopParams.aantalPositief);

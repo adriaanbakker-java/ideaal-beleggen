@@ -1,8 +1,9 @@
 package beleggingspakket;
 
+import beleggingspakket.Koersen.DayPriceRecord;
+import beleggingspakket.Koersen.GetPriceHistory;
 import beleggingspakket.indicatoren.ToppenEnDalen;
 import beleggingspakket.portefeuillebeheer.GenereerStatistieken;
-import beleggingspakket.portefeuillebeheer.StatistiekUitkomst;
 import beleggingspakket.util.IDate;
 import beleggingspakket.util.Util;
 import javafx.fxml.FXML;
@@ -22,6 +23,8 @@ public class StatistiekenschermController implements Initializable {
     @FXML
     private Label lblEinddatum;
     @FXML
+    private Label lblBegindatum;
+    @FXML
     private TextField txtMessage;
     @FXML
     private CheckBox chkKoopsignaal;
@@ -30,13 +33,18 @@ public class StatistiekenschermController implements Initializable {
     @FXML
     private TextField txtDelta;
     @FXML
-    private TextField txtEinddatum;
+    private TextField txtBegindatum;
     @FXML
-    private TextField txtNDagen;
+    private TextField txtEinddatum;
     @FXML
     private TextArea taLogArea;
 
     private String ticker;
+    private ArrayList<DayPriceRecord> prices;
+
+
+
+    private IDate begindatum;
     private IDate einddatum;
 
     @Override
@@ -45,9 +53,23 @@ public class StatistiekenschermController implements Initializable {
         txtDelta.setText("0.0");
     }
 
-    public void setTicker(String aTicker) {
-        this.ticker = aTicker;
-        lblHeading.setText("Statistieken voor aandeel " + aTicker);
+    // Bij het vaststellen van de ticker wordt tevens de begindatum vastgesteld
+    // aan de hand van de koersfile
+    public void setTicker(String aTicker) throws Exception {
+        try {
+            this.ticker = aTicker;
+            lblHeading.setText("Statistieken voor aandeel " + aTicker);
+            GetPriceHistory myGPH = new GetPriceHistory();
+            prices = myGPH.getHistoricPricesFromFile(aTicker);
+            setBegindatum(prices.get(0).getIDate());
+        } catch (Exception e) {
+            throw new Exception("StatistiekenschermController: setTicker():" + e.getLocalizedMessage());
+        }
+    }
+
+    public void setBegindatum(IDate begindatum) {
+        this.begindatum = begindatum;
+        lblBegindatum.setText("Begindatum:" + begindatum.toString());
     }
 
     public void setEinddatum(IDate einddatum) {
@@ -55,18 +77,26 @@ public class StatistiekenschermController implements Initializable {
         lblEinddatum.setText("Einddatum:" + einddatum.toString());
     }
 
-
+    public void wijzigBegindatum() {
+        System.out.println("wijzig begindatum");
+        try {
+            IDate dat = Util.toIDate(txtBegindatum.getText());
+            this.begindatum = dat;
+            lblBegindatum.setText("Begindatum:" + txtBegindatum.getText());
+        } catch (Exception e) {
+            addLogArea(e.getLocalizedMessage());
+        }
+    }
 
     public void wijzigEinddatum() {
         System.out.println("wijzig einddatum");
         try {
             IDate einddatumNieuw = Util.toIDate(txtEinddatum.getText());
             this.einddatum = einddatumNieuw;
-            lblEinddatum.setText(txtEinddatum.getText());
+            lblEinddatum.setText("Einddatum:" + txtEinddatum.getText());
         } catch (Exception e) {
             addLogArea(e.getLocalizedMessage());
         }
-
     }
 
     public void genereer() {
@@ -77,21 +107,21 @@ public class StatistiekenschermController implements Initializable {
             showMessage( sMsg);
             taLogArea.clear();
             addLogArea( sMsg );
-            GenereerStatistieken stats = new GenereerStatistieken(ticker, isKoopsignaal, 0, einddatum, delta);
+            GenereerStatistieken stats =
+                    new GenereerStatistieken(ticker, isKoopsignaal, 0, begindatum, einddatum, delta, prices);
             boolean corr = chkGecorrMACD.isSelected();
             ArrayList<String> koopverkopen = stats.berekenBeleggenMACDStoploss(corr);
             for (String msg: koopverkopen) {
                 addLogArea(msg);
             }
-
         } catch (Exception e) {
             showMessage(e.getLocalizedMessage());
         }
     }
 
-    public void toonLaatsteSignalen() {
+    public void toonLaatsteSignalen() throws Exception {
         GenereerStatistieken gen = new GenereerStatistieken(
-                ticker, true, 0, einddatum, 0);
+                ticker, true, 0, begindatum, einddatum, 0, prices) ;
         String message = gen.toonLaatsteSignalen( chkGecorrMACD.isSelected());
         taLogArea.clear();
         addLogArea("Laatste 10 MAC signalen:");

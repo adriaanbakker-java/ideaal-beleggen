@@ -19,18 +19,21 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblEinddatum" layoutX="14.0" layoutY="39.0" text="Einddatum" />
-      <CheckBox fx:id="chkKoopsignaal" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Koopsignaal van MACD" />
-      <TextField fx:id="txtDelta" layoutX="164.0" layoutY="109.0" text="0" />
-      <Label layoutX="14.0" layoutY="113.0" text="delta boven/onder koers" />
+      <Label fx:id="lblEinddatum" layoutX="26.0" layoutY="75.0" text="Einddatum" />
+      <CheckBox fx:id="chkKoopsignaal" layoutX="19.0" layoutY="105.0" mnemonicParsing="false" text="Koopsignaal van MACD" />
+      <TextField fx:id="txtDelta" layoutX="174.0" layoutY="134.0" text="0" />
+      <Label layoutX="26.0" layoutY="138.0" text="delta boven/onder koers" />
       <Label layoutX="326.0" layoutY="113.0" text="\%" />
       <TextArea fx:id="taLogArea" layoutY="189.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="286.0" prefWidth="600.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="189.0" />
-      <Button fx:id="genereer" layoutX="398.0" layoutY="76.0" mnemonicParsing="false" onAction="#genereer" text="Genereer statistieken" />
+      <Button fx:id="genereer" layoutX="465.0" layoutY="110.0" mnemonicParsing="false" onAction="#genereer" text="Genereer statistieken" />
       <TextField fx:id="txtMessage" layoutX="33.0" layoutY="363.0" maxHeight="89.0" minHeight="20.0" prefHeight="0.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <Button fx:id="toonLaatsteSignalen" layoutX="398.0" layoutY="109.0" mnemonicParsing="false" onAction="#toonLaatsteSignalen" text="Laatste signalen" />
-      <Button fx:id="toonLaatsteSignalen1" layoutX="398.0" layoutY="146.0" mnemonicParsing="false" onAction="#toonToppenDalen" text="Toppen en dalen" />
-      <Button layoutX="465.0" layoutY="34.0" mnemonicParsing="false" onAction="#wijzigEinddatum" text="Wijzig einddatum" />
-      <TextField fx:id="txtEinddatum" layoutX="300.0" layoutY="34.0" />
-      <CheckBox fx:id="chkGecorrMACD" layoutX="185.0" layoutY="81.0" mnemonicParsing="false" text="gecorrigeerd MACD" />
+      <Button fx:id="toonLaatsteSignalen" layoutX="466.0" layoutY="134.0" mnemonicParsing="false" onAction="#toonLaatsteSignalen" prefHeight="25.0" prefWidth="127.0" text="Laatste signalen" />
+      <Button fx:id="toonLaatsteSignalen1" layoutX="467.0" layoutY="159.0" mnemonicParsing="false" onAction="#toonToppenDalen" prefHeight="25.0" prefWidth="127.0" text="Toppen en dalen" />
+      <Button layoutX="469.0" layoutY="71.0" mnemonicParsing="false" onAction="#wijzigEinddatum" prefHeight="25.0" prefWidth="117.0" text="Wijzig einddatum" />
+      <TextField fx:id="txtEinddatum" layoutX="254.0" layoutY="71.0" />
+      <CheckBox fx:id="chkGecorrMACD" layoutX="185.0" layoutY="105.0" mnemonicParsing="false" text="gecorrigeerd MACD" />
+      <Label fx:id="lblBegindatum" layoutX="27.0" layoutY="46.0" text="Begindatum" />
+      <TextField fx:id="txtBegindatum" layoutX="254.0" layoutY="42.0" />
+      <Button layoutX="469.0" layoutY="42.0" mnemonicParsing="false" onAction="#wijzigBegindatum" text="Wijzig begindatum" />
    </children>
 </AnchorPane>
